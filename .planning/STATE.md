@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 1 of 7 (Foundation and Calculation Engine)
-Plan: 5 of 6 in current phase
-Status: In progress
-Last activity: 2026-01-29 -- Completed 01-05-PLAN.md (Return, Buyout, Sell-Privately Scenarios)
+Plan: 6 of 6 in current phase
+Status: Phase complete
+Last activity: 2026-01-29 -- Completed 01-06-PLAN.md (Early Termination and Extension Scenarios)
 
-Progress: [████░░░░░░] 83%
+Progress: [██████░░░░] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
-- Average duration: 4m 10s
-- Total execution time: 20m 39s
+- Total plans completed: 6
+- Average duration: 4m 27s
+- Total execution time: 26m 39s
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1. Foundation | 5/6 | 20m 39s | 4m 10s |
+| 1. Foundation | 6/6 | 26m 39s | 4m 27s |
 
 **Recent Trend:**
-- Last 5 plans: 01-02 (1m 54s), 01-03 (5m 45s), 01-04 (4m 31s), 01-05 (4m 27s)
-- Trend: Stable around 4-5 minutes per plan (TDD plans take slightly longer due to RED-GREEN-REFACTOR)
+- Last 5 plans: 01-02 (1m 54s), 01-03 (5m 45s), 01-04 (4m 31s), 01-05 (4m 27s), 01-06 (6m 0s)
+- Trend: Stable around 4-6 minutes per plan (TDD plans take slightly longer due to RED-GREEN-REFACTOR)
 
 *Updated after each plan completion*
 
@@ -58,6 +58,11 @@ Recent decisions affecting current work:
 - [01-04]: State tax rules cover top 15 US states only (65% of population)
 - [01-04]: CA is only state with cap cost reduction tax applied
 - [01-04]: GA TAVT and NC Highway Use Tax simplified to percentage of total payments in Phase 1
+- [01-05]: Sell privately scenario includes 7% buffer for private sale transaction friction
+- [01-05]: Return scenario calculates excess mileage costs using user-provided per-mile rate
+- [01-06]: Early termination uses generic actuarial method with strong disclaimers (lender-specific formulas vary)
+- [01-06]: Extension assumes same monthly payment as original lease (industry standard)
+- [01-06]: Warranty warning threshold set at >6 months for extensions
 
 ### Pending Todos
 
@@ -72,6 +77,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-29 14:58 UTC
-Stopped at: Completed 01-05-PLAN.md (Return, Buyout, Sell-Privately Scenarios)
+Last session: 2026-01-29 15:00 UTC
+Stopped at: Completed Phase 1 (Foundation and Calculation Engine) with 01-06-PLAN.md
 Resume file: None
+
+**Phase 1 complete:** All 6 plans executed. Calculation engine ready with 100% test coverage (120 tests).
