@@ -8,7 +8,7 @@ This roadmap delivers a vehicle lease exit-option comparison tool in seven phase
 
 - [x] **Phase 1: Foundation and Calculation Engine** - Scaffold the project and build the pure-function financial engine that powers every feature (6/6 plans complete)
 - [x] **Phase 2: Lease Entry and Core UI** - Guided forms for capturing lease data with progressive disclosure and educational tooltips (4/4 plans complete)
-- [ ] **Phase 3: Comparison View** - Side-by-side five-option comparison with cost breakdowns and a recommended best option
+- [x] **Phase 3: Comparison View** - Side-by-side five-option comparison with cost breakdowns and a recommended best option (4/4 plans complete)
 - [ ] **Phase 4: Market Value and Valuation** - Manual market value entry with service abstraction for future API integration
 - [ ] **Phase 5: Authentication and Multi-Lease** - User accounts via Clerk with multi-lease support and cross-device persistence
 - [ ] **Phase 6: Timeline and Smart Recommendations** - Month-by-month cost evolution chart with decision window identification
@@ -52,11 +52,7 @@ Plans: 4/4 complete (02-01 ✓, 02-02 ✓, 02-03 ✓, 02-04 ✓)
   3. The best option is visually highlighted with a short explanation of why it wins (e.g., "Selling privately saves $2,400 vs. returning because your vehicle has positive equity")
   4. A "snapshot" summary answers "what is the best move today?" in a single glance without scrolling
 
-Plans: 4 plans
-- [ ] 03-01-PLAN.md -- Calculation orchestrator + currency formatting utility + shadcn component installs
-- [ ] 03-02-PLAN.md -- Leaf UI components (LineItemsBreakdown, OptionCard)
-- [ ] 03-03-PLAN.md -- Orchestrator UI components (HeroSummary, OptionsList, ComparisonView)
-- [ ] 03-04-PLAN.md -- Comparison page route, LeaseCard navigation, and visual verification
+Plans: 4/4 complete (03-01 ✓, 03-02 ✓, 03-03 ✓, 03-04 ✓)
 
 ### Phase 4: Market Value and Valuation
 **Goal**: A user can record their vehicle's current market value with a prominent manual entry flow, and the system architecture supports future API integration without code changes to the comparison view.
@@ -113,7 +109,7 @@ Plans: TBD
 |-------|---------------|--------|-----------|
 | 1. Foundation and Calculation Engine | 6/6 | ✓ Complete | 2026-01-29 |
 | 2. Lease Entry and Core UI | 4/4 | ✓ Complete | 2026-01-29 |
-| 3. Comparison View | 0/4 | Planned | - |
+| 3. Comparison View | 4/4 | ✓ Complete | 2026-01-29 |
 | 4. Market Value and Valuation | 0/TBD | Not started | - |
 | 5. Authentication and Multi-Lease | 0/TBD | Not started | - |
 | 6. Timeline and Smart Recommendations | 0/TBD | Not started | - |

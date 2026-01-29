@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-28)
 
 **Core value:** Show the user the smartest financial move for their vehicle lease right now, and when a better window might open up.
-**Current focus:** Phase 3 in progress — Comparison View
+**Current focus:** Phase 3 complete — Comparison View
 
 ## Current Position
 
-Phase: 3 of 7 (Comparison View)
-Plan: 3 of 4 in current phase
-Status: In progress
-Last activity: 2026-01-29 -- Completed 03-03-PLAN.md (Comparison Orchestrator Components)
+Phase: 3 of 7 (Comparison View) — COMPLETE
+Plan: 4 of 4 in current phase — COMPLETE
+Status: Phase complete, verified
+Last activity: 2026-01-29 -- Completed Phase 3 (Comparison View) with browser verification
 
-Progress: [█████████████░] 13/14 plans (93%)
+Progress: [██████████████] 14/14 plans (100% of phases 1-3)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 13
-- Average duration: 3m 53s
-- Total execution time: 53m 18s
+- Total plans completed: 14
+- Average duration: ~3m 30s
+- Total execution time: ~57m
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [█████████████░] 13/14 plans (93%)
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 26m 39s | 4m 27s |
 | 2. Lease Entry and Core UI | 4/4 | 22m 32s | 5m 38s |
-| 3. Comparison View | 3/4 | 4m 7s | 1m 22s |
+| 3. Comparison View | 4/4 | ~8m | ~2m |
 
 **Recent Trend:**
-- Last 5 plans: 02-03 (4m 15s), 02-04 (8m 0s), 03-01 (2m 0s), 03-02 (1m 0s), 03-03 (1m 7s)
+- Last 5 plans: 02-04 (8m 0s), 03-01 (2m 0s), 03-02 (1m 0s), 03-03 (1m 7s), 03-04 (~4m)
 - Trend: Component composition plans with clear type foundations execute very fast
 
 *Updated after each plan completion*
@@ -94,6 +94,7 @@ Recent decisions affecting current work:
 - [03-03]: HeroSummary is server component -- only renders data, no interactivity needed
 - [03-03]: ComparisonView deduplicates disclaimers with Set for clean display
 - [03-03]: OptionsList preserves pre-sorted order from evaluate-all (no re-sorting)
+- [03-04]: RSC serialization boundary -- Decimal.toJSON() returns strings across server→client boundary; formatCurrency and LeaseCard accept Decimal | number | string
 
 ### Pending Todos
 
@@ -108,8 +109,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-29 21:57 UTC
-Stopped at: Completed 03-03-PLAN.md (Comparison Orchestrator Components)
+Last session: 2026-01-29
+Stopped at: Completed Phase 3 (Comparison View) - all 4 plans executed, browser verified, verifier passed 4/4
 Resume file: None
 
-**Phase 3 in progress:** Plan 3 of 4 complete. Data layer (03-01), leaf components (03-02), and orchestrator components (03-03) all ready. Plan 03-04 will wire ComparisonView into a page route with lease data loading.
+**Phase 3 complete.** Next phase: Phase 4 (Market Value and Valuation) needs planning.
