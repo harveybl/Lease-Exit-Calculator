@@ -40,7 +40,12 @@ Plans: 6/6 complete (01-01 ✓, 01-02 ✓, 01-03 ✓, 01-04 ✓, 01-05 ✓, 01-0
   4. A saved lease persists across browser sessions (page refresh, close and reopen) and can be edited or deleted
   5. Current mileage entries are date-stamped so the system can project future mileage accurately
 
-Plans: TBD
+**Plans:** 4 plans
+Plans:
+- [ ] 02-01-PLAN.md -- Install deps, init shadcn/ui with warm theme, create Zod schema and tooltip content
+- [ ] 02-02-PLAN.md -- Build form components: FieldTooltip, auto-save hook, LeaseEntryForm with progressive disclosure
+- [ ] 02-03-PLAN.md -- Server actions for CRUD, page routes (new/edit/list), wire form to database
+- [ ] 02-04-PLAN.md -- Visual verification of complete lease entry flow
 
 ### Phase 3: Comparison View
 **Goal**: A user with a saved lease sees all five exit options side-by-side with transparent cost breakdowns and a clear recommendation for the best move today.
@@ -108,7 +113,7 @@ Plans: TBD
 | Phase | Plans Complete | Status | Completed |
 |-------|---------------|--------|-----------|
 | 1. Foundation and Calculation Engine | 6/6 | ✓ Complete | 2026-01-29 |
-| 2. Lease Entry and Core UI | 0/TBD | Not started | - |
+| 2. Lease Entry and Core UI | 0/4 | Planned | - |
 | 3. Comparison View | 0/TBD | Not started | - |
 | 4. Market Value and Valuation | 0/TBD | Not started | - |
 | 5. Authentication and Multi-Lease | 0/TBD | Not started | - |
