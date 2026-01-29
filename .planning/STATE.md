@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 1 of 7 (Foundation and Calculation Engine)
-Plan: 1 of 6 in current phase
+Plan: 2 of 6 in current phase
 Status: In progress
-Last activity: 2026-01-29 -- Completed 01-01-PLAN.md
+Last activity: 2026-01-29 -- Completed 01-02-PLAN.md
 
-Progress: [█░░░░░░░░░] 17%
+Progress: [██░░░░░░░░] 33%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 4m 2s
-- Total execution time: 4m 2s
+- Total plans completed: 2
+- Average duration: 2m 58s
+- Total execution time: 5m 56s
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1. Foundation | 1/6 | 4m 2s | 4m 2s |
+| 1. Foundation | 2/6 | 5m 56s | 2m 58s |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (4m 2s)
-- Trend: First plan baseline established
+- Last 5 plans: 01-01 (4m 2s), 01-02 (1m 54s)
+- Trend: Accelerating (1m 54s vs 4m 2s baseline)
 
 *Updated after each plan completion*
 
@@ -50,6 +50,9 @@ Recent decisions affecting current work:
 - [01-01]: Import Decimal from @/lib/decimal (not 'decimal.js') to guarantee config consistency
 - [01-01]: 100% coverage thresholds only on src/lib/calculations/**/*.ts (core value)
 - [01-01]: ScenarioResult base interface + 5 extending interfaces for type-safe discriminated union
+- [01-02]: Custom Drizzle type decimalNumber maps Decimal.js to PostgreSQL numeric with configurable precision/scale
+- [01-02]: Money factor uses numeric(10, 6) for high precision, standard monetary fields use numeric(10, 2)
+- [01-02]: General disclaimer appears BEFORE calculation output area (FOUND-04 requirement)
 
 ### Pending Todos
 
@@ -60,9 +63,10 @@ None yet.
 - [Research]: KBB/Edmunds have no public API docs -- B2B partnership may be required for Phase 4 valuation integration
 - [Research]: Manufacturer-specific early termination formulas differ by lender -- Phase 1 engine should use generic method with strong disclaimers
 - [Research]: State/local tax database scope is large (50 states + municipalities) -- consider starting with top 15 states in Phase 1
+- [01-02]: DATABASE_URL environment variable required before migrations can run (Neon signup needed)
 
 ## Session Continuity
 
-Last session: 2026-01-29 14:38 UTC
-Stopped at: Completed 01-01-PLAN.md (Foundation Scaffold)
+Last session: 2026-01-29 14:45 UTC
+Stopped at: Completed 01-02-PLAN.md (Database Schema and Disclaimers)
 Resume file: None
