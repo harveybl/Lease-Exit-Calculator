@@ -52,10 +52,11 @@ Plans: 4/4 complete (02-01 ✓, 02-02 ✓, 02-03 ✓, 02-04 ✓)
   3. The best option is visually highlighted with a short explanation of why it wins (e.g., "Selling privately saves $2,400 vs. returning because your vehicle has positive equity")
   4. A "snapshot" summary answers "what is the best move today?" in a single glance without scrolling
 
-Plans: 3 plans
+Plans: 4 plans
 - [ ] 03-01-PLAN.md -- Calculation orchestrator + currency formatting utility + shadcn component installs
-- [ ] 03-02-PLAN.md -- Comparison UI components (HeroSummary, OptionsList, OptionCard, LineItemsBreakdown, ComparisonView)
-- [ ] 03-03-PLAN.md -- Comparison page route, LeaseCard navigation, and visual verification
+- [ ] 03-02-PLAN.md -- Leaf UI components (LineItemsBreakdown, OptionCard)
+- [ ] 03-03-PLAN.md -- Orchestrator UI components (HeroSummary, OptionsList, ComparisonView)
+- [ ] 03-04-PLAN.md -- Comparison page route, LeaseCard navigation, and visual verification
 
 ### Phase 4: Market Value and Valuation
 **Goal**: A user can record their vehicle's current market value with a prominent manual entry flow, and the system architecture supports future API integration without code changes to the comparison view.
@@ -112,7 +113,7 @@ Plans: TBD
 |-------|---------------|--------|-----------|
 | 1. Foundation and Calculation Engine | 6/6 | ✓ Complete | 2026-01-29 |
 | 2. Lease Entry and Core UI | 4/4 | ✓ Complete | 2026-01-29 |
-| 3. Comparison View | 0/3 | Planned | - |
+| 3. Comparison View | 0/4 | Planned | - |
 | 4. Market Value and Valuation | 0/TBD | Not started | - |
 | 5. Authentication and Multi-Lease | 0/TBD | Not started | - |
 | 6. Timeline and Smart Recommendations | 0/TBD | Not started | - |
