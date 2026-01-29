@@ -1,3 +1,84 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    /* Warm, approachable color palette inspired by Stripe/Robinhood */
+    --background: 28 20% 98%; /* warm off-white */
+    --foreground: 28 10% 10%; /* warm dark text */
+
+    --card: 28 20% 99%; /* slightly lighter warm tone */
+    --card-foreground: 28 10% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 28 10% 10%;
+
+    --primary: 195 85% 45%; /* warm teal - trustworthy but friendly */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 28 30% 94%; /* warm neutral secondary */
+    --secondary-foreground: 28 10% 20%;
+
+    --muted: 28 20% 92%; /* soft warm gray */
+    --muted-foreground: 28 10% 40%;
+
+    --accent: 28 30% 90%; /* accent areas */
+    --accent-foreground: 28 10% 20%;
+
+    --destructive: 0 75% 55%; /* warm red - not harsh */
+    --destructive-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%; /* amber/yellow for unusual-but-valid warnings */
+    --warning-foreground: 28 10% 10%;
+
+    --border: 28 20% 88%; /* soft warm gray border */
+    --input: 28 20% 88%;
+    --ring: 195 85% 45%; /* matches primary */
+
+    --radius: 0.75rem; /* rounded-xl default for cards */
+  }
+
+  .dark {
+    --background: 28 10% 10%; /* warm dark background */
+    --foreground: 28 5% 95%;
+
+    --card: 28 10% 12%;
+    --card-foreground: 28 5% 95%;
+
+    --popover: 28 10% 10%;
+    --popover-foreground: 28 5% 95%;
+
+    --primary: 195 75% 55%; /* slightly lighter teal for dark mode */
+    --primary-foreground: 28 10% 10%;
+
+    --secondary: 28 10% 18%;
+    --secondary-foreground: 28 5% 90%;
+
+    --muted: 28 10% 18%;
+    --muted-foreground: 28 5% 60%;
+
+    --accent: 28 10% 20%;
+    --accent-foreground: 28 5% 90%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 28 5% 95%;
+
+    --warning: 38 85% 55%;
+    --warning-foreground: 28 10% 10%;
+
+    --border: 28 10% 20%;
+    --input: 28 10% 20%;
+    --ring: 195 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
