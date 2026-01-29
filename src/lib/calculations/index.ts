@@ -12,5 +12,6 @@ export { calculateTotalCost } from './total-cost';
 export { moneyFactorToAPR, aprToMoneyFactor } from './utils';
 export { projectMileage } from './mileage';
 export { calculateEquity } from './equity';
-export { calculateTax } from './tax';
+export { calculateLeaseTax } from './tax';
+export { getStateTaxRule, STATE_TAX_RULES } from './tax-rules';
 export * from './scenarios';

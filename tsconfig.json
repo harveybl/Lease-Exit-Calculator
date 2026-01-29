@@ -6,6 +6,9 @@
       "DOM",
       "DOM.Iterable"
     ],
+    "types": [
+      "vitest/globals"
+    ],
     "jsx": "react-jsx",
     "module": "esnext",
     "moduleResolution": "bundler",
