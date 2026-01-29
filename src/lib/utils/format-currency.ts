@@ -13,16 +13,18 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
 });
 
 /**
- * Converts a Decimal value to a localized USD currency string.
+ * Converts a monetary value to a localized USD currency string.
  *
- * Number conversion happens here at the display boundary — all upstream
- * calculations use Decimal for precision.
+ * Accepts Decimal (server-side), number, or string (after RSC serialization).
+ * Decimal.toJSON() returns a string, so client components receive strings
+ * for Decimal fields when data crosses the server/client boundary.
  *
- * @param value - A Decimal amount
+ * @param value - A Decimal, number, or string amount
  * @returns Formatted string like "$1,234.56"
  */
-export function formatCurrency(value: Decimal): string {
-  return currencyFormatter.format(value.toNumber());
+export function formatCurrency(value: Decimal | number | string): string {
+  const num = value instanceof Decimal ? value.toNumber() : Number(value);
+  return currencyFormatter.format(num);
 }
 
 /**

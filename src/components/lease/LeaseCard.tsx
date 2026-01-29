@@ -68,7 +68,7 @@ export function LeaseCard({ lease }: LeaseCardProps) {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
             <div>
               <p className="text-muted-foreground">Monthly Payment</p>
-              <p className="font-medium">${lease.monthlyPayment.toFixed(2)}</p>
+              <p className="font-medium">${Number(lease.monthlyPayment).toFixed(2)}</p>
             </div>
             <div>
               <p className="text-muted-foreground">Lease Term</p>

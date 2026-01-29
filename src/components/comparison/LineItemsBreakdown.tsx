@@ -35,7 +35,7 @@ const displayOrder: CategoryKey[] = [
 
 interface LineItemsBreakdownProps {
   lineItems: LineItem[];
-  netCost: Decimal;
+  netCost: Decimal | string | number;
 }
 
 export function LineItemsBreakdown({
