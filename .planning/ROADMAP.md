@@ -7,7 +7,7 @@ This roadmap delivers a vehicle lease exit-option comparison tool in seven phase
 ## Phases
 
 - [x] **Phase 1: Foundation and Calculation Engine** - Scaffold the project and build the pure-function financial engine that powers every feature (6/6 plans complete)
-- [ ] **Phase 2: Lease Entry and Core UI** - Guided forms for capturing lease data with progressive disclosure and educational tooltips
+- [x] **Phase 2: Lease Entry and Core UI** - Guided forms for capturing lease data with progressive disclosure and educational tooltips (4/4 plans complete)
 - [ ] **Phase 3: Comparison View** - Side-by-side five-option comparison with cost breakdowns and a recommended best option
 - [ ] **Phase 4: Market Value and Valuation** - Manual market value entry with service abstraction for future API integration
 - [ ] **Phase 5: Authentication and Multi-Lease** - User accounts via Clerk with multi-lease support and cross-device persistence
@@ -40,12 +40,7 @@ Plans: 6/6 complete (01-01 ✓, 01-02 ✓, 01-03 ✓, 01-04 ✓, 01-05 ✓, 01-0
   4. A saved lease persists across browser sessions (page refresh, close and reopen) and can be edited or deleted
   5. Current mileage entries are date-stamped so the system can project future mileage accurately
 
-**Plans:** 4 plans
-Plans:
-- [ ] 02-01-PLAN.md -- Install deps, init shadcn/ui with warm theme, create Zod schema and tooltip content
-- [ ] 02-02-PLAN.md -- Build form components: FieldTooltip, auto-save hook, LeaseEntryForm with progressive disclosure
-- [ ] 02-03-PLAN.md -- Server actions for CRUD, page routes (new/edit/list), wire form to database
-- [ ] 02-04-PLAN.md -- Visual verification of complete lease entry flow
+Plans: 4/4 complete (02-01 ✓, 02-02 ✓, 02-03 ✓, 02-04 ✓)
 
 ### Phase 3: Comparison View
 **Goal**: A user with a saved lease sees all five exit options side-by-side with transparent cost breakdowns and a clear recommendation for the best move today.
@@ -113,7 +108,7 @@ Plans: TBD
 | Phase | Plans Complete | Status | Completed |
 |-------|---------------|--------|-----------|
 | 1. Foundation and Calculation Engine | 6/6 | ✓ Complete | 2026-01-29 |
-| 2. Lease Entry and Core UI | 0/4 | Planned | - |
+| 2. Lease Entry and Core UI | 4/4 | ✓ Complete | 2026-01-29 |
 | 3. Comparison View | 0/TBD | Not started | - |
 | 4. Market Value and Valuation | 0/TBD | Not started | - |
 | 5. Authentication and Multi-Lease | 0/TBD | Not started | - |

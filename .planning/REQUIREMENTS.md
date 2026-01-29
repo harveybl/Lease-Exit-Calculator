@@ -30,13 +30,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Lease Entry
 
-- [ ] **ENTRY-01**: User can enter vehicle lease details (monthly payment, residual value, buyout amount, term, mileage allowance, disposition fee)
-- [ ] **ENTRY-02**: Guided entry with progressive disclosure (5 essential fields first, then refinements)
-- [ ] **ENTRY-03**: Educational tooltips explain confusing terms (residual, money factor, disposition fee, cap cost)
-- [ ] **ENTRY-04**: Zod validation shared between client and server with clear error messages
-- [ ] **ENTRY-05**: Lease data persisted to Postgres via Drizzle ORM (survives sessions)
-- [ ] **ENTRY-06**: User can edit and delete existing lease records
-- [ ] **ENTRY-07**: Current mileage tracking with date stamping for projection accuracy
+- [x] **ENTRY-01**: User can enter vehicle lease details (monthly payment, residual value, buyout amount, term, mileage allowance, disposition fee)
+- [x] **ENTRY-02**: Guided entry with progressive disclosure (5 essential fields first, then refinements)
+- [x] **ENTRY-03**: Educational tooltips explain confusing terms (residual, money factor, disposition fee, cap cost)
+- [x] **ENTRY-04**: Zod validation shared between client and server with clear error messages
+- [x] **ENTRY-05**: Lease data persisted to Postgres via Drizzle ORM (survives sessions)
+- [x] **ENTRY-06**: User can edit and delete existing lease records
+- [x] **ENTRY-07**: Current mileage tracking with date stamping for projection accuracy
 
 ### Comparison
 
