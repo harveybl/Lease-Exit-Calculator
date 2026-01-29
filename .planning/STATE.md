@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-28)
 
 **Core value:** Show the user the smartest financial move for their vehicle lease right now, and when a better window might open up.
-**Current focus:** Phase 2 complete — ready for Phase 3
+**Current focus:** Phase 3 in progress — Comparison View
 
 ## Current Position
 
-Phase: 2 of 7 (Lease Entry and Core UI)
-Plan: 4 of 4 in current phase
-Status: Phase complete, pending verification
-Last activity: 2026-01-29 -- Completed 02-04-PLAN.md (Visual Verification)
+Phase: 3 of 7 (Comparison View)
+Plan: 1 of 4 in current phase
+Status: In progress
+Last activity: 2026-01-29 -- Completed 03-01-PLAN.md (Comparison Data Layer)
 
-Progress: [██████████] 10/10 plans (100%)
+Progress: [███████████░░░] 11/14 plans (79%)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
-- Average duration: 4m 39s
-- Total execution time: 49m 11s
+- Total plans completed: 11
+- Average duration: 4m 21s
+- Total execution time: 51m 11s
 
 **By Phase:**
 
@@ -29,10 +29,11 @@ Progress: [██████████] 10/10 plans (100%)
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 26m 39s | 4m 27s |
 | 2. Lease Entry and Core UI | 4/4 | 22m 32s | 5m 38s |
+| 3. Comparison View | 1/4 | 2m 0s | 2m 0s |
 
 **Recent Trend:**
-- Last 5 plans: 01-06 (6m 0s), 02-01 (5m 32s), 02-02 (4m 45s), 02-03 (4m 15s), 02-04 (8m 0s)
-- Trend: UI plans slightly longer due to CSS debugging and visual verification
+- Last 5 plans: 02-01 (5m 32s), 02-02 (4m 45s), 02-03 (4m 15s), 02-04 (8m 0s), 03-01 (2m 0s)
+- Trend: Data-only plans execute faster than UI plans
 
 *Updated after each plan completion*
 
@@ -82,6 +83,10 @@ Recent decisions affecting current work:
 - [02-03]: Create redirects to list, edit shows inline success (different UX patterns for different workflows)
 - [02-04]: Tailwind CSS v4 requires @import "tailwindcss" + @theme inline (NOT @tailwind directives)
 - [02-04]: tailwindcss-animate plugin required for shadcn/ui component animations
+- [03-01]: Module-level Intl.NumberFormat singleton reused for formatCurrency performance
+- [03-01]: Tie threshold is $100 absolute difference between top two ranked options
+- [03-01]: estimatedSalePrice defaults to residualValue until Phase 4 adds market value entry
+- [03-01]: Return scenario is always the baseline for savings comparison (default lessee action)
 
 ### Pending Todos
 
@@ -96,8 +101,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-29 17:50 UTC
-Stopped at: Completed Phase 2 (Lease Entry and Core UI) with 02-04-PLAN.md
+Last session: 2026-01-29 21:51 UTC
+Stopped at: Completed 03-01-PLAN.md (Comparison Data Layer)
 Resume file: None
 
-**Phase 2 complete:** All 4 plans executed. Lease entry form with educational tooltips, progressive disclosure, auto-save, Zod validation, server actions, CRUD routes, and warm visual design verified working. Critical Tailwind CSS v4 compatibility fix applied during visual verification.
+**Phase 3 in progress:** Plan 1 of 4 complete. Data layer (evaluateAllScenarios, formatCurrency, shadcn components) ready for comparison UI construction in plans 02-04.
