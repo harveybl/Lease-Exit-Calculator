@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import type { Lease } from "@/lib/db/schema";
 import { deleteLease } from "@/app/lease/actions";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash2 } from "lucide-react";
+import { BarChart3, Edit, Trash2 } from "lucide-react";
 
 interface LeaseCardProps {
   lease: Lease;
@@ -83,6 +83,12 @@ export function LeaseCard({ lease }: LeaseCardProps) {
 
         {/* Actions */}
         <div className="flex flex-col gap-2">
+          <Button asChild variant="default" size="sm">
+            <Link href={`/lease/${lease.id}/compare`}>
+              <BarChart3 className="h-4 w-4 mr-2" />
+              Compare Options
+            </Link>
+          </Button>
           <Button asChild variant="outline" size="sm">
             <Link href={`/lease/${lease.id}/edit`}>
               <Edit className="h-4 w-4 mr-2" />
