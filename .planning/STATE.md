@@ -10,29 +10,29 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 2 of 7 (Lease Entry and Core UI)
-Plan: 2 of 4 in current phase
+Plan: 3 of 4 in current phase
 Status: In progress
-Last activity: 2026-01-29 -- Completed 02-02-PLAN.md (Form Components and Progressive Disclosure)
+Last activity: 2026-01-29 -- Completed 02-03-PLAN.md (Database Integration and CRUD Routes)
 
-Progress: [████████░░] 8/10 plans (80%)
+Progress: [█████████░] 9/10 plans (90%)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
-- Average duration: 4m 37s
-- Total execution time: 36m 56s
+- Total plans completed: 9
+- Average duration: 4m 33s
+- Total execution time: 41m 11s
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 26m 39s | 4m 27s |
-| 2. Lease Entry and Core UI | 2/4 | 10m 17s | 5m 9s |
+| 2. Lease Entry and Core UI | 3/4 | 14m 32s | 4m 51s |
 
 **Recent Trend:**
-- Last 5 plans: 01-04 (4m 31s), 01-05 (4m 27s), 01-06 (6m 0s), 02-01 (5m 32s), 02-02 (4m 45s)
-- Trend: Stable around 4-6 minutes per plan (setup/dependency plans at higher end)
+- Last 5 plans: 01-05 (4m 27s), 01-06 (6m 0s), 02-01 (5m 32s), 02-02 (4m 45s), 02-03 (4m 15s)
+- Trend: Stable around 4-6 minutes per plan (faster for execution plans, slower for setup plans)
 
 *Updated after each plan completion*
 
@@ -74,6 +74,12 @@ Recent decisions affecting current work:
 - [02-02]: Empty string defaults for required number fields, coerced by Zod
 - [02-02]: Absolute positioned prefix/suffix labels within input containers for clean layout
 - [02-02]: Warning check on form.watch subscription for immediate feedback
+- [02-03]: Optional fields store NULL in database (not empty strings or zero) - NULL means "not provided"
+- [02-03]: Server actions use same Zod schema as client for double validation (never trust client input)
+- [02-03]: Mileage date only updates when currentMileage value changes (tracks measurement, not save)
+- [02-03]: Edit mode skips localStorage draft restore (initialData is source of truth)
+- [02-03]: Delete requires two clicks with visual confirmation (prevents accidental deletion)
+- [02-03]: Create redirects to list, edit shows inline success (different UX patterns for different workflows)
 
 ### Pending Todos
 
@@ -88,8 +94,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-29 17:22 UTC
-Stopped at: Completed 02-02-PLAN.md (Form Components and Progressive Disclosure)
+Last session: 2026-01-29 17:35 UTC
+Stopped at: Completed 02-03-PLAN.md (Database Integration and CRUD Routes)
 Resume file: None
 
-**Phase 2 progress:** Plan 02-02 complete. Full lease entry form with FieldTooltip component, auto-save hook, 5 essential fields, 15 optional fields in progressive disclosure section, and hybrid validation. Ready for server actions and database integration in Plan 02-03.
+**Phase 2 progress:** Plan 02-03 complete. Full CRUD cycle working: server actions for create/read/update/delete with Zod validation and Decimal mapping, page routes (new/edit/list), nullable optional fields in DB schema, LeaseCard component with delete confirmation, and updated home page with CTAs. Users can now create leases, edit existing leases, view lease list, and delete leases. Data persists across sessions (once DATABASE_URL is set). Ready for comparison view in Plan 02-04.
