@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 3 of 7 (Comparison View)
-Plan: 1 of 4 in current phase
+Plan: 2 of 4 in current phase
 Status: In progress
-Last activity: 2026-01-29 -- Completed 03-01-PLAN.md (Comparison Data Layer)
+Last activity: 2026-01-29 -- Completed 03-02-PLAN.md (Comparison Leaf Components)
 
-Progress: [███████████░░░] 11/14 plans (79%)
+Progress: [████████████░░] 12/14 plans (86%)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
-- Average duration: 4m 21s
-- Total execution time: 51m 11s
+- Total plans completed: 12
+- Average duration: 4m 5s
+- Total execution time: 52m 11s
 
 **By Phase:**
 
@@ -29,11 +29,11 @@ Progress: [███████████░░░] 11/14 plans (79%)
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 26m 39s | 4m 27s |
 | 2. Lease Entry and Core UI | 4/4 | 22m 32s | 5m 38s |
-| 3. Comparison View | 1/4 | 2m 0s | 2m 0s |
+| 3. Comparison View | 2/4 | 3m 0s | 1m 30s |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (5m 32s), 02-02 (4m 45s), 02-03 (4m 15s), 02-04 (8m 0s), 03-01 (2m 0s)
-- Trend: Data-only plans execute faster than UI plans
+- Last 5 plans: 02-02 (4m 45s), 02-03 (4m 15s), 02-04 (8m 0s), 03-01 (2m 0s), 03-02 (1m 0s)
+- Trend: Leaf component plans with clear type foundations execute very fast
 
 *Updated after each plan completion*
 
@@ -87,6 +87,10 @@ Recent decisions affecting current work:
 - [03-01]: Tie threshold is $100 absolute difference between top two ranked options
 - [03-01]: estimatedSalePrice defaults to residualValue until Phase 4 adds market value entry
 - [03-01]: Return scenario is always the baseline for savings comparison (default lessee action)
+- [03-02]: Popover with Info icon for line item educational descriptions (consistent with Phase 2 Popover decision)
+- [03-02]: Collapsible (not Accordion) for independent expand/collapse per option card
+- [03-02]: Green text for credits always paired with "You receive:" prefix for color-blind accessibility
+- [03-02]: Category display order: liability, fee, tax, asset, other (costs before credits)
 
 ### Pending Todos
 
@@ -101,8 +105,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-29 21:51 UTC
-Stopped at: Completed 03-01-PLAN.md (Comparison Data Layer)
+Last session: 2026-01-29 21:55 UTC
+Stopped at: Completed 03-02-PLAN.md (Comparison Leaf Components)
 Resume file: None
 
-**Phase 3 in progress:** Plan 1 of 4 complete. Data layer (evaluateAllScenarios, formatCurrency, shadcn components) ready for comparison UI construction in plans 02-04.
+**Phase 3 in progress:** Plan 2 of 4 complete. Data layer and leaf components (LineItemsBreakdown, OptionCard) ready for orchestrator components (HeroSummary, OptionsList) in plan 03 and full page assembly in plan 04.
