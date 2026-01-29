@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 2 of 7 (Lease Entry and Core UI)
-Plan: 1 of 4 in current phase
+Plan: 2 of 4 in current phase
 Status: In progress
-Last activity: 2026-01-29 -- Completed 02-01-PLAN.md (UI Foundation and Validation)
+Last activity: 2026-01-29 -- Completed 02-02-PLAN.md (Form Components and Progressive Disclosure)
 
-Progress: [███████░░░] 7/10 plans (70%)
+Progress: [████████░░] 8/10 plans (80%)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
-- Average duration: 4m 30s
-- Total execution time: 32m 11s
+- Total plans completed: 8
+- Average duration: 4m 37s
+- Total execution time: 36m 56s
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 26m 39s | 4m 27s |
-| 2. Lease Entry and Core UI | 1/4 | 5m 32s | 5m 32s |
+| 2. Lease Entry and Core UI | 2/4 | 10m 17s | 5m 9s |
 
 **Recent Trend:**
-- Last 5 plans: 01-03 (5m 45s), 01-04 (4m 31s), 01-05 (4m 27s), 01-06 (6m 0s), 02-01 (5m 32s)
+- Last 5 plans: 01-04 (4m 31s), 01-05 (4m 27s), 01-06 (6m 0s), 02-01 (5m 32s), 02-02 (4m 45s)
 - Trend: Stable around 4-6 minutes per plan (setup/dependency plans at higher end)
 
 *Updated after each plan completion*
@@ -69,6 +69,11 @@ Recent decisions affecting current work:
 - [02-01]: Separate warning function (checkLeaseWarnings) for non-blocking unusual-value warnings
 - [02-01]: z.coerce for all numeric/date fields to simplify form handling
 - [02-01]: Tooltip content includes 'whereToFind' guidance for lease paperwork navigation
+- [02-02]: Popover (not Tooltip) for educational content with rich formatting and interactive links
+- [02-02]: useWatch for optional field tracking instead of form.watch() for performance
+- [02-02]: Empty string defaults for required number fields, coerced by Zod
+- [02-02]: Absolute positioned prefix/suffix labels within input containers for clean layout
+- [02-02]: Warning check on form.watch subscription for immediate feedback
 
 ### Pending Todos
 
@@ -83,8 +88,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-29 17:17 UTC
-Stopped at: Completed 02-01-PLAN.md (UI Foundation and Validation)
+Last session: 2026-01-29 17:22 UTC
+Stopped at: Completed 02-02-PLAN.md (Form Components and Progressive Disclosure)
 Resume file: None
 
-**Phase 2 started:** Plan 02-01 complete. shadcn/ui initialized, Zod schema and tooltip content ready for form construction.
+**Phase 2 progress:** Plan 02-02 complete. Full lease entry form with FieldTooltip component, auto-save hook, 5 essential fields, 15 optional fields in progressive disclosure section, and hybrid validation. Ready for server actions and database integration in Plan 02-03.
