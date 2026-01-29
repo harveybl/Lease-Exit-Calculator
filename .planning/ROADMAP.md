@@ -6,7 +6,7 @@ This roadmap delivers a vehicle lease exit-option comparison tool in seven phase
 
 ## Phases
 
-- [ ] **Phase 1: Foundation and Calculation Engine** - Scaffold the project and build the pure-function financial engine that powers every feature (1/6 plans complete)
+- [x] **Phase 1: Foundation and Calculation Engine** - Scaffold the project and build the pure-function financial engine that powers every feature (6/6 plans complete)
 - [ ] **Phase 2: Lease Entry and Core UI** - Guided forms for capturing lease data with progressive disclosure and educational tooltips
 - [ ] **Phase 3: Comparison View** - Side-by-side five-option comparison with cost breakdowns and a recommended best option
 - [ ] **Phase 4: Market Value and Valuation** - Manual market value entry with service abstraction for future API integration
@@ -27,7 +27,7 @@ This roadmap delivers a vehicle lease exit-option comparison tool in seven phase
   4. Tax calculation accepts a state identifier and correctly distinguishes upfront-tax states, monthly-tax states, and no-tax states
   5. Legal disclaimer copy exists and is rendered before any calculation output in the UI shell
 
-Plans: 1/6 complete (01-01 ✓)
+Plans: 6/6 complete (01-01 ✓, 01-02 ✓, 01-03 ✓, 01-04 ✓, 01-05 ✓, 01-06 ✓)
 
 ### Phase 2: Lease Entry and Core UI
 **Goal**: A user can enter their complete lease details through a guided form that explains confusing terms, validates input, and persists data to the database.
@@ -107,7 +107,7 @@ Plans: TBD
 
 | Phase | Plans Complete | Status | Completed |
 |-------|---------------|--------|-----------|
-| 1. Foundation and Calculation Engine | 1/6 | In progress | 2026-01-29 (01-01) |
+| 1. Foundation and Calculation Engine | 6/6 | ✓ Complete | 2026-01-29 |
 | 2. Lease Entry and Core UI | 0/TBD | Not started | - |
 | 3. Comparison View | 0/TBD | Not started | - |
 | 4. Market Value and Valuation | 0/TBD | Not started | - |
