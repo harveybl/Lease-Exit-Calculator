@@ -1,8 +1,15 @@
+import { LegalDisclaimer } from '@/components/disclaimers/LegalDisclaimer';
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">Lease Tracker</h1>
-      <p className="mt-4 text-lg">Vehicle lease exit option comparison tool</p>
+    <main className="mx-auto max-w-4xl px-4 py-8">
+      <h1 className="mb-6 text-3xl font-bold">Lease Tracker</h1>
+      <LegalDisclaimer types={['general']} />
+      <section className="mt-8">
+        <p className="text-gray-600">
+          Calculation results will appear here.
+        </p>
+      </section>
     </main>
   );
 }
