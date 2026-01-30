@@ -6,23 +6,27 @@ import type { Lease } from '@/lib/db/schema';
 function createMockLease(overrides: Partial<Lease> = {}): Lease {
   return {
     id: 'test-lease-1',
-    userId: 'test-user',
-    vehicleMake: 'Toyota',
-    vehicleModel: 'Camry',
-    vehicleYear: 2023,
-    vin: null,
+    make: 'Toyota',
+    model: 'Camry',
+    year: 2023,
+    msrp: new Decimal('35000'),
     residualValue: new Decimal('18000'),
+    residualPercent: new Decimal('51.43'),
     monthlyPayment: new Decimal('400'),
     termMonths: 36,
     monthsElapsed: 36,
     allowedMilesPerYear: 12000,
     currentMileage: 36000,
+    mileageDate: new Date(),
     overageFeePerMile: new Decimal('0.25'),
     dispositionFee: new Decimal('395'),
     purchaseFee: new Decimal('300'),
+    downPayment: null,
     stateCode: 'CA',
     netCapCost: new Decimal('30000'),
     moneyFactor: new Decimal('0.00125'),
+    startDate: null,
+    endDate: null,
     createdAt: new Date(),
     updatedAt: new Date(),
     ...overrides,
@@ -41,6 +45,7 @@ describe('evaluateAllScenarios', () => {
 
       const sellPrivately = scenarios.find(s => s.type === 'sell-privately')!;
       expect(sellPrivately).toBeDefined();
+      expect(sellPrivately.type).toBe('sell-privately');
 
       // Verify it used the estimatedSalePrice (not residualValue)
       // When using estimatedSalePrice of 22000, net proceeds should be positive
@@ -48,11 +53,10 @@ describe('evaluateAllScenarios', () => {
       expect(sellPrivately.incomplete).toBeUndefined();
       expect(sellPrivately.warnings.some(w => w.includes('market value'))).toBe(false);
 
-      // Type guard to access SellPrivatelyResult specific fields
-      if (sellPrivately.type === 'sell-privately') {
-        expect(sellPrivately.estimatedSalePrice.toNumber()).toBe(22000);
-        expect(sellPrivately.netProceeds.greaterThan(0)).toBe(true);
-      }
+      // Type assertion to access SellPrivatelyResult specific fields
+      const sellResult = sellPrivately as import('@/lib/types/scenario').SellPrivatelyResult;
+      expect(sellResult.estimatedSalePrice.toNumber()).toBe(22000);
+      expect(sellResult.netProceeds.greaterThan(0)).toBe(true);
     });
 
     it('should not mark sell-privately as incomplete when market value is provided', () => {

@@ -21,6 +21,8 @@ export interface ComparisonData {
   returnOption: ScenarioResult;
   savingsVsReturn: Decimal;
   tie: { isTie: boolean; tiedOptions: ScenarioType[] };
+  hasMarketValue: boolean;
+  equity?: { amount: Decimal; isPositive: boolean };
 }
 
 /**
@@ -30,9 +32,13 @@ export interface ComparisonData {
  * Maps nullable DB fields to sensible defaults, then calls each scenario evaluator.
  *
  * @param lease - A lease record from the database
+ * @param estimatedSalePrice - Optional market value for sell-privately scenario
  * @returns All five ScenarioResult objects sorted by netCost ascending (cheapest first)
  */
-export function evaluateAllScenarios(lease: Lease): ScenarioResult[] {
+export function evaluateAllScenarios(
+  lease: Lease,
+  estimatedSalePrice?: Decimal
+): ScenarioResult[] {
   // Map nullable DB fields to safe defaults
   const dispositionFee = lease.dispositionFee ?? new Decimal('0');
   const purchaseFee = lease.purchaseFee ?? new Decimal('0');
@@ -42,9 +48,6 @@ export function evaluateAllScenarios(lease: Lease): ScenarioResult[] {
   const stateCode = lease.stateCode ?? 'CA';
   const netCapCost = lease.netCapCost ?? lease.residualValue;
   const moneyFactor = lease.moneyFactor ?? new Decimal('0.001');
-
-  // Phase 4 will add market value entry; using residual as placeholder
-  const estimatedSalePrice = lease.residualValue;
 
   const extensionMonths = 6; // Common extension period default
   const monthlyTax = new Decimal('0'); // Simplified; full tax calc is already in each scenario
@@ -65,20 +68,37 @@ export function evaluateAllScenarios(lease: Lease): ScenarioResult[] {
 
   const buyoutResult = evaluateBuyoutScenario({
     residualValue: lease.residualValue,
+    netCapCost,
+    moneyFactor,
     monthlyPayment: lease.monthlyPayment,
-    monthsRemaining,
+    termMonths: lease.termMonths,
+    monthsElapsed,
     purchaseFee,
     stateCode,
   });
 
+  // Use provided market value or fallback to residualValue as conservative placeholder
+  const salePrice = estimatedSalePrice ?? lease.residualValue;
+
   const sellPrivatelyResult = evaluateSellPrivatelyScenario({
-    estimatedSalePrice,
+    estimatedSalePrice: salePrice,
     residualValue: lease.residualValue,
+    netCapCost,
+    moneyFactor,
     monthlyPayment: lease.monthlyPayment,
-    monthsRemaining,
+    termMonths: lease.termMonths,
+    monthsElapsed,
     purchaseFee,
     stateCode,
   });
+
+  // Mark sell-privately as incomplete if no market value provided
+  if (!estimatedSalePrice) {
+    sellPrivatelyResult.incomplete = true;
+    sellPrivatelyResult.warnings.push(
+      'Add your vehicle\'s market value for accurate sell-privately results'
+    );
+  }
 
   const earlyTerminationResult = evaluateEarlyTerminationScenario({
     netCapCost,
@@ -97,14 +117,20 @@ export function evaluateAllScenarios(lease: Lease): ScenarioResult[] {
     monthlyTax,
   });
 
-  // Sort all results by netCost ascending (cheapest first)
+  // Sort all results: complete scenarios by netCost ascending, incomplete last
   const scenarios: ScenarioResult[] = [
     returnResult,
     buyoutResult,
     sellPrivatelyResult,
     earlyTerminationResult,
     extensionResult,
-  ].sort((a, b) => a.netCost.comparedTo(b.netCost));
+  ].sort((a, b) => {
+    // Incomplete scenarios always sort last
+    if (a.incomplete && !b.incomplete) return 1;
+    if (!a.incomplete && b.incomplete) return -1;
+    // Both complete or both incomplete: sort by netCost
+    return a.netCost.comparedTo(b.netCost);
+  });
 
   return scenarios;
 }
@@ -145,11 +171,17 @@ export function checkForTie(
  * into a single ComparisonData object.
  *
  * @param lease - A lease record from the database
+ * @param estimatedSalePrice - Optional market value for sell-privately scenario
  * @returns ComparisonData with sorted scenarios, best option, return baseline, savings, and tie info
  */
-export function getComparisonData(lease: Lease): ComparisonData {
-  const scenarios = evaluateAllScenarios(lease);
-  const bestOption = scenarios[0];
+export function getComparisonData(
+  lease: Lease,
+  estimatedSalePrice?: Decimal
+): ComparisonData {
+  const scenarios = evaluateAllScenarios(lease, estimatedSalePrice);
+
+  // Best option is first non-incomplete scenario
+  const bestOption = scenarios.find((s) => !s.incomplete) ?? scenarios[0];
 
   // Return is always present -- find it for baseline comparison
   const returnOption = scenarios.find((s) => s.type === 'return')!;
@@ -158,7 +190,22 @@ export function getComparisonData(lease: Lease): ComparisonData {
   // Positive = best option saves money vs return; zero or negative = return is already best
   const savingsVsReturn = returnOption.netCost.minus(bestOption.netCost);
 
-  const tie = checkForTie(scenarios);
+  const tie = checkForTie(scenarios.filter((s) => !s.incomplete));
+
+  // Equity calculation when market value is provided
+  const hasMarketValue = estimatedSalePrice !== undefined;
+  let equity: { amount: Decimal; isPositive: boolean } | undefined;
+
+  if (hasMarketValue && estimatedSalePrice) {
+    const buyoutResult = scenarios.find((s) => s.type === 'buyout')!;
+    if (buyoutResult.type === 'buyout') {
+      const equityAmount = estimatedSalePrice.minus(buyoutResult.totalCost);
+      equity = {
+        amount: equityAmount,
+        isPositive: equityAmount.greaterThan(0),
+      };
+    }
+  }
 
   return {
     scenarios,
@@ -166,5 +213,7 @@ export function getComparisonData(lease: Lease): ComparisonData {
     returnOption,
     savingsVsReturn,
     tie,
+    hasMarketValue,
+    equity,
   };
 }

@@ -10,6 +10,7 @@ export interface ScenarioResult {
   lineItems: LineItem[];
   warnings: string[];
   disclaimers: string[];
+  incomplete?: boolean;
 }
 
 export interface ReturnScenarioResult extends ScenarioResult {
@@ -22,7 +23,8 @@ export interface ReturnScenarioResult extends ScenarioResult {
 export interface BuyoutScenarioResult extends ScenarioResult {
   type: 'buyout';
   residualValue: Decimal;
-  remainingPayments: Decimal;
+  payoffAmount: Decimal;
+  remainingDepreciation: Decimal;
   purchaseFee: Decimal;
   salesTax: Decimal;
 }
