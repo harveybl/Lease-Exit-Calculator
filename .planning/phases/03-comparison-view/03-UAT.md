@@ -3,7 +3,7 @@ status: complete
 phase: 03-comparison-view
 source: [03-01-SUMMARY.md, 03-02-SUMMARY.md, 03-03-SUMMARY.md]
 started: 2026-01-29T23:00:00Z
-updated: 2026-01-30T00:15:00Z
+updated: 2026-01-30T00:30:00Z
 ---
 
 ## Current Test
@@ -70,4 +70,33 @@ skipped: 0
 
 ## Gaps
 
-[none]
+### Upstream Calculation Issues (Phase 1 engine, not Phase 3 UI)
+
+User tested with real lease data (2025 GMC Sierra EV) and identified calculation accuracy issues in the Phase 1 scenario evaluators. Phase 3 UI correctly displays whatever the engine produces -- these gaps belong to the calculation engine:
+
+- truth: "Buyout scenario should show the lender's mid-lease payoff amount, not Residual + ALL remaining payments"
+  status: failed
+  reason: "User reported: the buyout of 97k is not correct, that was the price at the purchase which was a year ago. that wouldnt be the buyout price today."
+  severity: major
+  test: user-review
+  root_cause: "evaluateBuyoutScenario adds residualValue + monthlyPayment*monthsRemaining, which is the total cash outlay to keep paying monthly and then buy at lease end. A mid-lease buyout payoff from the lender is approximately the remaining book value (cap cost - depreciation paid so far), which is less because remaining rent charges are partially or fully waived."
+  artifacts:
+    - path: "src/lib/calculations/scenarios/buyout.ts"
+      issue: "totalCost = residualValue + remainingPayments + purchaseFee + salesTax treats mid-lease buyout as end-of-lease buyout plus remaining payments"
+  missing:
+    - "Distinguish end-of-lease buyout (residual + fee + tax) vs mid-lease buyout (payoff amount + tax)"
+    - "Mid-lease payoff ≈ netCapCost - (depreciation/month × monthsElapsed) or user-entered lender quote"
+    - "Ideally allow user to enter their exact payoff quote from the lender"
+
+- truth: "Sell privately scenario should use correct mid-lease buyout payoff, not inflated amount"
+  status: failed
+  reason: "User reported: with the buyout not being correct, sell privately doesnt seem correct either since you need the current buyout price"
+  severity: major
+  test: user-review
+  root_cause: "evaluateSellPrivatelyScenario reuses the same inflated buyout calculation (residualValue + remainingPayments + purchaseFee + tax) as the payoff amount. The actual payoff to buy out and sell would be the lender's mid-lease payoff, not the full remaining payment stream plus residual."
+  artifacts:
+    - path: "src/lib/calculations/scenarios/sell-privately.ts"
+      issue: "payoffAmount calculation mirrors the inflated buyout formula"
+  missing:
+    - "Use corrected mid-lease payoff amount from buyout fix"
+    - "Phase 4 will replace estimatedSalePrice placeholder (currently defaults to residualValue)"
