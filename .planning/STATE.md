@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 
 ## Current Position
 
-Phase: 3 of 7 (Comparison View) — COMPLETE
-Plan: 4 of 4 in current phase — COMPLETE
-Status: Phase complete, verified
-Last activity: 2026-01-29 -- Completed Phase 3 (Comparison View) with browser verification
+Phase: 4 of 7 (Market Value and Valuation) — IN PROGRESS
+Plan: 1 of 5 in current phase — COMPLETE
+Status: In progress
+Last activity: 2026-01-30 -- Completed 04-01-PLAN.md (Market Value Data Layer)
 
-Progress: [██████████████] 14/14 plans (100% of phases 1-3)
+Progress: [███████████████] 15/19 plans (79% - phases 1-3 complete, phase 4 started)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 14
+- Total plans completed: 15
 - Average duration: ~3m 30s
-- Total execution time: ~57m
+- Total execution time: ~60m
 
 **By Phase:**
 
@@ -30,10 +30,11 @@ Progress: [██████████████] 14/14 plans (100% of phas
 | 1. Foundation | 6/6 | 26m 39s | 4m 27s |
 | 2. Lease Entry and Core UI | 4/4 | 22m 32s | 5m 38s |
 | 3. Comparison View | 4/4 | ~8m | ~2m |
+| 4. Market Value and Valuation | 1/5 | 3m | 3m |
 
 **Recent Trend:**
-- Last 5 plans: 02-04 (8m 0s), 03-01 (2m 0s), 03-02 (1m 0s), 03-03 (1m 7s), 03-04 (~4m)
-- Trend: Component composition plans with clear type foundations execute very fast
+- Last 5 plans: 03-01 (2m 0s), 03-02 (1m 0s), 03-03 (1m 7s), 03-04 (~4m), 04-01 (3m)
+- Trend: Data layer plans with clear patterns execute quickly
 
 *Updated after each plan completion*
 
@@ -95,6 +96,10 @@ Recent decisions affecting current work:
 - [03-03]: ComparisonView deduplicates disclaimers with Set for clean display
 - [03-03]: OptionsList preserves pre-sorted order from evaluate-all (no re-sorting)
 - [03-04]: RSC serialization boundary -- Decimal.toJSON() returns strings across server→client boundary; formatCurrency and LeaseCard accept Decimal | number | string
+- [04-01]: ValuationProvider interface pattern for swappable valuation sources (manual, KBB, Edmunds, Carvana)
+- [04-01]: 30-day staleness threshold for market value freshness detection
+- [04-01]: Native relative time formatting (no date-fns) for simple use cases reduces bundle size
+- [04-01]: Source stored as varchar(50) enum for flexibility with type safety
 
 ### Pending Todos
 
@@ -109,8 +114,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-29
-Stopped at: Completed Phase 3 (Comparison View) - all 4 plans executed, browser verified, verifier passed 4/4
+Last session: 2026-01-30
+Stopped at: Completed 04-01-PLAN.md (Market Value Data Layer)
 Resume file: None
 
-**Phase 3 complete.** Next phase: Phase 4 (Market Value and Valuation) needs planning.
+**Phase 4 in progress.** Next: 04-02 (Market Value Integration into Calculations)
