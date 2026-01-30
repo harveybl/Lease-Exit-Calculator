@@ -8,6 +8,7 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import { EquityDisplay } from "@/components/comparison/EquityDisplay";
 
 // ── Component ───────────────────────────────────────────────────────
 
@@ -75,6 +76,18 @@ export function HeroSummary({ data }: HeroSummaryProps) {
             </div>
           ))}
         </div>
+
+        {data.equity && (
+          <div className="mt-4">
+            <EquityDisplay equity={data.equity} />
+          </div>
+        )}
+
+        {!data.hasMarketValue && (
+          <p className="text-xs text-muted-foreground mt-3 text-center">
+            Some options are estimates — add your market value for complete results
+          </p>
+        )}
       </CardContent>
     </Card>
   );

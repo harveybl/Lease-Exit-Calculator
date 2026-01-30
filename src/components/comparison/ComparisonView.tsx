@@ -2,6 +2,8 @@ import type { ComparisonData } from "@/lib/calculations/evaluate-all";
 import type { MarketValue } from "@/lib/db/schema";
 import { HeroSummary } from "@/components/comparison/HeroSummary";
 import { OptionsList } from "@/components/comparison/OptionsList";
+import { MarketValueBanner } from "@/components/comparison/MarketValueBanner";
+import { MarketValueDisplay } from "@/components/comparison/MarketValueDisplay";
 
 // ── Component ───────────────────────────────────────────────────────
 
@@ -18,7 +20,12 @@ export function ComparisonView({ data, marketValue, leaseId }: ComparisonViewPro
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Market value display will be added in Plan 04 */}
+      {/* Market value entry/display - above hero summary */}
+      {marketValue ? (
+        <MarketValueDisplay leaseId={leaseId} marketValue={marketValue} />
+      ) : (
+        <MarketValueBanner leaseId={leaseId} />
+      )}
       <HeroSummary data={data} />
       <OptionsList scenarios={data.scenarios} />
 

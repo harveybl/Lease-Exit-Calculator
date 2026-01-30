@@ -25,18 +25,35 @@ interface OptionCardProps {
 
 export function OptionCard({ scenario, rank, isFirst }: OptionCardProps) {
   const [open, setOpen] = useState(false);
+  const isIncomplete = scenario.incomplete ?? false;
 
   return (
     <Card
-      className={cn(isFirst && "border-primary border-2")}
+      className={cn(
+        isFirst && "border-primary border-2",
+        isIncomplete && "opacity-60"
+      )}
     >
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Badge variant={rank === 1 ? "default" : "outline"}>
-              #{rank}
-            </Badge>
-            <CardTitle>{formatOptionName(scenario.type)}</CardTitle>
+            {isIncomplete ? (
+              <Badge variant="outline" className="bg-muted text-muted-foreground">
+                ?
+              </Badge>
+            ) : (
+              <Badge variant={rank === 1 ? "default" : "outline"}>
+                #{rank}
+              </Badge>
+            )}
+            <div>
+              <CardTitle>{formatOptionName(scenario.type)}</CardTitle>
+              {isIncomplete && (
+                <p className="text-xs text-muted-foreground mt-1">
+                  Needs market value
+                </p>
+              )}
+            </div>
           </div>
           <span className="text-xl font-bold tabular-nums">
             {formatCurrency(scenario.netCost)}
