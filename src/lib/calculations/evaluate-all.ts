@@ -196,7 +196,7 @@ export function getComparisonData(
   const hasMarketValue = estimatedSalePrice !== undefined;
   let equity: { amount: Decimal; isPositive: boolean } | undefined;
 
-  if (hasMarketValue && estimatedSalePrice) {
+  if (estimatedSalePrice) {
     const buyoutResult = scenarios.find((s) => s.type === 'buyout')!;
     if (buyoutResult.type === 'buyout') {
       const equityAmount = estimatedSalePrice.minus(buyoutResult.totalCost);
