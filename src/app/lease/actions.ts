@@ -2,10 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db/client";
-import { leases } from "@/lib/db/schema";
+import { leases, marketValues } from "@/lib/db/schema";
 import { leaseFormSchema, type LeaseFormData } from "@/lib/validations/lease-schema";
+import { marketValueSchema } from "@/lib/validations/market-value-schema";
 import { Decimal } from "@/lib/decimal";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 
 /**
  * Server-side result type for lease operations
@@ -249,6 +250,95 @@ export async function getLeases() {
     return allLeases;
   } catch (error) {
     console.error("Error fetching leases:", error);
+    return [];
+  }
+}
+
+/**
+ * Create a new market value entry for a lease
+ */
+export async function createMarketValue(
+  leaseId: string,
+  data: { value: number; source?: string; sourceLabel?: string }
+): Promise<ActionResult<{ id: string }>> {
+  try {
+    // Server-side validation with shared Zod schema
+    const parsed = marketValueSchema.safeParse(data);
+
+    if (!parsed.success) {
+      return {
+        success: false,
+        error: "Validation failed",
+        fieldErrors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
+      };
+    }
+
+    const validData = parsed.data;
+
+    // Convert value to Decimal for database precision
+    const valueDecimal = new Decimal(validData.value.toString());
+
+    // Insert into market_values table
+    const [marketValue] = await db
+      .insert(marketValues)
+      .values({
+        leaseId,
+        value: valueDecimal,
+        source: validData.source ?? 'manual',
+        sourceLabel: validData.sourceLabel ?? 'Your estimate',
+      })
+      .returning({ id: marketValues.id });
+
+    // Revalidate comparison page for instant update
+    revalidatePath(`/lease/${leaseId}/compare`);
+
+    return {
+      success: true,
+      data: { id: marketValue.id },
+    };
+  } catch (error) {
+    console.error("Error creating market value:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Failed to create market value",
+    };
+  }
+}
+
+/**
+ * Get the latest market value for a lease
+ */
+export async function getLatestMarketValue(leaseId: string) {
+  try {
+    const [latestValue] = await db
+      .select()
+      .from(marketValues)
+      .where(eq(marketValues.leaseId, leaseId))
+      .orderBy(desc(marketValues.createdAt))
+      .limit(1);
+
+    return latestValue ?? null;
+  } catch (error) {
+    console.error("Error fetching latest market value:", error);
+    return null;
+  }
+}
+
+/**
+ * Get market value history for a lease (last 20 entries)
+ */
+export async function getMarketValueHistory(leaseId: string) {
+  try {
+    const history = await db
+      .select()
+      .from(marketValues)
+      .where(eq(marketValues.leaseId, leaseId))
+      .orderBy(desc(marketValues.createdAt))
+      .limit(20);
+
+    return history;
+  } catch (error) {
+    console.error("Error fetching market value history:", error);
     return [];
   }
 }
