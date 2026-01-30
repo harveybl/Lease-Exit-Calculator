@@ -64,7 +64,11 @@ Plans: 4/4 complete (03-01 ✓, 03-02 ✓, 03-03 ✓, 03-04 ✓)
   3. A valuation provider interface exists in code so that adding KBB or Edmunds integration later does not require changing components that consume market value
   4. The displayed market value shows when it was last updated and includes a disclaimer about estimate accuracy
 
-Plans: TBD
+Plans:
+- [ ] 04-01-PLAN.md -- Database schema, provider interface, validation, staleness utility
+- [ ] 04-02-PLAN.md -- TDD: Evaluation logic accepts market value, handles missing gracefully
+- [ ] 04-03-PLAN.md -- Server actions and comparison page data wiring
+- [ ] 04-04-PLAN.md -- UI components (banner, display, edit, equity) + visual verification
 
 ### Phase 5: Authentication and Multi-Lease
 **Goal**: Users have personal accounts so their lease data is private, portable across devices, and they can track more than one vehicle.
