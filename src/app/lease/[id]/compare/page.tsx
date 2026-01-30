@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getLease } from "@/app/lease/actions";
+import { getLease, getLatestMarketValue } from "@/app/lease/actions";
 import { getComparisonData } from "@/lib/calculations/evaluate-all";
 import { ComparisonView } from "@/components/comparison/ComparisonView";
+import { Decimal } from "@/lib/decimal";
 import { ChevronLeft } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -23,7 +24,13 @@ export default async function ComparePage({ params }: ComparePageProps) {
     notFound();
   }
 
-  const comparisonData = getComparisonData(lease);
+  // Fetch latest market value for this lease
+  const latestMarketValue = await getLatestMarketValue(id);
+  const estimatedSalePrice = latestMarketValue
+    ? new Decimal(latestMarketValue.value.toString())
+    : undefined;
+
+  const comparisonData = getComparisonData(lease, estimatedSalePrice);
 
   // Build vehicle heading
   const heading =
@@ -44,7 +51,11 @@ export default async function ComparePage({ params }: ComparePageProps) {
 
       <h1 className="text-2xl md:text-3xl font-bold mb-6">{heading}</h1>
 
-      <ComparisonView data={comparisonData} />
+      <ComparisonView
+        data={comparisonData}
+        marketValue={latestMarketValue}
+        leaseId={id}
+      />
     </main>
   );
 }
