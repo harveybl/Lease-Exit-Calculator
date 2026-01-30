@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 4 of 7 (Market Value and Valuation) — IN PROGRESS
-Plan: 1 of 5 in current phase — COMPLETE
+Plan: 2 of 5 in current phase — COMPLETE
 Status: In progress
-Last activity: 2026-01-30 -- Completed 04-01-PLAN.md (Market Value Data Layer)
+Last activity: 2026-01-30 -- Completed 04-02-PLAN.md (Market Value Integration in Evaluation Orchestrator)
 
-Progress: [███████████████] 15/19 plans (79% - phases 1-3 complete, phase 4 started)
+Progress: [███████████████░] 16/19 plans (84% - phases 1-3 complete, phase 4 in progress)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 15
+- Total plans completed: 16
 - Average duration: ~3m 30s
-- Total execution time: ~60m
+- Total execution time: ~64m
 
 **By Phase:**
 
@@ -30,11 +30,11 @@ Progress: [███████████████] 15/19 plans (79% - pha
 | 1. Foundation | 6/6 | 26m 39s | 4m 27s |
 | 2. Lease Entry and Core UI | 4/4 | 22m 32s | 5m 38s |
 | 3. Comparison View | 4/4 | ~8m | ~2m |
-| 4. Market Value and Valuation | 1/5 | 3m | 3m |
+| 4. Market Value and Valuation | 2/5 | 7m | 3m 30s |
 
 **Recent Trend:**
-- Last 5 plans: 03-01 (2m 0s), 03-02 (1m 0s), 03-03 (1m 7s), 03-04 (~4m), 04-01 (3m)
-- Trend: Data layer plans with clear patterns execute quickly
+- Last 5 plans: 03-02 (1m 0s), 03-03 (1m 7s), 03-04 (~4m), 04-01 (3m), 04-02 (4m)
+- Trend: TDD plans slightly longer but maintain quality through test coverage
 
 *Updated after each plan completion*
 
@@ -100,6 +100,9 @@ Recent decisions affecting current work:
 - [04-01]: 30-day staleness threshold for market value freshness detection
 - [04-01]: Native relative time formatting (no date-fns) for simple use cases reduces bundle size
 - [04-01]: Source stored as varchar(50) enum for flexibility with type safety
+- [04-02]: Incomplete scenarios use residualValue as conservative placeholder (shows scenario but marked incomplete)
+- [04-02]: Equity calculated as marketValue - buyoutCost (not payoffAmount, which excludes tax/fees)
+- [04-02]: Incomplete scenarios sort last regardless of netCost and excluded from bestOption selection
 
 ### Pending Todos
 
@@ -115,7 +118,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-30
-Stopped at: Completed 04-01-PLAN.md (Market Value Data Layer)
+Stopped at: Completed 04-02-PLAN.md (Market Value Integration in Evaluation Orchestrator)
 Resume file: None
 
-**Phase 4 in progress.** Next: 04-02 (Market Value Integration into Calculations)
+**Phase 4 in progress.** Next: 04-03 (Manual Market Value Entry UI)
