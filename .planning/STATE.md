@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 4 of 7 (Market Value and Valuation) — IN PROGRESS
-Plan: 3 of 5 in current phase — COMPLETE
+Plan: 4 of 5 in current phase — COMPLETE
 Status: In progress
-Last activity: 2026-01-30 -- Completed 04-03-PLAN.md (Market Value Data Layer)
+Last activity: 2026-01-30 -- Completed 04-04-PLAN.md (Manual Market Value Entry UI)
 
-Progress: [███████████████░] 17/19 plans (89% - phases 1-3 complete, phase 4 in progress)
+Progress: [████████████████░] 18/19 plans (95% - phases 1-3 complete, phase 4 in progress)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 17
-- Average duration: ~3m 15s
-- Total execution time: ~65m 30s
+- Total plans completed: 18
+- Average duration: ~3m 11s
+- Total execution time: ~67m 23s
 
 **By Phase:**
 
@@ -30,11 +30,11 @@ Progress: [███████████████░] 17/19 plans (89% - 
 | 1. Foundation | 6/6 | 26m 39s | 4m 27s |
 | 2. Lease Entry and Core UI | 4/4 | 22m 32s | 5m 38s |
 | 3. Comparison View | 4/4 | ~8m | ~2m |
-| 4. Market Value and Valuation | 3/5 | ~8m 30s | ~2m 50s |
+| 4. Market Value and Valuation | 4/5 | ~10m 23s | ~2m 36s |
 
 **Recent Trend:**
-- Last 5 plans: 03-03 (1m 7s), 03-04 (~4m), 04-01 (3m), 04-02 (4m), 04-03 (1m 34s)
-- Trend: Data layer plans faster, calculation/UI plans take more time
+- Last 5 plans: 03-04 (~4m), 04-01 (3m), 04-02 (4m), 04-03 (1m 34s), 04-04 (1m 53s)
+- Trend: Component plans consistently fast (~2m), data layer plans similar
 
 *Updated after each plan completion*
 
@@ -106,6 +106,10 @@ Recent decisions affecting current work:
 - [04-03]: Server actions follow ActionResult pattern for consistent error handling
 - [04-03]: revalidatePath called after createMarketValue for instant comparison page updates
 - [04-03]: Market value history limited to last 20 entries to prevent over-fetching
+- [04-04]: MarketValueBanner uses inline form with educational popover for immediate value entry
+- [04-04]: MarketValueDisplay toggles between display and edit modes with Check/X buttons
+- [04-04]: Near-zero equity threshold set at $50 for neutral display
+- [04-04]: Inline edit pattern with useTransition for server action pending states
 
 ### Pending Todos
 
@@ -121,7 +125,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-30
-Stopped at: Completed 04-03-PLAN.md (Market Value Data Layer)
+Stopped at: Completed 04-04-PLAN.md (Manual Market Value Entry UI)
 Resume file: None
 
-**Phase 4 in progress.** Next: 04-04 (Manual Market Value Entry UI)
+**Phase 4 in progress.** Next: 04-05 (Comparison Page Integration)
