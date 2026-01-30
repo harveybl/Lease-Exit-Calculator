@@ -1,0 +1,206 @@
+import { Decimal } from '@/lib/decimal';
+import { evaluateAllScenarios, getComparisonData } from '@/lib/calculations/evaluate-all';
+import type { Lease } from '@/lib/db/schema';
+
+/** Helper: Create a mock lease with sensible defaults */
+function createMockLease(overrides: Partial<Lease> = {}): Lease {
+  return {
+    id: 'test-lease-1',
+    userId: 'test-user',
+    vehicleMake: 'Toyota',
+    vehicleModel: 'Camry',
+    vehicleYear: 2023,
+    vin: null,
+    residualValue: new Decimal('18000'),
+    monthlyPayment: new Decimal('400'),
+    termMonths: 36,
+    monthsElapsed: 36,
+    allowedMilesPerYear: 12000,
+    currentMileage: 36000,
+    overageFeePerMile: new Decimal('0.25'),
+    dispositionFee: new Decimal('395'),
+    purchaseFee: new Decimal('300'),
+    stateCode: 'CA',
+    netCapCost: new Decimal('30000'),
+    moneyFactor: new Decimal('0.00125'),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    ...overrides,
+  };
+}
+
+describe('evaluateAllScenarios', () => {
+  describe('with market value provided', () => {
+    it('should use estimatedSalePrice for sell-privately scenario instead of residualValue', () => {
+      const lease = createMockLease({
+        residualValue: new Decimal('18000'),
+      });
+
+      const estimatedSalePrice = new Decimal('22000'); // Higher than residual
+      const scenarios = evaluateAllScenarios(lease, estimatedSalePrice);
+
+      const sellPrivately = scenarios.find(s => s.type === 'sell-privately')!;
+      expect(sellPrivately).toBeDefined();
+
+      // Verify it used the estimatedSalePrice (not residualValue)
+      // When using estimatedSalePrice of 22000, net proceeds should be positive
+      // (22000 sale - ~18000 payoff = ~4000 profit)
+      expect(sellPrivately.incomplete).toBeUndefined();
+      expect(sellPrivately.warnings.some(w => w.includes('market value'))).toBe(false);
+
+      // Type guard to access SellPrivatelyResult specific fields
+      if (sellPrivately.type === 'sell-privately') {
+        expect(sellPrivately.estimatedSalePrice.toNumber()).toBe(22000);
+        expect(sellPrivately.netProceeds.greaterThan(0)).toBe(true);
+      }
+    });
+
+    it('should not mark sell-privately as incomplete when market value is provided', () => {
+      const lease = createMockLease();
+      const estimatedSalePrice = new Decimal('20000');
+      const scenarios = evaluateAllScenarios(lease, estimatedSalePrice);
+
+      const sellPrivately = scenarios.find(s => s.type === 'sell-privately')!;
+      expect(sellPrivately.incomplete).toBeUndefined();
+    });
+  });
+
+  describe('without market value (undefined)', () => {
+    it('should mark sell-privately as incomplete when estimatedSalePrice is undefined', () => {
+      const lease = createMockLease();
+      const scenarios = evaluateAllScenarios(lease); // No estimatedSalePrice
+
+      const sellPrivately = scenarios.find(s => s.type === 'sell-privately')!;
+      expect(sellPrivately.incomplete).toBe(true);
+      expect(sellPrivately.warnings.some(w =>
+        w.includes('Add your vehicle\'s market value for accurate sell-privately results')
+      )).toBe(true);
+    });
+
+    it('should sort incomplete scenarios last regardless of netCost', () => {
+      const lease = createMockLease({
+        residualValue: new Decimal('10000'), // Low residual to make sell-privately cheap
+        monthsElapsed: 36, // End of lease
+      });
+
+      const scenarios = evaluateAllScenarios(lease); // No estimatedSalePrice
+
+      // Find incomplete scenario
+      const incompleteIndex = scenarios.findIndex(s => s.incomplete === true);
+      expect(incompleteIndex).toBeGreaterThanOrEqual(0);
+
+      // Verify all scenarios after incomplete are also incomplete (or it's last)
+      const completeAfterIncomplete = scenarios.slice(incompleteIndex + 1).some(s => !s.incomplete);
+      expect(completeAfterIncomplete).toBe(false);
+
+      // Verify there's at least one complete scenario before it
+      const hasCompleteBefore = scenarios.slice(0, incompleteIndex).every(s => !s.incomplete);
+      expect(hasCompleteBefore).toBe(true);
+    });
+
+    it('should exclude incomplete scenarios from bestOption selection', () => {
+      const lease = createMockLease();
+      const comparisonData = getComparisonData(lease); // No estimatedSalePrice
+
+      // Best option should not be incomplete
+      expect(comparisonData.bestOption.incomplete).toBeUndefined();
+
+      // Verify sell-privately is incomplete but not selected as best
+      const sellPrivately = comparisonData.scenarios.find(s => s.type === 'sell-privately')!;
+      expect(sellPrivately.incomplete).toBe(true);
+      expect(comparisonData.bestOption.type).not.toBe('sell-privately');
+    });
+  });
+
+  describe('getComparisonData with market value', () => {
+    it('should calculate positive equity correctly when market value > buyout cost', () => {
+      const lease = createMockLease({
+        residualValue: new Decimal('18000'),
+        monthsElapsed: 36, // End of lease
+      });
+
+      // Market value higher than buyout cost
+      const estimatedSalePrice = new Decimal('22000');
+      const comparisonData = getComparisonData(lease, estimatedSalePrice);
+
+      expect(comparisonData.hasMarketValue).toBe(true);
+      expect(comparisonData.equity).toBeDefined();
+      expect(comparisonData.equity!.isPositive).toBe(true);
+
+      // Equity = marketValue - buyoutCost
+      // buyoutCost ≈ 18000 (residual) + 300 (purchase fee) + 1305 (CA tax 7.25%)
+      // = 19605
+      // Equity = 22000 - 19605 = 2395
+      expect(comparisonData.equity!.amount.toNumber()).toBeCloseTo(2395, 0);
+    });
+
+    it('should calculate negative equity correctly when market value < buyout cost', () => {
+      const lease = createMockLease({
+        residualValue: new Decimal('18000'),
+        monthsElapsed: 36, // End of lease
+      });
+
+      // Market value lower than buyout cost
+      const estimatedSalePrice = new Decimal('17000');
+      const comparisonData = getComparisonData(lease, estimatedSalePrice);
+
+      expect(comparisonData.hasMarketValue).toBe(true);
+      expect(comparisonData.equity).toBeDefined();
+      expect(comparisonData.equity!.isPositive).toBe(false);
+
+      // Equity = marketValue - buyoutCost
+      // buyoutCost ≈ 18000 + 300 + 1305 = 19605
+      // Equity = 17000 - 19605 = -2605
+      expect(comparisonData.equity!.amount.toNumber()).toBeCloseTo(-2605, 0);
+      expect(comparisonData.equity!.amount.lessThan(0)).toBe(true);
+    });
+
+    it('should set hasMarketValue to true when estimatedSalePrice is provided', () => {
+      const lease = createMockLease();
+      const estimatedSalePrice = new Decimal('20000');
+      const comparisonData = getComparisonData(lease, estimatedSalePrice);
+
+      expect(comparisonData.hasMarketValue).toBe(true);
+      expect(comparisonData.equity).toBeDefined();
+    });
+
+    it('should set hasMarketValue to false when estimatedSalePrice is not provided', () => {
+      const lease = createMockLease();
+      const comparisonData = getComparisonData(lease); // No estimatedSalePrice
+
+      expect(comparisonData.hasMarketValue).toBe(false);
+      expect(comparisonData.equity).toBeUndefined();
+    });
+  });
+
+  describe('scenario sorting with mixed complete/incomplete', () => {
+    it('should sort complete scenarios by netCost, then incomplete scenarios last', () => {
+      const lease = createMockLease({
+        residualValue: new Decimal('15000'),
+        monthlyPayment: new Decimal('450'),
+        monthsElapsed: 36,
+      });
+
+      const scenarios = evaluateAllScenarios(lease); // No estimatedSalePrice
+
+      // Find the boundary between complete and incomplete
+      const firstIncompleteIndex = scenarios.findIndex(s => s.incomplete === true);
+
+      if (firstIncompleteIndex > 0) {
+        // All scenarios before first incomplete should be complete and sorted by netCost
+        const completeScenarios = scenarios.slice(0, firstIncompleteIndex);
+        for (let i = 0; i < completeScenarios.length - 1; i++) {
+          expect(completeScenarios[i].netCost.lessThanOrEqualTo(completeScenarios[i + 1].netCost)).toBe(true);
+        }
+      }
+
+      // All scenarios from first incomplete onwards should be incomplete
+      if (firstIncompleteIndex >= 0) {
+        const incompleteScenarios = scenarios.slice(firstIncompleteIndex);
+        incompleteScenarios.forEach(s => {
+          expect(s.incomplete).toBe(true);
+        });
+      }
+    });
+  });
+});
