@@ -1,4 +1,5 @@
-import { pgTable, uuid, varchar, integer, timestamp, date } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, varchar, integer, timestamp, date, text } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
 import { decimalNumber } from './custom-types';
 import { Decimal } from '@/lib/decimal';
 
@@ -45,3 +46,31 @@ export const leases = pgTable('leases', {
 
 export type Lease = typeof leases.$inferSelect;
 export type NewLease = typeof leases.$inferInsert;
+
+export const marketValues = pgTable('market_values', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  leaseId: uuid('lease_id').notNull().references(() => leases.id, { onDelete: 'cascade' }),
+  value: decimalNumber('value', { precision: 10, scale: 2 }).notNull(),
+  source: varchar('source', { length: 50 }).notNull(), // 'manual', 'kbb', 'edmunds', 'carvana'
+  sourceLabel: varchar('source_label', { length: 100 }),
+  sourceMetadata: text('source_metadata'), // JSON for future API data
+  createdAt: timestamp('created_at', { mode: 'date', precision: 3 }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { mode: 'date', precision: 3 })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
+
+export type MarketValue = typeof marketValues.$inferSelect;
+export type NewMarketValue = typeof marketValues.$inferInsert;
+
+export const leasesRelations = relations(leases, ({ many }) => ({
+  marketValues: many(marketValues),
+}));
+
+export const marketValuesRelations = relations(marketValues, ({ one }) => ({
+  lease: one(leases, {
+    fields: [marketValues.leaseId],
+    references: [leases.id],
+  }),
+}));
