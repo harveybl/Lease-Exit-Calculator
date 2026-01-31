@@ -3,8 +3,21 @@ import { relations } from 'drizzle-orm';
 import { decimalNumber } from './custom-types';
 import { Decimal } from '@/lib/decimal';
 
+export const users = pgTable('users', {
+  id: text('id').primaryKey(), // Clerk user ID (string, not UUID)
+  email: varchar('email', { length: 255 }).notNull(),
+  firstName: varchar('first_name', { length: 100 }),
+  lastName: varchar('last_name', { length: 100 }),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+});
+
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
+
 export const leases = pgTable('leases', {
   id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),
 
   // Vehicle information (optional - progressive disclosure)
   make: varchar('make', { length: 100 }),
@@ -64,7 +77,15 @@ export const marketValues = pgTable('market_values', {
 export type MarketValue = typeof marketValues.$inferSelect;
 export type NewMarketValue = typeof marketValues.$inferInsert;
 
-export const leasesRelations = relations(leases, ({ many }) => ({
+export const usersRelations = relations(users, ({ many }) => ({
+  leases: many(leases),
+}));
+
+export const leasesRelations = relations(leases, ({ one, many }) => ({
+  user: one(users, {
+    fields: [leases.userId],
+    references: [users.id],
+  }),
   marketValues: many(marketValues),
 }));
 
