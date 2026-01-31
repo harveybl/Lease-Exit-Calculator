@@ -80,6 +80,13 @@
     --ring: 195 85% 45%; /* matches primary */
 
     --radius: 0.75rem; /* rounded-xl default for cards */
+
+    /* Chart colors for timeline visualization */
+    --chart-1: 195 85% 45%; /* teal - matches primary */
+    --chart-2: 25 95% 53%; /* warm orange */
+    --chart-3: 142 72% 42%; /* green */
+    --chart-4: 280 65% 60%; /* purple */
+    --chart-5: 350 80% 55%; /* red */
   }
 
   .dark {
@@ -113,6 +120,13 @@
     --border: 28 10% 20%;
     --input: 28 10% 20%;
     --ring: 195 75% 55%;
+
+    /* Chart colors for dark mode */
+    --chart-1: 195 75% 55%; /* lighter teal for dark mode */
+    --chart-2: 25 90% 60%; /* lighter orange */
+    --chart-3: 142 70% 50%; /* lighter green */
+    --chart-4: 280 65% 65%; /* lighter purple */
+    --chart-5: 350 75% 60%; /* lighter red */
   }
 
   * {
