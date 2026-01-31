@@ -35,7 +35,7 @@ export function TimelineTooltip({ active, payload, label }: TimelineTooltipProps
   const headerText = label === 0 ? 'Today' : `Month ${label}`;
 
   return (
-    <div className="rounded-lg border bg-background p-3 shadow-md">
+    <div className="rounded-lg border bg-background p-3 shadow-md max-w-[280px]">
       <div className="mb-2 font-medium text-foreground">{headerText}</div>
       <div className="flex flex-col gap-1.5">
         {sortedEntries.map((entry) => {
@@ -45,13 +45,13 @@ export function TimelineTooltip({ active, payload, label }: TimelineTooltipProps
           return (
             <div key={entry.dataKey} className="flex items-center gap-2">
               <div
-                className="h-2.5 w-2.5 rounded-sm"
+                className="h-2.5 w-2.5 rounded-sm shrink-0"
                 style={{ backgroundColor: entry.color }}
               />
-              <span className="flex-1 text-sm text-muted-foreground">
+              <span className="flex-1 text-sm text-muted-foreground truncate">
                 {displayName}
               </span>
-              <span className="text-sm font-medium tabular-nums text-foreground">
+              <span className="text-sm font-medium tabular-nums text-foreground shrink-0">
                 {formatCurrency(entry.value)}
               </span>
             </div>

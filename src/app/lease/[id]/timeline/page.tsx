@@ -49,7 +49,7 @@ export default async function TimelinePage({ params }: TimelinePageProps) {
       : 'Lease Timeline';
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8">
+    <main className="mx-auto max-w-4xl px-4 py-4 md:py-8">
       {/* Back navigation to compare page */}
       <Link
         href={`/lease/${id}/compare`}
@@ -59,10 +59,10 @@ export default async function TimelinePage({ params }: TimelinePageProps) {
         Back to Comparison
       </Link>
 
-      <h1 className="text-2xl md:text-3xl font-bold mb-6">{heading}</h1>
+      <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">{heading}</h1>
 
       {/* Recommendation summary */}
-      <div className="mb-6">
+      <div className="mb-4 md:mb-6">
         <RecommendationSummary
           recommendation={recommendation}
           crossovers={crossovers}
@@ -70,19 +70,19 @@ export default async function TimelinePage({ params }: TimelinePageProps) {
       </div>
 
       {/* Timeline chart */}
-      <div className="mb-6">
+      <div className="mb-4 md:mb-6">
         <TimelineChart data={timelineSeries.data} crossovers={crossovers} />
       </div>
 
       {/* Market value note if not set */}
       {!timelineSeries.hasMarketValue && (
-        <p className="text-sm text-muted-foreground mb-6">
+        <p className="text-sm text-muted-foreground mb-4 md:mb-6">
           Add market value on the comparison page for sell-privately projections
         </p>
       )}
 
       {/* General disclaimer */}
-      <div className="mt-8 p-4 rounded-lg bg-muted/50">
+      <div className="mt-6 md:mt-8 p-3 md:p-4 rounded-lg bg-muted/50">
         <p className="text-xs text-muted-foreground">
           <strong>Disclaimer:</strong> These projections are estimates based on your
           lease terms and current data. Actual costs may vary. Consult your lease

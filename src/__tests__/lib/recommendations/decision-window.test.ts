@@ -5,9 +5,9 @@ import type { TimelineDataPoint } from '@/lib/types/timeline';
 describe('generateRecommendation', () => {
   it('identifies best option today when no waiting benefit exists', () => {
     const data: TimelineDataPoint[] = [
-      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null },
-      { month: 6, return: 1100, buyout: 2100, sellPrivately: null, earlyTermination: 2900, extension: null },
-      { month: 12, return: 1200, buyout: 2200, sellPrivately: null, earlyTermination: 2800, extension: null },
+      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null, leaseTransfer: null },
+      { month: 6, return: 1100, buyout: 2100, sellPrivately: null, earlyTermination: 2900, extension: null, leaseTransfer: null },
+      { month: 12, return: 1200, buyout: 2200, sellPrivately: null, earlyTermination: 2800, extension: null, leaseTransfer: null },
     ];
 
     const result = generateRecommendation(data);
@@ -26,10 +26,10 @@ describe('generateRecommendation', () => {
 
   it('recommends waiting when future month has significant savings', () => {
     const data: TimelineDataPoint[] = [
-      { month: 0, return: 2000, buyout: 2500, sellPrivately: null, earlyTermination: 3000, extension: null },
-      { month: 6, return: 2200, buyout: 2400, sellPrivately: null, earlyTermination: 2800, extension: null },
-      { month: 12, return: 2500, buyout: 1500, sellPrivately: null, earlyTermination: 2600, extension: null },
-      { month: 18, return: 2800, buyout: 1600, sellPrivately: null, earlyTermination: 2400, extension: null },
+      { month: 0, return: 2000, buyout: 2500, sellPrivately: null, earlyTermination: 3000, extension: null, leaseTransfer: null },
+      { month: 6, return: 2200, buyout: 2400, sellPrivately: null, earlyTermination: 2800, extension: null, leaseTransfer: null },
+      { month: 12, return: 2500, buyout: 1500, sellPrivately: null, earlyTermination: 2600, extension: null, leaseTransfer: null },
+      { month: 18, return: 2800, buyout: 1600, sellPrivately: null, earlyTermination: 2400, extension: null, leaseTransfer: null },
     ];
 
     const result = generateRecommendation(data);
@@ -49,9 +49,9 @@ describe('generateRecommendation', () => {
 
   it('treats savings <= $100 as not worth waiting (tie threshold)', () => {
     const data: TimelineDataPoint[] = [
-      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null },
-      { month: 6, return: 1100, buyout: 2100, sellPrivately: null, earlyTermination: 2800, extension: null },
-      { month: 12, return: 1150, buyout: 950, sellPrivately: null, earlyTermination: 2600, extension: null },
+      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null, leaseTransfer: null },
+      { month: 6, return: 1100, buyout: 2100, sellPrivately: null, earlyTermination: 2800, extension: null, leaseTransfer: null },
+      { month: 12, return: 1150, buyout: 950, sellPrivately: null, earlyTermination: 2600, extension: null, leaseTransfer: null },
     ];
 
     const result = generateRecommendation(data);
@@ -67,7 +67,7 @@ describe('generateRecommendation', () => {
 
   it('handles edge case with only one data point (month 0)', () => {
     const data: TimelineDataPoint[] = [
-      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null },
+      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null, leaseTransfer: null },
     ];
 
     const result = generateRecommendation(data);
@@ -83,9 +83,9 @@ describe('generateRecommendation', () => {
 
   it('excludes null scenarios from comparison', () => {
     const data: TimelineDataPoint[] = [
-      { month: 0, return: 2000, buyout: 2500, sellPrivately: 1500, earlyTermination: 3000, extension: null },
-      { month: 6, return: 2200, buyout: 2400, sellPrivately: null, earlyTermination: 2800, extension: null },
-      { month: 12, return: 2500, buyout: 2200, sellPrivately: null, earlyTermination: 2600, extension: null },
+      { month: 0, return: 2000, buyout: 2500, sellPrivately: 1500, earlyTermination: 3000, extension: null, leaseTransfer: null },
+      { month: 6, return: 2200, buyout: 2400, sellPrivately: null, earlyTermination: 2800, extension: null, leaseTransfer: null },
+      { month: 12, return: 2500, buyout: 2200, sellPrivately: null, earlyTermination: 2600, extension: null, leaseTransfer: null },
     ];
 
     const result = generateRecommendation(data);
@@ -99,10 +99,10 @@ describe('generateRecommendation', () => {
 
   it('correctly identifies best future month when multiple future options exist', () => {
     const data: TimelineDataPoint[] = [
-      { month: 0, return: 2000, buyout: 2500, sellPrivately: null, earlyTermination: 3000, extension: null },
-      { month: 6, return: 2200, buyout: 1900, sellPrivately: null, earlyTermination: 2800, extension: null },
-      { month: 12, return: 2500, buyout: 1400, sellPrivately: null, earlyTermination: 2600, extension: null },
-      { month: 18, return: 2800, buyout: 1600, sellPrivately: null, earlyTermination: 2400, extension: null },
+      { month: 0, return: 2000, buyout: 2500, sellPrivately: null, earlyTermination: 3000, extension: null, leaseTransfer: null },
+      { month: 6, return: 2200, buyout: 1900, sellPrivately: null, earlyTermination: 2800, extension: null, leaseTransfer: null },
+      { month: 12, return: 2500, buyout: 1400, sellPrivately: null, earlyTermination: 2600, extension: null, leaseTransfer: null },
+      { month: 18, return: 2800, buyout: 1600, sellPrivately: null, earlyTermination: 2400, extension: null, leaseTransfer: null },
     ];
 
     const result = generateRecommendation(data);
@@ -114,8 +114,8 @@ describe('generateRecommendation', () => {
 
   it('includes formatted currency in messages', () => {
     const data: TimelineDataPoint[] = [
-      { month: 0, return: 2000, buyout: 2500, sellPrivately: null, earlyTermination: 3000, extension: null },
-      { month: 12, return: 2500, buyout: 1250.50, sellPrivately: null, earlyTermination: 2600, extension: null },
+      { month: 0, return: 2000, buyout: 2500, sellPrivately: null, earlyTermination: 3000, extension: null, leaseTransfer: null },
+      { month: 12, return: 2500, buyout: 1250.50, sellPrivately: null, earlyTermination: 2600, extension: null, leaseTransfer: null },
     ];
 
     const result = generateRecommendation(data);
@@ -126,8 +126,8 @@ describe('generateRecommendation', () => {
 
   it('handles extension scenario at lease end', () => {
     const data: TimelineDataPoint[] = [
-      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: 800 },
-      { month: 6, return: 1500, buyout: 2200, sellPrivately: null, earlyTermination: 2800, extension: null },
+      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: 800, leaseTransfer: null },
+      { month: 6, return: 1500, buyout: 2200, sellPrivately: null, earlyTermination: 2800, extension: null, leaseTransfer: null },
     ];
 
     const result = generateRecommendation(data);
@@ -139,8 +139,8 @@ describe('generateRecommendation', () => {
 
   it('recommends waiting exactly at $101 savings (just over threshold)', () => {
     const data: TimelineDataPoint[] = [
-      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null },
-      { month: 12, return: 1150, buyout: 899, sellPrivately: null, earlyTermination: 2600, extension: null },
+      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null, leaseTransfer: null },
+      { month: 12, return: 1150, buyout: 899, sellPrivately: null, earlyTermination: 2600, extension: null, leaseTransfer: null },
     ];
 
     const result = generateRecommendation(data);
@@ -151,8 +151,8 @@ describe('generateRecommendation', () => {
 
   it('does not recommend waiting at exactly $100 savings (at threshold)', () => {
     const data: TimelineDataPoint[] = [
-      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null },
-      { month: 12, return: 1150, buyout: 900, sellPrivately: null, earlyTermination: 2600, extension: null },
+      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null, leaseTransfer: null },
+      { month: 12, return: 1150, buyout: 900, sellPrivately: null, earlyTermination: 2600, extension: null, leaseTransfer: null },
     ];
 
     const result = generateRecommendation(data);

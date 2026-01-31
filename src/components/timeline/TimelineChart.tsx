@@ -62,12 +62,12 @@ export function TimelineChart({ data, crossovers, className }: TimelineChartProp
   return (
     <ChartContainer
       config={chartConfig}
-      className={className || 'min-h-[400px] w-full'}
+      className={className || 'min-h-[300px] md:min-h-[400px] w-full'}
     >
       <LineChart
         accessibilityLayer
         data={data}
-        margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+        margin={{ top: 20, right: 10, bottom: 20, left: 10 }}
       >
         <CartesianGrid vertical={false} />
 
@@ -76,12 +76,14 @@ export function TimelineChart({ data, crossovers, className }: TimelineChartProp
           tickLine={false}
           axisLine={false}
           label={{ value: 'Months from now', position: 'insideBottom', offset: -10 }}
+          interval="preserveStartEnd"
         />
 
         <YAxis
           tickFormatter={formatYAxis}
           tickLine={false}
           axisLine={false}
+          width={40}
         />
 
         <ChartTooltip content={<TimelineTooltip />} />
