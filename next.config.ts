@@ -10,6 +10,8 @@ const withSerwist = withSerwistInit({
 const nextConfig: NextConfig = {
   // Empty turbopack config to suppress webpack migration warning
   turbopack: {},
+  // Exclude @react-pdf/renderer from server-side bundling (client-only library)
+  serverExternalPackages: ['@react-pdf/renderer'],
 };
 
 export default withSerwist(nextConfig);

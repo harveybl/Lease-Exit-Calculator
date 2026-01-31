@@ -55,6 +55,7 @@ export default async function ComparePage({ params }: ComparePageProps) {
         data={comparisonData}
         marketValue={latestMarketValue}
         leaseId={id}
+        heading={heading}
       />
 
       {/* Timeline navigation */}
