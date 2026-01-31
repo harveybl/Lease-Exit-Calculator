@@ -102,6 +102,7 @@ export function projectScenarioCosts(
       'sell-privately': sellPrivatelyResult,
       'early-termination': earlyTerminationResult.netCost,
       extension: extensionResult,
+      'lease-transfer': null, // TODO: Implement timeline support for lease transfer in future plan
     },
   };
 }
@@ -134,6 +135,7 @@ export function buildTimelineData(
       sellPrivately: projection.costs['sell-privately']?.toDP(2).toNumber() ?? null,
       earlyTermination: projection.costs['early-termination']!.toDP(2).toNumber(),
       extension: projection.costs.extension?.toDP(2).toNumber() ?? null,
+      leaseTransfer: projection.costs['lease-transfer']?.toDP(2).toNumber() ?? null,
     };
 
     data.push(dataPoint);

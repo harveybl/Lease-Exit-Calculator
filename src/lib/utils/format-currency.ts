@@ -36,6 +36,7 @@ const scenarioDisplayNames: Record<ScenarioType, string> = {
   'sell-privately': 'Sell Privately',
   'early-termination': 'Early Termination',
   'extension': 'Keep Paying (Extend)',
+  'lease-transfer': 'Transfer Lease',
 };
 
 /**

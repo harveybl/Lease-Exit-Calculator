@@ -165,7 +165,7 @@ describe('evaluateLeaseTransferScenario', () => {
       const incentiveItem = result.lineItems.find(item => item.label === 'Incentive Payments');
       expect(incentiveItem).toBeDefined();
       expect(incentiveItem?.amount.toNumber()).toBe(200);
-      expect(incentiveItem?.type).toBe('payment');
+      expect(incentiveItem?.type).toBe('fee');
     });
   });
 

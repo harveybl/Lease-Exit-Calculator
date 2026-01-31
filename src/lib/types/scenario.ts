@@ -1,7 +1,7 @@
 import { Decimal } from '@/lib/decimal';
 import { LineItem } from './calculation';
 
-export type ScenarioType = 'return' | 'buyout' | 'sell-privately' | 'early-termination' | 'extension';
+export type ScenarioType = 'return' | 'buyout' | 'sell-privately' | 'early-termination' | 'extension' | 'lease-transfer';
 
 export interface ScenarioResult {
   type: ScenarioType;
@@ -48,4 +48,13 @@ export interface ExtensionResult extends ScenarioResult {
   monthlyExtensionPayment: Decimal;
   extensionMonths: number;
   totalExtensionCost: Decimal;
+}
+
+export interface LeaseTransferResult extends ScenarioResult {
+  type: 'lease-transfer';
+  transferFee: Decimal;
+  marketplaceFee: Decimal;
+  registrationFee: Decimal;
+  incentivePayments: Decimal;
+  paymentsAvoided: Decimal;
 }
