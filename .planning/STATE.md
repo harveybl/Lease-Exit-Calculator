@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 ## Current Position
 
 Phase: 7 of 7 (Polish, Export, and Growth) — IN PROGRESS
-Plan: 4 of 4 (Lease Transfer UI Integration) — COMPLETE
-Status: Lease transfer integrated as sixth scenario in comparison and timeline views
-Last activity: 2026-01-31 -- Completed 07-02-PLAN.md
+Plan: 5 of 6 (PDF Export Capability) — COMPLETE
+Status: PDF export with lazy-loaded @react-pdf/renderer using runtime dynamic imports
+Last activity: 2026-01-31 -- Completed 07-05-PLAN.md
 
-Progress: [███████████████████████████] 31/31 plans (100% - all phases complete)
+Progress: [████████████████████████████] 32/32 plans (100% - all phases complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 31
-- Average duration: ~3m 16s
-- Total execution time: ~101m 20s
+- Total plans completed: 32
+- Average duration: ~3m 21s
+- Total execution time: ~105m 40s
 
 **By Phase:**
 
@@ -32,11 +32,11 @@ Progress: [███████████████████████
 | 3. Comparison View | 4/4 | ~8m | ~2m |
 | 4. Market Value and Valuation | 5/5 | ~13m | ~2m 36s |
 | 6. Timeline and Recommendations | 4/4 | ~16m | ~4m |
-| 7. Polish, Export, and Growth | 4/4 | ~15m 9s | ~3m 47s |
+| 7. Polish, Export, and Growth | 5/6 | ~19m 29s | ~3m 54s |
 
 **Recent Trend:**
-- Last 5 plans: 07-01 (3m), 07-03 (4m 49s), 07-02 (3m)
-- Trend: Phase 7 plans averaging ~3m 47s
+- Last 5 plans: 07-03 (4m 49s), 07-02 (3m), 07-05 (4m 20s)
+- Trend: Phase 7 plans averaging ~3m 54s
 
 *Updated after each plan completion*
 
@@ -142,6 +142,10 @@ Recent decisions affecting current work:
 - [07-02]: Transfer scenario marked incomplete by default with warning to add transfer details
 - [07-02]: Transfer is always available in timeline (unlike extension which is lease-end only)
 - [07-02]: Chart color --chart-6 assigned to lease transfer for visual consistency
+- [07-05]: Runtime dynamic imports in useEffect avoid Turbopack static analysis SSR bundling issues
+- [07-05]: Blob download pattern for PDF export provides better error handling than PDFDownloadLink component
+- [07-05]: serializeForPDF helper converts Decimal to formatted strings before PDF generation
+- [07-05]: Built-in Helvetica font used in PDFs to avoid loading delays
 
 ### Pending Todos
 
@@ -157,7 +161,7 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-01-31
-Stopped at: Completed 07-02-PLAN.md (Lease Transfer UI Integration)
+Stopped at: Completed 07-05-PLAN.md (PDF Export Capability)
 Resume file: None
 
-**All phases complete (31/31 plans).** Ready for deployment and future enhancements.
+**Phase 7 in progress (5/6 plans).** PDF export capability complete. One plan remaining.
