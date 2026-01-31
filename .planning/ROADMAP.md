@@ -76,7 +76,12 @@ Plans: 5/5 complete (04-01 ✓, 04-02 ✓, 04-03 ✓, 04-04 ✓, 04-05 ✓)
   3. User can add a second lease and switch between leases to see separate comparison results for each
   4. Unauthenticated visitors cannot access lease data or comparison views (protected routes redirect to login)
 
-Plans: TBD
+Plans: 5 plans
+- [ ] 05-01-PLAN.md -- Clerk installation, ClerkProvider, middleware, auth pages
+- [ ] 05-02-PLAN.md -- Database schema: users table and user_id FK on leases
+- [ ] 05-03-PLAN.md -- Webhook handler and auth-gated Server Actions
+- [ ] 05-04-PLAN.md -- Route restructuring, Header, lease list, multi-lease navigation
+- [ ] 05-05-PLAN.md -- Browser verification of all auth and multi-lease flows
 
 ### Phase 6: Timeline and Smart Recommendations
 **Goal**: A user can see how their exit options change month-by-month over the remaining lease term, with the system identifying when financial windows open or close.
@@ -111,6 +116,6 @@ Plans: TBD
 | 2. Lease Entry and Core UI | 4/4 | ✓ Complete | 2026-01-29 |
 | 3. Comparison View | 4/4 | ✓ Complete | 2026-01-29 |
 | 4. Market Value and Valuation | 5/5 | ✓ Complete | 2026-01-30 |
-| 5. Authentication and Multi-Lease | 0/TBD | Not started | - |
+| 5. Authentication and Multi-Lease | 0/5 | Planned | - |
 | 6. Timeline and Smart Recommendations | 0/TBD | Not started | - |
 | 7. Polish, Export, and Growth | 0/TBD | Not started | - |
