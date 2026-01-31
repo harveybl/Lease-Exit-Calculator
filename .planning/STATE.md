@@ -138,6 +138,10 @@ Recent decisions affecting current work:
 - [07-04]: WCAG 2.5.5 touch target minimum (44px) enforced on interactive elements
 - [07-04]: Timeline chart reduced to 300px height on mobile for better fit
 - [07-04]: Recharts preserveStartEnd interval for automatic mobile label spacing
+- [07-02]: Transfer scenario uses default fees ($400 transfer, $100 marketplace, $150 registration) since DB doesn't capture transfer-specific fields
+- [07-02]: Transfer scenario marked incomplete by default with warning to add transfer details
+- [07-02]: Transfer is always available in timeline (unlike extension which is lease-end only)
+- [07-02]: Chart color --chart-6 assigned to lease transfer for visual consistency
 
 ### Pending Todos
 
@@ -153,7 +157,7 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-01-31
-Stopped at: Completed 07-03-PLAN.md (Progressive Web App Configuration)
+Stopped at: Completed 07-02-PLAN.md (Lease Transfer UI Integration)
 Resume file: None
 
-**Phase 7 in progress (3/4 plans).** PWA configured, one plan remaining.
+**All phases complete (31/31 plans).** Ready for deployment and future enhancements.
