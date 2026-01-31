@@ -5,16 +5,15 @@
 See: .planning/PROJECT.md (updated 2026-01-28)
 
 **Core value:** Show the user the smartest financial move for their vehicle lease right now, and when a better window might open up.
-**Current focus:** Phase 4 complete — Market Value and Valuation
+**Current focus:** Phase 5 skipped (auth dropped) — Next: Phase 6
 
 ## Current Position
 
-Phase: 4 of 7 (Market Value and Valuation) — COMPLETE
-Plan: 5 of 5 in current phase — COMPLETE
-Status: Complete
-Last activity: 2026-01-30 -- Completed 04-05-PLAN.md (Integration + browser verification)
+Phase: 5 of 7 (Multi-Lease / Auth Dropped) — SKIPPED
+Status: Auth unnecessary for local app. Multi-lease already works from Phase 2.
+Last activity: 2026-01-31 -- Reverted Clerk auth (fdf4d4a), app is local-only
 
-Progress: [███████████████████] 23/23 plans (100% - phases 1-4 complete)
+Progress: [███████████████████] 23/23 plans (100% - phases 1-4 complete, phase 5 skipped)
 
 ## Performance Metrics
 
@@ -48,6 +47,7 @@ Recent decisions affecting current work:
 - [Roadmap]: Calculations before UI -- financial accuracy is the entire value proposition
 - [Roadmap]: Manual value entry before API integration -- eliminates external dependency risk
 - [Roadmap]: Auth after core features -- personal-use validation does not require auth
+- [05]: Auth dropped entirely -- app is local/household tool, no login needed. Multi-lease already works from Phase 2.
 - [01-01]: Decimal.js precision=20, ROUND_HALF_UP for all financial calculations
 - [01-01]: All monetary types use Decimal, never number (enforced by type system)
 - [01-01]: Import Decimal from @/lib/decimal (not 'decimal.js') to guarantee config consistency
@@ -124,8 +124,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-30
-Stopped at: Completed Phase 4 (Market Value and Valuation) - all 5 plans executed and verified
+Last session: 2026-01-31
+Stopped at: Phase 5 skipped (auth dropped — local app). Reverted Clerk auth code.
 Resume file: None
 
-**Phase 4 complete.** Next: Phase 5 (Authentication and Multi-Lease)
+**Phase 5 skipped.** Next: Phase 6 (Timeline and Smart Recommendations)

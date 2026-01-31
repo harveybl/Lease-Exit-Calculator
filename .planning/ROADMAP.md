@@ -10,7 +10,7 @@ This roadmap delivers a vehicle lease exit-option comparison tool in seven phase
 - [x] **Phase 2: Lease Entry and Core UI** - Guided forms for capturing lease data with progressive disclosure and educational tooltips (4/4 plans complete)
 - [x] **Phase 3: Comparison View** - Side-by-side five-option comparison with cost breakdowns and a recommended best option (4/4 plans complete)
 - [x] **Phase 4: Market Value and Valuation** - Manual market value entry with service abstraction for future API integration (5/5 plans complete)
-- [ ] **Phase 5: Authentication and Multi-Lease** - User accounts via Clerk with multi-lease support and cross-device persistence
+- [x] **Phase 5: ~~Authentication and~~ Multi-Lease** - Skipped auth (local app); multi-lease already works from Phase 2
 - [ ] **Phase 6: Timeline and Smart Recommendations** - Month-by-month cost evolution chart with decision window identification
 - [ ] **Phase 7: Polish, Export, and Growth** - PDF export, PWA, responsive optimization, accessibility, and lease transfer analysis
 
@@ -66,22 +66,13 @@ Plans: 4/4 complete (03-01 ✓, 03-02 ✓, 03-03 ✓, 03-04 ✓)
 
 Plans: 5/5 complete (04-01 ✓, 04-02 ✓, 04-03 ✓, 04-04 ✓, 04-05 ✓)
 
-### Phase 5: Authentication and Multi-Lease
-**Goal**: Users have personal accounts so their lease data is private, portable across devices, and they can track more than one vehicle.
-**Depends on**: Phase 2
-**Requirements**: AUTH-01, AUTH-02, AUTH-03, AUTH-04, AUTH-05
-**Success Criteria** (what must be TRUE):
-  1. User can create an account and log in through Clerk (email, Google, or other configured provider)
-  2. Lease data is tied to the authenticated user -- logging in on a different device shows the same leases
-  3. User can add a second lease and switch between leases to see separate comparison results for each
-  4. Unauthenticated visitors cannot access lease data or comparison views (protected routes redirect to login)
+### Phase 5: Multi-Lease (Auth Dropped)
+**Goal**: ~~Users have personal accounts so their lease data is private, portable across devices, and they can~~ track more than one vehicle.
+**Status**: SKIPPED — Auth unnecessary for local/household app. Multi-lease already implemented in Phase 2 (lease list, create, edit, compare per lease).
+**Reason**: App is local-only. No user accounts needed. May be shared as public repo for others to run locally.
+**Multi-lease capability**: Already exists — users can create multiple leases and switch between them via the lease list at `/lease`.
 
-Plans: 5 plans
-- [ ] 05-01-PLAN.md -- Clerk installation, ClerkProvider, middleware, auth pages
-- [ ] 05-02-PLAN.md -- Database schema: users table and user_id FK on leases
-- [ ] 05-03-PLAN.md -- Webhook handler and auth-gated Server Actions
-- [ ] 05-04-PLAN.md -- Route restructuring, Header, lease list, multi-lease navigation
-- [ ] 05-05-PLAN.md -- Browser verification of all auth and multi-lease flows
+Plans: Skipped (auth plans reverted in fdf4d4a)
 
 ### Phase 6: Timeline and Smart Recommendations
 **Goal**: A user can see how their exit options change month-by-month over the remaining lease term, with the system identifying when financial windows open or close.
@@ -97,7 +88,7 @@ Plans: TBD
 
 ### Phase 7: Polish, Export, and Growth
 **Goal**: The application is production-ready with export capabilities, mobile-optimized layout, installability, accessibility compliance, and lease transfer as a sixth comparison option.
-**Depends on**: Phase 3, Phase 5
+**Depends on**: Phase 3
 **Requirements**: PLSH-01, PLSH-02, PLSH-03, PLSH-04, PLSH-05
 **Success Criteria** (what must be TRUE):
   1. User can export a comparison summary to PDF that includes all options, cost breakdowns, and the recommendation
@@ -116,6 +107,6 @@ Plans: TBD
 | 2. Lease Entry and Core UI | 4/4 | ✓ Complete | 2026-01-29 |
 | 3. Comparison View | 4/4 | ✓ Complete | 2026-01-29 |
 | 4. Market Value and Valuation | 5/5 | ✓ Complete | 2026-01-30 |
-| 5. Authentication and Multi-Lease | 0/5 | Planned | - |
+| 5. Multi-Lease (Auth Dropped) | - | ✓ Skipped | 2026-01-31 |
 | 6. Timeline and Smart Recommendations | 0/TBD | Not started | - |
 | 7. Polish, Export, and Growth | 0/TBD | Not started | - |

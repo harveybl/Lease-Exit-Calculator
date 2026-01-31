@@ -54,11 +54,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Authentication and Multi-Lease
 
-- [ ] **AUTH-01**: User can create an account and log in via Clerk authentication
-- [ ] **AUTH-02**: Lease data is scoped to authenticated user (user_id foreign keys)
-- [ ] **AUTH-03**: User session persists across browser sessions
-- [ ] **AUTH-04**: User can store and switch between multiple leases
-- [ ] **AUTH-05**: Protected routes prevent unauthenticated access to lease data
+- [x] ~~**AUTH-01**: User can create an account and log in via Clerk authentication~~ — DROPPED (local app, no auth needed)
+- [x] ~~**AUTH-02**: Lease data is scoped to authenticated user (user_id foreign keys)~~ — DROPPED (local app, no auth needed)
+- [x] ~~**AUTH-03**: User session persists across browser sessions~~ — DROPPED (local app, no auth needed)
+- [x] **AUTH-04**: User can store and switch between multiple leases — Already implemented in Phase 2
+- [x] ~~**AUTH-05**: Protected routes prevent unauthenticated access to lease data~~ — DROPPED (local app, no auth needed)
 
 ### Timeline and Recommendations
 
@@ -143,11 +143,11 @@ Explicitly excluded. Documented to prevent scope creep.
 | VALU-02 | Phase 4 | Pending |
 | VALU-03 | Phase 4 | Pending |
 | VALU-04 | Phase 4 | Pending |
-| AUTH-01 | Phase 5 | Pending |
-| AUTH-02 | Phase 5 | Pending |
-| AUTH-03 | Phase 5 | Pending |
-| AUTH-04 | Phase 5 | Pending |
-| AUTH-05 | Phase 5 | Pending |
+| AUTH-01 | Phase 5 | Dropped |
+| AUTH-02 | Phase 5 | Dropped |
+| AUTH-03 | Phase 5 | Dropped |
+| AUTH-04 | Phase 2 | Complete |
+| AUTH-05 | Phase 5 | Dropped |
 | TIME-01 | Phase 6 | Pending |
 | TIME-02 | Phase 6 | Pending |
 | TIME-03 | Phase 6 | Pending |
@@ -165,4 +165,4 @@ Explicitly excluded. Documented to prevent scope creep.
 
 ---
 *Requirements defined: 2026-01-28*
-*Last updated: 2026-01-29 — Phase 1 requirements marked Complete*
+*Last updated: 2026-01-31 — Phase 5 auth requirements dropped (local app), AUTH-04 already complete from Phase 2*
