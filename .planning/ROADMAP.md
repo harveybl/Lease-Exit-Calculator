@@ -9,7 +9,7 @@ This roadmap delivers a vehicle lease exit-option comparison tool in seven phase
 - [x] **Phase 1: Foundation and Calculation Engine** - Scaffold the project and build the pure-function financial engine that powers every feature (6/6 plans complete)
 - [x] **Phase 2: Lease Entry and Core UI** - Guided forms for capturing lease data with progressive disclosure and educational tooltips (4/4 plans complete)
 - [x] **Phase 3: Comparison View** - Side-by-side five-option comparison with cost breakdowns and a recommended best option (4/4 plans complete)
-- [ ] **Phase 4: Market Value and Valuation** - Manual market value entry with service abstraction for future API integration
+- [x] **Phase 4: Market Value and Valuation** - Manual market value entry with service abstraction for future API integration (5/5 plans complete)
 - [ ] **Phase 5: Authentication and Multi-Lease** - User accounts via Clerk with multi-lease support and cross-device persistence
 - [ ] **Phase 6: Timeline and Smart Recommendations** - Month-by-month cost evolution chart with decision window identification
 - [ ] **Phase 7: Polish, Export, and Growth** - PDF export, PWA, responsive optimization, accessibility, and lease transfer analysis
@@ -64,11 +64,7 @@ Plans: 4/4 complete (03-01 ✓, 03-02 ✓, 03-03 ✓, 03-04 ✓)
   3. A valuation provider interface exists in code so that adding KBB or Edmunds integration later does not require changing components that consume market value
   4. The displayed market value shows when it was last updated and includes a disclaimer about estimate accuracy
 
-Plans:
-- [ ] 04-01-PLAN.md -- Database schema, provider interface, validation, staleness utility
-- [ ] 04-02-PLAN.md -- TDD: Evaluation logic accepts market value, handles missing gracefully
-- [ ] 04-03-PLAN.md -- Server actions and comparison page data wiring
-- [ ] 04-04-PLAN.md -- UI components (banner, display, edit, equity) + visual verification
+Plans: 5/5 complete (04-01 ✓, 04-02 ✓, 04-03 ✓, 04-04 ✓, 04-05 ✓)
 
 ### Phase 5: Authentication and Multi-Lease
 **Goal**: Users have personal accounts so their lease data is private, portable across devices, and they can track more than one vehicle.
@@ -114,7 +110,7 @@ Plans: TBD
 | 1. Foundation and Calculation Engine | 6/6 | ✓ Complete | 2026-01-29 |
 | 2. Lease Entry and Core UI | 4/4 | ✓ Complete | 2026-01-29 |
 | 3. Comparison View | 4/4 | ✓ Complete | 2026-01-29 |
-| 4. Market Value and Valuation | 0/TBD | Not started | - |
+| 4. Market Value and Valuation | 5/5 | ✓ Complete | 2026-01-30 |
 | 5. Authentication and Multi-Lease | 0/TBD | Not started | - |
 | 6. Timeline and Smart Recommendations | 0/TBD | Not started | - |
 | 7. Polish, Export, and Growth | 0/TBD | Not started | - |
