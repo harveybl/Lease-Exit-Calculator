@@ -6,7 +6,6 @@ import type { Lease } from '@/lib/db/schema';
 function createMockLease(overrides: Partial<Lease> = {}): Lease {
   return {
     id: 'test-lease-1',
-    userId: null, // No user for test leases (pre-auth)
     make: 'Toyota',
     model: 'Camry',
     year: 2023,
