@@ -11,7 +11,7 @@ This roadmap delivers a vehicle lease exit-option comparison tool in seven phase
 - [x] **Phase 3: Comparison View** - Side-by-side five-option comparison with cost breakdowns and a recommended best option (4/4 plans complete)
 - [x] **Phase 4: Market Value and Valuation** - Manual market value entry with service abstraction for future API integration (5/5 plans complete)
 - [x] **Phase 5: ~~Authentication and~~ Multi-Lease** - Skipped auth (local app); multi-lease already works from Phase 2
-- [ ] **Phase 6: Timeline and Smart Recommendations** - Month-by-month cost evolution chart with decision window identification
+- [ ] **Phase 6: Timeline and Smart Recommendations** - Month-by-month cost evolution chart with decision window identification (4 plans)
 - [ ] **Phase 7: Polish, Export, and Growth** - PDF export, PWA, responsive optimization, accessibility, and lease transfer analysis
 
 ## Phase Details
@@ -78,13 +78,18 @@ Plans: Skipped (auth plans reverted in fdf4d4a)
 **Goal**: A user can see how their exit options change month-by-month over the remaining lease term, with the system identifying when financial windows open or close.
 **Depends on**: Phase 3
 **Requirements**: TIME-01, TIME-02, TIME-03, TIME-04
+**Plans:** 4 plans
 **Success Criteria** (what must be TRUE):
   1. An interactive chart shows cost curves for each exit option across remaining months of the lease term
   2. Hovering over any month on the chart shows the cost breakdown for all options at that point in time
   3. The system identifies and labels decision inflection points (e.g., "Buyout becomes cheaper than returning after month 18")
   4. A recommendation summary distinguishes between the best option today and whether waiting would produce a better outcome
 
-Plans: TBD
+Plans:
+- [ ] 06-01-PLAN.md — Timeline calculation engine (TDD: month-by-month scenario projections)
+- [ ] 06-02-PLAN.md — Crossover detection and decision window recommendations (TDD)
+- [ ] 06-03-PLAN.md — Install Recharts + build chart components (TimelineChart, tooltip, markers)
+- [ ] 06-04-PLAN.md — Timeline page, recommendation UI, wiring, and visual verification
 
 ### Phase 7: Polish, Export, and Growth
 **Goal**: The application is production-ready with export capabilities, mobile-optimized layout, installability, accessibility compliance, and lease transfer as a sixth comparison option.
@@ -108,5 +113,5 @@ Plans: TBD
 | 3. Comparison View | 4/4 | ✓ Complete | 2026-01-29 |
 | 4. Market Value and Valuation | 5/5 | ✓ Complete | 2026-01-30 |
 | 5. Multi-Lease (Auth Dropped) | - | ✓ Skipped | 2026-01-31 |
-| 6. Timeline and Smart Recommendations | 0/TBD | Not started | - |
+| 6. Timeline and Smart Recommendations | 0/4 | Not started | - |
 | 7. Polish, Export, and Growth | 0/TBD | Not started | - |
