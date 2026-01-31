@@ -194,20 +194,22 @@ describe('buildTimelineData', () => {
     const timelineWithoutMarketValue = buildTimelineData(baseLease);
     const timelineWithMarketValue = buildTimelineData(baseLease, new Decimal('25000'));
 
-    // Without market value: 4 scenarios (no sell-privately)
-    expect(timelineWithoutMarketValue.scenarios).toHaveLength(4);
+    // Without market value: 5 scenarios (no sell-privately, but includes lease-transfer)
+    expect(timelineWithoutMarketValue.scenarios).toHaveLength(5);
     expect(timelineWithoutMarketValue.scenarios).toContain('return');
     expect(timelineWithoutMarketValue.scenarios).toContain('buyout');
     expect(timelineWithoutMarketValue.scenarios).toContain('early-termination');
     expect(timelineWithoutMarketValue.scenarios).toContain('extension');
+    expect(timelineWithoutMarketValue.scenarios).toContain('lease-transfer');
     expect(timelineWithoutMarketValue.scenarios).not.toContain('sell-privately');
 
-    // With market value: all 5 scenarios
-    expect(timelineWithMarketValue.scenarios).toHaveLength(5);
+    // With market value: all 6 scenarios
+    expect(timelineWithMarketValue.scenarios).toHaveLength(6);
     expect(timelineWithMarketValue.scenarios).toContain('return');
     expect(timelineWithMarketValue.scenarios).toContain('buyout');
     expect(timelineWithMarketValue.scenarios).toContain('sell-privately');
     expect(timelineWithMarketValue.scenarios).toContain('early-termination');
     expect(timelineWithMarketValue.scenarios).toContain('extension');
+    expect(timelineWithMarketValue.scenarios).toContain('lease-transfer');
   });
 });

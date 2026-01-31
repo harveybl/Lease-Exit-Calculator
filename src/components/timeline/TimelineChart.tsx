@@ -41,6 +41,10 @@ const chartConfig = {
     label: 'Keep Paying',
     color: 'hsl(var(--chart-5))',
   },
+  leaseTransfer: {
+    label: 'Transfer Lease',
+    color: 'hsl(var(--chart-6))',
+  },
 } satisfies ChartConfig;
 
 /**
@@ -133,6 +137,16 @@ export function TimelineChart({ data, crossovers, className }: TimelineChartProp
           type="monotone"
           dataKey="extension"
           stroke="var(--color-extension)"
+          strokeWidth={2}
+          dot={false}
+          connectNulls={false}
+        />
+
+        {/* Lease transfer scenario line */}
+        <Line
+          type="monotone"
+          dataKey="leaseTransfer"
+          stroke="var(--color-leaseTransfer)"
           strokeWidth={2}
           dot={false}
           connectNulls={false}

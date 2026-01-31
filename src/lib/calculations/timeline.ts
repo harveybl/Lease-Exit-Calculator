@@ -8,6 +8,7 @@ import {
   evaluateSellPrivatelyScenario,
   evaluateEarlyTerminationScenario,
   evaluateExtensionScenario,
+  evaluateLeaseTransferScenario,
 } from './scenarios';
 
 /**
@@ -94,6 +95,18 @@ export function projectScenarioCosts(
     extensionResult = result.totalCost;
   }
 
+  // Evaluate lease transfer scenario (always available)
+  const leaseTransferResult = evaluateLeaseTransferScenario({
+    transferFee: new Decimal('400'), // Midpoint of $75-$895 range
+    marketplaceFee: new Decimal('100'), // Typical marketplace listing
+    registrationFee: new Decimal('150'), // Typical registration/title
+    remainingPayments: lease.monthlyPayment.times(monthsRemaining),
+    monthsRemaining,
+    monthlyPayment: lease.monthlyPayment,
+    dispositionFee: lease.dispositionFee ?? new Decimal('0'),
+    incentivePayments: new Decimal('0'),
+  });
+
   return {
     month: monthOffset,
     costs: {
@@ -102,7 +115,7 @@ export function projectScenarioCosts(
       'sell-privately': sellPrivatelyResult,
       'early-termination': earlyTerminationResult.netCost,
       extension: extensionResult,
-      'lease-transfer': null, // TODO: Implement timeline support for lease transfer in future plan
+      'lease-transfer': leaseTransferResult.netCost,
     },
   };
 }
@@ -147,6 +160,7 @@ export function buildTimelineData(
     'buyout',
     'early-termination',
     'extension',
+    'lease-transfer',
   ];
 
   if (hasMarketValue) {
