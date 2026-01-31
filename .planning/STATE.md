@@ -9,18 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 
 ## Current Position
 
-Phase: 5 of 7 (Multi-Lease / Auth Dropped) — SKIPPED
-Status: Auth unnecessary for local app. Multi-lease already works from Phase 2.
-Last activity: 2026-01-31 -- Reverted Clerk auth (fdf4d4a), app is local-only
+Phase: 6 of 7 (Timeline and Smart Recommendations)
+Plan: 1 of 5
+Status: In progress
+Last activity: 2026-01-31 -- Completed 06-01-PLAN.md (Timeline Calculation Engine)
 
-Progress: [███████████████████] 23/23 plans (100% - phases 1-4 complete, phase 5 skipped)
+Progress: [████████████████████] 24/28 plans (85.7%)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 23
-- Average duration: ~3m 10s
-- Total execution time: ~73m
+- Total plans completed: 24
+- Average duration: ~3m 8s
+- Total execution time: ~75m 18s
 
 **By Phase:**
 
@@ -30,10 +31,11 @@ Progress: [███████████████████] 23/23 plan
 | 2. Lease Entry and Core UI | 4/4 | 22m 32s | 5m 38s |
 | 3. Comparison View | 4/4 | ~8m | ~2m |
 | 4. Market Value and Valuation | 5/5 | ~13m | ~2m 36s |
+| 6. Timeline and Recommendations | 1/5 | 2m 18s | 2m 18s |
 
 **Recent Trend:**
-- Last 5 plans: 04-01 (3m), 04-02 (4m), 04-03 (1m 34s), 04-04 (1m 53s), 04-05 (~3m + verification)
-- Trend: Component plans consistently fast (~2m), integration plans similar
+- Last 5 plans: 04-02 (4m), 04-03 (1m 34s), 04-04 (1m 53s), 04-05 (~3m), 06-01 (2m 18s)
+- Trend: TDD calculation plans efficient (~2m), component plans similar
 
 *Updated after each plan completion*
 
@@ -110,6 +112,10 @@ Recent decisions affecting current work:
 - [04-04]: MarketValueDisplay toggles between display and edit modes with Check/X buttons
 - [04-04]: Near-zero equity threshold set at $50 for neutral display
 - [04-04]: Inline edit pattern with useTransition for server action pending states
+- [06-01]: Decimal precision maintained during timeline calculations, converted to number at export boundary
+- [06-01]: Extension scenario only available at lease end (monthsRemaining = 0)
+- [06-01]: Null values for incomplete scenarios (sellPrivately without market value, extension mid-lease)
+- [06-01]: Default 6-month extension with zero tax for timeline projections
 
 ### Pending Todos
 
@@ -124,8 +130,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-31
-Stopped at: Phase 5 skipped (auth dropped — local app). Reverted Clerk auth code.
+Last session: 2026-01-31 13:02 PST
+Stopped at: Completed 06-01-PLAN.md (Timeline Calculation Engine)
 Resume file: None
 
-**Phase 5 skipped.** Next: Phase 6 (Timeline and Smart Recommendations)
+**Phase 6 in progress** (1 of 5 plans complete). Next: 06-02 (Timeline Chart Component)
