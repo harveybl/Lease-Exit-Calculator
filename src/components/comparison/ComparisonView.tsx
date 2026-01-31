@@ -19,13 +19,15 @@ export function ComparisonView({ data, marketValue, leaseId }: ComparisonViewPro
   const uniqueDisclaimers = [...new Set(allDisclaimers)];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto px-4 py-4 md:py-8">
       {/* Market value entry/display - above hero summary */}
-      {marketValue ? (
-        <MarketValueDisplay leaseId={leaseId} marketValue={marketValue} />
-      ) : (
-        <MarketValueBanner leaseId={leaseId} />
-      )}
+      <div className="mb-4 md:mb-6">
+        {marketValue ? (
+          <MarketValueDisplay leaseId={leaseId} marketValue={marketValue} />
+        ) : (
+          <MarketValueBanner leaseId={leaseId} />
+        )}
+      </div>
       <HeroSummary data={data} />
       <OptionsList scenarios={data.scenarios} />
 

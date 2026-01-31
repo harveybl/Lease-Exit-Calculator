@@ -58,7 +58,7 @@ export default async function ComparePage({ params }: ComparePageProps) {
       />
 
       {/* Timeline navigation */}
-      <div className="mt-8 rounded-lg border bg-card p-6 text-center">
+      <div className="mt-8 rounded-lg border bg-card p-4 md:p-6 text-center">
         <h2 className="text-lg font-semibold mb-2">When should you act?</h2>
         <p className="text-sm text-muted-foreground mb-4">
           See how your options change month-by-month over the remaining lease term.

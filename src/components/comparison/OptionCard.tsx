@@ -55,7 +55,7 @@ export function OptionCard({ scenario, rank, isFirst }: OptionCardProps) {
               )}
             </div>
           </div>
-          <span className="text-xl font-bold tabular-nums">
+          <span className="text-xl font-bold tabular-nums shrink-0">
             {formatCurrency(scenario.netCost)}
           </span>
         </div>
@@ -65,7 +65,7 @@ export function OptionCard({ scenario, rank, isFirst }: OptionCardProps) {
         <CollapsibleTrigger asChild>
           <Button
             variant="ghost"
-            className="w-full justify-between px-6"
+            className="w-full justify-between px-6 min-h-[44px]"
           >
             <span>View cost breakdown</span>
             <ChevronDown
@@ -87,7 +87,7 @@ export function OptionCard({ scenario, rank, isFirst }: OptionCardProps) {
       </Collapsible>
 
       {scenario.warnings.length > 0 && (
-        <div className="mx-6 mb-6 bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-md p-3">
+        <div className="mx-6 mb-6 bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-md p-2 md:p-3">
           {scenario.warnings.map((warning, idx) => (
             <p
               key={idx}

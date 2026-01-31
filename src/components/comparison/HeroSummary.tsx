@@ -59,7 +59,7 @@ export function HeroSummary({ data }: HeroSummaryProps) {
       </CardHeader>
 
       <CardContent>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:flex md:justify-between">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {scenarios.map((opt) => (
             <div key={opt.type} className="text-center">
               <p className="text-xs text-muted-foreground mb-1">
