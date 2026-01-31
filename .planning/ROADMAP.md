@@ -91,6 +91,7 @@ Plans: 4/4 complete (06-01 ✓, 06-02 ✓, 06-03 ✓, 06-04 ✓)
 **Goal**: The application is production-ready with export capabilities, mobile-optimized layout, installability, accessibility compliance, and lease transfer as a sixth comparison option.
 **Depends on**: Phase 3
 **Requirements**: PLSH-01, PLSH-02, PLSH-03, PLSH-04, PLSH-05
+**Plans:** 6 plans
 **Success Criteria** (what must be TRUE):
   1. User can export a comparison summary to PDF that includes all options, cost breakdowns, and the recommendation
   2. The comparison view is usable on a phone screen (responsive layout, no horizontal scrolling of critical data)
@@ -98,7 +99,13 @@ Plans: 4/4 complete (06-01 ✓, 06-02 ✓, 06-03 ✓, 06-04 ✓)
   4. Keyboard navigation reaches all interactive elements, screen readers announce comparison data meaningfully, and no accessibility violations remain at WCAG 2.1 AA level
   5. Lease transfer/swap appears as a sixth option in the comparison view with transfer fees, registration costs, and timeline implications included
 
-Plans: TBD
+Plans:
+- [ ] 07-01-PLAN.md -- Lease transfer scenario calculation (TDD)
+- [ ] 07-02-PLAN.md -- Wire lease transfer into comparison and timeline
+- [ ] 07-03-PLAN.md -- PWA setup (manifest, service worker, icons)
+- [ ] 07-04-PLAN.md -- Mobile responsive layout optimization
+- [ ] 07-05-PLAN.md -- PDF export with react-pdf
+- [ ] 07-06-PLAN.md -- Accessibility audit and WCAG AA fixes
 
 ## Progress
 
@@ -110,4 +117,4 @@ Plans: TBD
 | 4. Market Value and Valuation | 5/5 | ✓ Complete | 2026-01-30 |
 | 5. Multi-Lease (Auth Dropped) | - | ✓ Skipped | 2026-01-31 |
 | 6. Timeline and Smart Recommendations | 4/4 | ✓ Complete | 2026-01-31 |
-| 7. Polish, Export, and Growth | 0/TBD | Not started | - |
+| 7. Polish, Export, and Growth | 0/6 | In Progress | - |
