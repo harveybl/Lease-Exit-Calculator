@@ -62,10 +62,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Timeline and Recommendations
 
-- [ ] **TIME-01**: Month-by-month timeline view showing how each exit option's cost changes over the remaining lease term
-- [ ] **TIME-02**: Interactive chart with hover states showing cost details per month
-- [ ] **TIME-03**: Smart recommendation algorithm that identifies the optimal exit window (today vs future months)
-- [ ] **TIME-04**: Decision window identification showing when options flip (e.g., "buyout becomes better than return in month 18")
+- [x] **TIME-01**: Month-by-month timeline view showing how each exit option's cost changes over the remaining lease term
+- [x] **TIME-02**: Interactive chart with hover states showing cost details per month
+- [x] **TIME-03**: Smart recommendation algorithm that identifies the optimal exit window (today vs future months)
+- [x] **TIME-04**: Decision window identification showing when options flip (e.g., "buyout becomes better than return in month 18")
 
 ### Polish and Growth
 
@@ -148,10 +148,10 @@ Explicitly excluded. Documented to prevent scope creep.
 | AUTH-03 | Phase 5 | Dropped |
 | AUTH-04 | Phase 2 | Complete |
 | AUTH-05 | Phase 5 | Dropped |
-| TIME-01 | Phase 6 | Pending |
-| TIME-02 | Phase 6 | Pending |
-| TIME-03 | Phase 6 | Pending |
-| TIME-04 | Phase 6 | Pending |
+| TIME-01 | Phase 6 | Complete |
+| TIME-02 | Phase 6 | Complete |
+| TIME-03 | Phase 6 | Complete |
+| TIME-04 | Phase 6 | Complete |
 | PLSH-01 | Phase 7 | Pending |
 | PLSH-02 | Phase 7 | Pending |
 | PLSH-03 | Phase 7 | Pending |
