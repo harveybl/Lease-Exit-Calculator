@@ -109,7 +109,12 @@ export function LineItemsBreakdown({
                       isAsset && "text-green-600 dark:text-green-400",
                     )}
                   >
-                    {isAsset && "You receive: "}
+                    {isAsset && (
+                      <>
+                        <span className="sr-only">Credit: </span>
+                        You receive:{" "}
+                      </>
+                    )}
                     {formatCurrency(item.amount)}
                   </span>
                 </div>

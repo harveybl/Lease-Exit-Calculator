@@ -38,16 +38,25 @@ export function OptionCard({ scenario, rank, isFirst }: OptionCardProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {isIncomplete ? (
-              <Badge variant="outline" className="bg-muted text-muted-foreground">
+              <Badge
+                variant="outline"
+                className="bg-muted text-muted-foreground"
+                aria-label="Incomplete scenario, needs market value"
+              >
                 ?
               </Badge>
             ) : (
-              <Badge variant={rank === 1 ? "default" : "outline"}>
+              <Badge
+                variant={rank === 1 ? "default" : "outline"}
+                aria-label={`Ranked ${rank} of available options`}
+              >
                 #{rank}
               </Badge>
             )}
             <div>
-              <CardTitle>{formatOptionName(scenario.type)}</CardTitle>
+              <h3>
+                <CardTitle>{formatOptionName(scenario.type)}</CardTitle>
+              </h3>
               {isIncomplete && (
                 <p className="text-xs text-muted-foreground mt-1">
                   Needs market value
@@ -66,6 +75,8 @@ export function OptionCard({ scenario, rank, isFirst }: OptionCardProps) {
           <Button
             variant="ghost"
             className="w-full justify-between px-6 min-h-[44px]"
+            aria-expanded={open}
+            aria-label={`View cost breakdown for ${formatOptionName(scenario.type)}`}
           >
             <span>View cost breakdown</span>
             <ChevronDown
@@ -73,11 +84,12 @@ export function OptionCard({ scenario, rank, isFirst }: OptionCardProps) {
                 "h-4 w-4 transition-transform duration-200",
                 open && "rotate-180",
               )}
+              aria-hidden="true"
             />
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <CardContent className="pt-4">
+          <CardContent className="pt-4" role="region" aria-label="Cost breakdown details">
             <LineItemsBreakdown
               lineItems={scenario.lineItems}
               netCost={scenario.netCost}
@@ -87,7 +99,10 @@ export function OptionCard({ scenario, rank, isFirst }: OptionCardProps) {
       </Collapsible>
 
       {scenario.warnings.length > 0 && (
-        <div className="mx-6 mb-6 bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-md p-2 md:p-3">
+        <div
+          className="mx-6 mb-6 bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-md p-2 md:p-3"
+          role="alert"
+        >
           {scenario.warnings.map((warning, idx) => (
             <p
               key={idx}

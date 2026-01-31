@@ -40,13 +40,18 @@ export function HeroSummary({ data }: HeroSummaryProps) {
   return (
     <Card className="border-2 border-primary mb-6 md:mb-8">
       <CardHeader>
-        <CardTitle className="text-xl md:text-2xl font-bold">
-          Best Move: {formatOptionName(bestOption.type)}
-        </CardTitle>
+        <h2>
+          <CardTitle className="text-xl md:text-2xl font-bold">
+            Best Move: {formatOptionName(bestOption.type)}
+          </CardTitle>
+        </h2>
         <CardDescription>{savingsDescription}</CardDescription>
 
         {tie.isTie && tie.tiedOptions.length >= 2 && (
-          <div className="bg-muted p-3 rounded-md text-sm text-muted-foreground mt-2">
+          <div
+            role="status"
+            className="bg-muted p-3 rounded-md text-sm text-muted-foreground mt-2"
+          >
             {formatOptionName(tie.tiedOptions[0])} and{" "}
             {formatOptionName(tie.tiedOptions[1])} are within $100 — either
             is a strong choice
@@ -71,6 +76,9 @@ export function HeroSummary({ data }: HeroSummaryProps) {
                   opt.type === bestOption.type && "text-primary font-bold",
                 )}
               >
+                <span className="sr-only">
+                  {formatOptionName(opt.type)} total cost:{" "}
+                </span>
                 {formatCurrency(opt.netCost)}
               </p>
             </div>
