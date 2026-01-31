@@ -5,7 +5,7 @@ import { getLease, getLatestMarketValue } from "@/app/lease/actions";
 import { getComparisonData } from "@/lib/calculations/evaluate-all";
 import { ComparisonView } from "@/components/comparison/ComparisonView";
 import { Decimal } from "@/lib/decimal";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, TrendingUp } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Compare Options | Lease Tracker",
@@ -56,6 +56,21 @@ export default async function ComparePage({ params }: ComparePageProps) {
         marketValue={latestMarketValue}
         leaseId={id}
       />
+
+      {/* Timeline navigation */}
+      <div className="mt-8 rounded-lg border bg-card p-6 text-center">
+        <h2 className="text-lg font-semibold mb-2">When should you act?</h2>
+        <p className="text-sm text-muted-foreground mb-4">
+          See how your options change month-by-month over the remaining lease term.
+        </p>
+        <Link
+          href={`/lease/${id}/timeline`}
+          className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+        >
+          <TrendingUp className="h-4 w-4" />
+          View Timeline
+        </Link>
+      </div>
     </main>
   );
 }
