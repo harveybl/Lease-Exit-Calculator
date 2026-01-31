@@ -7,12 +7,13 @@ import {
   evaluateSellPrivatelyScenario,
   evaluateEarlyTerminationScenario,
   evaluateExtensionScenario,
+  evaluateLeaseTransferScenario,
 } from '@/lib/calculations/scenarios';
 
 /**
  * Bundled comparison data for the UI.
  *
- * Contains all five scenario results sorted best-to-worst,
+ * Contains all six scenario results sorted best-to-worst,
  * the best option, the return baseline, savings vs return, and tie detection.
  */
 export interface ComparisonData {
@@ -26,14 +27,14 @@ export interface ComparisonData {
 }
 
 /**
- * Evaluates all five lease-end scenarios for a given lease record.
+ * Evaluates all six lease-end scenarios for a given lease record.
  *
  * Accepts a Drizzle `Lease` select type (the shape returned by db.select().from(leases)).
  * Maps nullable DB fields to sensible defaults, then calls each scenario evaluator.
  *
  * @param lease - A lease record from the database
  * @param estimatedSalePrice - Optional market value for sell-privately scenario
- * @returns All five ScenarioResult objects sorted by netCost ascending (cheapest first)
+ * @returns All six ScenarioResult objects sorted by netCost ascending (cheapest first)
  */
 export function evaluateAllScenarios(
   lease: Lease,
@@ -54,7 +55,7 @@ export function evaluateAllScenarios(
   const earlyTerminationFee = new Decimal('0'); // Not captured in DB yet
   const wearAndTearEstimate = new Decimal('0'); // Not captured in DB yet
 
-  // Evaluate all five scenarios
+  // Evaluate all six scenarios
   const returnResult = evaluateReturnScenario({
     dispositionFee,
     currentMileage: lease.currentMileage,
@@ -117,6 +118,23 @@ export function evaluateAllScenarios(
     monthlyTax,
   });
 
+  const leaseTransferResult = evaluateLeaseTransferScenario({
+    transferFee: new Decimal('400'), // Midpoint of $75-$895 range
+    marketplaceFee: new Decimal('100'), // Typical marketplace listing
+    registrationFee: new Decimal('150'), // Typical registration/title
+    remainingPayments,
+    monthsRemaining,
+    monthlyPayment: lease.monthlyPayment,
+    dispositionFee,
+    incentivePayments: new Decimal('0'),
+  });
+
+  // Mark lease transfer as incomplete with warning (no transfer details in DB yet)
+  leaseTransferResult.incomplete = true;
+  leaseTransferResult.warnings.push(
+    'Add your transfer details for accurate lease transfer results'
+  );
+
   // Sort all results: complete scenarios by netCost ascending, incomplete last
   const scenarios: ScenarioResult[] = [
     returnResult,
@@ -124,6 +142,7 @@ export function evaluateAllScenarios(
     sellPrivatelyResult,
     earlyTerminationResult,
     extensionResult,
+    leaseTransferResult,
   ].sort((a, b) => {
     // Incomplete scenarios always sort last
     if (a.incomplete && !b.incomplete) return 1;
