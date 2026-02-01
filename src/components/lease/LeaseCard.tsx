@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import type { Lease } from "@/lib/db/schema";
 import { deleteLease } from "@/app/lease/actions";
 import { Button } from "@/components/ui/button";
@@ -10,10 +8,10 @@ import { BarChart3, Edit, Trash2 } from "lucide-react";
 
 interface LeaseCardProps {
   lease: Lease;
+  onDelete?: () => void;
 }
 
-export function LeaseCard({ lease }: LeaseCardProps) {
-  const router = useRouter();
+export function LeaseCard({ lease, onDelete }: LeaseCardProps) {
   const [deleting, setDeleting] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -31,7 +29,7 @@ export function LeaseCard({ lease }: LeaseCardProps) {
     const result = await deleteLease(lease.id);
 
     if (result.success) {
-      router.refresh();
+      onDelete?.();
     } else {
       console.error("Failed to delete lease:", result.error);
       setDeleting(false);
@@ -84,16 +82,16 @@ export function LeaseCard({ lease }: LeaseCardProps) {
         {/* Actions */}
         <div className="flex flex-col gap-2">
           <Button asChild variant="default" size="sm">
-            <Link href={`/lease/${lease.id}/compare`}>
+            <a href={`#/${lease.id}/compare`}>
               <BarChart3 className="h-4 w-4 mr-2" />
               Compare Options
-            </Link>
+            </a>
           </Button>
           <Button asChild variant="outline" size="sm">
-            <Link href={`/lease/${lease.id}/edit`}>
+            <a href={`#/${lease.id}/edit`}>
               <Edit className="h-4 w-4 mr-2" />
               Edit
-            </Link>
+            </a>
           </Button>
           <Button
             variant={confirmDelete ? "destructive" : "outline"}

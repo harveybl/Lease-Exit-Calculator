@@ -1,17 +1,42 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getLeases } from "./actions";
+import { getLeases } from "@/app/lease/actions";
 import { LeaseCard } from "@/components/lease/LeaseCard";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import type { Lease } from "@/lib/db/schema";
 
-export const metadata: Metadata = {
-  title: "Your Leases | Lease Tracker",
-  description: "Manage your vehicle leases.",
-};
+export function LeasesView() {
+  const [leases, setLeases] = useState<Lease[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function LeasesPage() {
-  const leases = await getLeases();
+  const loadLeases = async () => {
+    const data = await getLeases();
+    setLeases(data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    loadLeases();
+  }, []);
+
+  if (loading) {
+    return (
+      <main id="main-content" className="mx-auto max-w-4xl px-4 py-8">
+        <div className="flex items-center justify-between mb-6">
+          <div className="h-9 w-48 animate-pulse rounded bg-muted" />
+          <div className="h-10 w-28 animate-pulse rounded bg-muted" />
+        </div>
+        <div className="space-y-4">
+          {[1, 2].map((i) => (
+            <div key={i} className="h-32 animate-pulse rounded-lg bg-muted" />
+          ))}
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main id="main-content" className="mx-auto max-w-4xl px-4 py-8">
@@ -28,7 +53,6 @@ export default async function LeasesPage() {
 
       {/* Lease list */}
       {leases.length === 0 ? (
-        // Empty state
         <div className="rounded-2xl border-2 border-dashed border-border bg-card p-12 text-center">
           <h2 className="text-xl font-semibold mb-2">No leases yet</h2>
           <p className="text-muted-foreground mb-6">
@@ -42,10 +66,9 @@ export default async function LeasesPage() {
           </Button>
         </div>
       ) : (
-        // List of leases
         <div className="space-y-4">
           {leases.map((lease) => (
-            <LeaseCard key={lease.id} lease={lease} />
+            <LeaseCard key={lease.id} lease={lease} onDelete={loadLeases} />
           ))}
         </div>
       )}

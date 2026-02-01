@@ -101,6 +101,21 @@ Plans: 4/4 complete (06-01 ✓, 06-02 ✓, 06-03 ✓, 06-04 ✓)
 
 Plans: 6/6 complete (07-01 ✓, 07-02 ✓, 07-03 ✓, 07-04 ✓, 07-05 ✓, 07-06 ✓)
 
+### Phase 8: GitHub Pages Deployment (Client-Side Storage)
+**Goal:** The application runs entirely in the browser with no server dependencies, using IndexedDB for data persistence, and deploys automatically to GitHub Pages via static export.
+**Depends on**: Phase 7
+**Requirements**: Deployment (new — enables GitHub Pages hosting)
+**Gap Closure:** Closes pending todo from STATE.md and enables public deployment
+**Success Criteria** (what must be TRUE):
+  1. All data persistence uses IndexedDB (via Dexie.js) instead of Neon Postgres — no server-side database dependency
+  2. All server actions converted to client-side functions — no `'use server'` directives remain
+  3. Next.js configured with `output: 'export'` and the production build generates a static `/out` directory
+  4. GitHub Actions workflow deploys to GitHub Pages on push to master
+  5. The live site at GitHub Pages URL works end-to-end: create lease, add market value, compare options, view timeline, export PDF
+  6. All 186+ existing tests continue to pass after the migration
+
+Plans: 0/0 (planning)
+
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
@@ -112,3 +127,4 @@ Plans: 6/6 complete (07-01 ✓, 07-02 ✓, 07-03 ✓, 07-04 ✓, 07-05 ✓, 07-0
 | 5. Multi-Lease (Auth Dropped) | - | ✓ Skipped | 2026-01-31 |
 | 6. Timeline and Smart Recommendations | 4/4 | ✓ Complete | 2026-01-31 |
 | 7. Polish, Export, and Growth | 6/6 | ✓ Complete | 2026-01-31 |
+| 8. GitHub Pages Deployment | 0/0 | Planning | — |

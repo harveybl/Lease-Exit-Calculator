@@ -24,9 +24,10 @@ interface MarketValueDisplayProps {
     createdAt: Date;
     source: string;
   };
+  onSave?: () => void;
 }
 
-export function MarketValueDisplay({ leaseId, marketValue }: MarketValueDisplayProps) {
+export function MarketValueDisplay({ leaseId, marketValue, onSave }: MarketValueDisplayProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
   const [error, setError] = useState("");
@@ -67,9 +68,9 @@ export function MarketValueDisplay({ leaseId, marketValue }: MarketValueDisplayP
       if (!result.success) {
         setError(result.error);
       } else {
-        // Success - page will revalidate and show new value
         setIsEditing(false);
         setEditValue("");
+        onSave?.();
       }
     });
   };

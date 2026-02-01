@@ -1,17 +1,10 @@
 import type { NextConfig } from "next";
-import withSerwistInit from '@serwist/next'
-
-const withSerwist = withSerwistInit({
-  swSrc: 'src/app/sw.ts',
-  swDest: 'public/sw.js',
-  disable: process.env.NODE_ENV !== 'production', // Disable except in production (Serwist doesn't support Turbopack)
-})
 
 const nextConfig: NextConfig = {
+  output: 'export',
+  basePath: '/Lease-Exit-Calculator',
   // Empty turbopack config to suppress webpack migration warning
   turbopack: {},
-  // Exclude @react-pdf/renderer from server-side bundling (client-only library)
-  serverExternalPackages: ['@react-pdf/renderer'],
 };
 
-export default withSerwist(nextConfig);
+export default nextConfig;

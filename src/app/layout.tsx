@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Lease Tracker",
   description: "Vehicle lease exit option comparison tool",
+};
+
+export const viewport = {
   themeColor: '#0d7fa5',
 };
 
@@ -14,6 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="manifest" href="/Lease-Exit-Calculator/manifest.webmanifest" />
+      </head>
       <body>
         <a
           href="#main-content"

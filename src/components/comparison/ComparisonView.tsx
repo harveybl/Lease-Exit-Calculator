@@ -62,9 +62,10 @@ interface ComparisonViewProps {
   marketValue?: MarketValue | null;
   leaseId: string;
   heading?: string;
+  onMarketValueChange?: () => void;
 }
 
-export function ComparisonView({ data, marketValue, leaseId, heading = "Lease Comparison" }: ComparisonViewProps) {
+export function ComparisonView({ data, marketValue, leaseId, heading = "Lease Comparison", onMarketValueChange }: ComparisonViewProps) {
   // Collect unique disclaimers from all scenarios
   const allDisclaimers = data.scenarios.flatMap((s) => s.disclaimers);
   const uniqueDisclaimers = [...new Set(allDisclaimers)];
@@ -82,9 +83,9 @@ export function ComparisonView({ data, marketValue, leaseId, heading = "Lease Co
       {/* Market value entry/display - above hero summary */}
       <div className="mb-4 md:mb-6">
         {marketValue ? (
-          <MarketValueDisplay leaseId={leaseId} marketValue={marketValue} />
+          <MarketValueDisplay leaseId={leaseId} marketValue={marketValue} onSave={onMarketValueChange} />
         ) : (
-          <MarketValueBanner leaseId={leaseId} />
+          <MarketValueBanner leaseId={leaseId} onSave={onMarketValueChange} />
         )}
       </div>
       <section aria-label="Recommendation summary">

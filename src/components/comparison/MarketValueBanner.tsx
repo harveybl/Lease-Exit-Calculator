@@ -15,9 +15,10 @@ import { marketValueSchema } from "@/lib/validations/market-value-schema";
 
 interface MarketValueBannerProps {
   leaseId: string;
+  onSave?: () => void;
 }
 
-export function MarketValueBanner({ leaseId }: MarketValueBannerProps) {
+export function MarketValueBanner({ leaseId, onSave }: MarketValueBannerProps) {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
@@ -41,9 +42,9 @@ export function MarketValueBanner({ leaseId }: MarketValueBannerProps) {
 
       if (!result.success) {
         setError(result.error);
+      } else {
+        onSave?.();
       }
-      // On success, revalidatePath handles the update automatically
-      // The component will unmount when the page re-renders with marketValue data
     });
   };
 
