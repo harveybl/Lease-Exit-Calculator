@@ -22,7 +22,7 @@ interface TimelineChartProps {
 // Chart configuration mapping each scenario to a label and color
 const chartConfig = {
   return: {
-    label: 'Return Vehicle',
+    label: 'Ride Out Lease',
     color: 'hsl(var(--chart-1))',
   },
   buyout: {
@@ -38,7 +38,7 @@ const chartConfig = {
     color: 'hsl(var(--chart-4))',
   },
   extension: {
-    label: 'Keep Paying',
+    label: 'Extend Lease',
     color: 'hsl(var(--chart-5))',
   },
   leaseTransfer: {

@@ -26,7 +26,6 @@ export interface BuyoutScenarioResult extends ScenarioResult {
   payoffAmount: Decimal;
   remainingDepreciation: Decimal;
   purchaseFee: Decimal;
-  salesTax: Decimal;
 }
 
 export interface SellPrivatelyResult extends ScenarioResult {
@@ -39,8 +38,11 @@ export interface SellPrivatelyResult extends ScenarioResult {
 export interface EarlyTerminationResult extends ScenarioResult {
   type: 'early-termination';
   earlyTerminationFee: Decimal;
-  remainingDepreciation: Decimal;
-  unpaidRentCharges: Decimal;
+  dispositionFee: Decimal;
+  remainingPayments: Decimal;
+  optionA?: Decimal;
+  optionB: Decimal;
+  usedOption: 'a' | 'b' | 'b-only';
 }
 
 export interface ExtensionResult extends ScenarioResult {

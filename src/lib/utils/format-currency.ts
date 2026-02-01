@@ -31,11 +31,11 @@ export function formatCurrency(value: Decimal | number | string): string {
  * Maps ScenarioType enum values to human-readable display names.
  */
 const scenarioDisplayNames: Record<ScenarioType, string> = {
-  'return': 'Return Vehicle',
+  'return': 'Ride Out Lease',
   'buyout': 'Buy Out Lease',
   'sell-privately': 'Sell Privately',
   'early-termination': 'Early Termination',
-  'extension': 'Keep Paying (Extend)',
+  'extension': 'Extend Lease',
   'lease-transfer': 'Transfer Lease',
 };
 

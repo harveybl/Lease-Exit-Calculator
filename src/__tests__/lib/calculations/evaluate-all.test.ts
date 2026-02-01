@@ -48,8 +48,6 @@ describe('evaluateAllScenarios', () => {
       expect(sellPrivately.type).toBe('sell-privately');
 
       // Verify it used the estimatedSalePrice (not residualValue)
-      // When using estimatedSalePrice of 22000, net proceeds should be positive
-      // (22000 sale - ~18000 payoff = ~4000 profit)
       expect(sellPrivately.incomplete).toBeUndefined();
       expect(sellPrivately.warnings.some(w => w.includes('market value'))).toBe(false);
 
@@ -79,6 +77,14 @@ describe('evaluateAllScenarios', () => {
       expect(sellPrivately.warnings.some(w =>
         w.includes('Add your vehicle\'s market value for accurate sell-privately results')
       )).toBe(true);
+    });
+
+    it('should mark early termination as incomplete when no market value', () => {
+      const lease = createMockLease();
+      const scenarios = evaluateAllScenarios(lease); // No estimatedSalePrice
+
+      const earlyTerm = scenarios.find(s => s.type === 'early-termination')!;
+      expect(earlyTerm.incomplete).toBe(true);
     });
 
     it('should sort incomplete scenarios last regardless of netCost', () => {
@@ -116,6 +122,33 @@ describe('evaluateAllScenarios', () => {
     });
   });
 
+  describe('extension incomplete for mid-lease', () => {
+    it('should mark extension as incomplete when months remaining > 3', () => {
+      const lease = createMockLease({
+        monthsElapsed: 10, // 26 months remaining > 3
+        termMonths: 36,
+      });
+
+      const scenarios = evaluateAllScenarios(lease);
+      const extension = scenarios.find(s => s.type === 'extension')!;
+
+      expect(extension.incomplete).toBe(true);
+      expect(extension.warnings.some(w => w.includes('Extension only applies after your lease ends'))).toBe(true);
+    });
+
+    it('should not mark extension as incomplete at end of lease', () => {
+      const lease = createMockLease({
+        monthsElapsed: 36, // 0 months remaining
+        termMonths: 36,
+      });
+
+      const scenarios = evaluateAllScenarios(lease);
+      const extension = scenarios.find(s => s.type === 'extension')!;
+
+      expect(extension.incomplete).toBeUndefined();
+    });
+  });
+
   describe('getComparisonData with market value', () => {
     it('should calculate positive equity correctly when market value > buyout cost', () => {
       const lease = createMockLease({
@@ -132,10 +165,9 @@ describe('evaluateAllScenarios', () => {
       expect(comparisonData.equity!.isPositive).toBe(true);
 
       // Equity = marketValue - buyoutCost
-      // buyoutCost ≈ 18000 (residual) + 300 (purchase fee) + 1305 (CA tax 7.25%)
-      // = 19605
-      // Equity = 22000 - 19605 = 2395
-      expect(comparisonData.equity!.amount.toNumber()).toBeCloseTo(2395, 0);
+      // buyoutCost = 18000 (residual) + 300 (purchase fee) = 18300 (no tax now)
+      // Equity = 22000 - 18300 = 3700
+      expect(comparisonData.equity!.amount.toNumber()).toBeCloseTo(3700, 0);
     });
 
     it('should calculate negative equity correctly when market value < buyout cost', () => {
@@ -153,9 +185,9 @@ describe('evaluateAllScenarios', () => {
       expect(comparisonData.equity!.isPositive).toBe(false);
 
       // Equity = marketValue - buyoutCost
-      // buyoutCost ≈ 18000 + 300 + 1305 = 19605
-      // Equity = 17000 - 19605 = -2605
-      expect(comparisonData.equity!.amount.toNumber()).toBeCloseTo(-2605, 0);
+      // buyoutCost = 18000 + 300 = 18300 (no tax now)
+      // Equity = 17000 - 18300 = -1300
+      expect(comparisonData.equity!.amount.toNumber()).toBeCloseTo(-1300, 0);
       expect(comparisonData.equity!.amount.lessThan(0)).toBe(true);
     });
 

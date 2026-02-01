@@ -19,7 +19,7 @@ describe('generateRecommendation', () => {
     expect(result.bestOverall.month).toBe(0);
     expect(result.shouldWait).toBe(false);
     expect(result.savings).toBe(0);
-    expect(result.message).toContain('Return Vehicle');
+    expect(result.message).toContain('Ride Out Lease');
     expect(result.message).toContain('best option today');
     expect(result.message).toContain('waiting won\'t improve');
   });
@@ -134,7 +134,7 @@ describe('generateRecommendation', () => {
 
     expect(result.bestNow.scenario).toBe('extension');
     expect(result.bestNow.cost).toBe(800);
-    expect(result.message).toContain('Keep Paying');
+    expect(result.message).toContain('Extend Lease');
   });
 
   it('recommends waiting exactly at $101 savings (just over threshold)', () => {

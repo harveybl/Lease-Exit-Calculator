@@ -48,7 +48,7 @@ export function evaluateLeaseTransferScenario(
     {
       label: 'Marketplace Listing Fee',
       amount: marketplaceFee,
-      description: 'Fee for listing on SwapALease, LeaseTrader, or similar marketplace',
+      description: 'Fee for listing on a lease transfer marketplace (e.g., SwapALease ~$100, LeaseTrader ~$50-200, or free on Leasehackr forums)',
       type: 'fee',
     },
     {

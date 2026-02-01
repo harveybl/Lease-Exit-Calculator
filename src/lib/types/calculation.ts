@@ -48,4 +48,5 @@ export interface LineItem {
   amount: Decimal;
   description: string;
   type?: 'asset' | 'liability' | 'fee' | 'tax';
+  subItem?: boolean;
 }

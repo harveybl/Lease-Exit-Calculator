@@ -55,13 +55,13 @@ export function LineItemsBreakdown({
     { liability: [], fee: [], tax: [], asset: [], other: [] },
   );
 
-  // Calculate totals for the summary section
+  // Calculate totals for the summary section (exclude sub-items to avoid double-counting)
   const totalCosts = lineItems
-    .filter((item) => item.type !== "asset")
+    .filter((item) => item.type !== "asset" && !item.subItem)
     .reduce((sum, item) => sum.plus(item.amount), new Decimal("0"));
 
   const totalCredits = lineItems
-    .filter((item) => item.type === "asset")
+    .filter((item) => item.type === "asset" && !item.subItem)
     .reduce((sum, item) => sum.plus(item.amount), new Decimal("0"));
 
   const hasCredits = totalCredits.gt(0);
@@ -84,7 +84,10 @@ export function LineItemsBreakdown({
               {items.map((item, idx) => (
                 <div
                   key={`${category}-${idx}`}
-                  className="flex items-center justify-between text-sm"
+                  className={cn(
+                    "flex items-center justify-between text-sm",
+                    item.subItem && "text-muted-foreground text-xs",
+                  )}
                 >
                   <span className="flex items-center gap-1.5">
                     {item.label}

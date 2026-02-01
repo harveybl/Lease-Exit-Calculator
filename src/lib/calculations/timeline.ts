@@ -2,6 +2,7 @@ import { Decimal } from '@/lib/decimal';
 import { Lease } from '@/lib/db/schema';
 import { ScenarioType } from '@/lib/types/scenario';
 import { MonthlyProjection, TimelineDataPoint, TimelineSeries } from '@/lib/types/timeline';
+import { getStateRegistrationFee } from './tax-rules';
 import {
   evaluateReturnScenario,
   evaluateBuyoutScenario,
@@ -51,7 +52,6 @@ export function projectScenarioCosts(
     termMonths: lease.termMonths,
     monthsElapsed,
     purchaseFee: lease.purchaseFee ?? new Decimal('0'),
-    stateCode: lease.stateCode ?? 'CA',
   });
 
   // Evaluate sell-privately scenario (only if market value provided)
@@ -66,7 +66,6 @@ export function projectScenarioCosts(
       termMonths: lease.termMonths,
       monthsElapsed,
       purchaseFee: lease.purchaseFee ?? new Decimal('0'),
-      stateCode: lease.stateCode ?? 'CA',
     });
     sellPrivatelyResult = result.netCost;
   }
@@ -81,6 +80,7 @@ export function projectScenarioCosts(
     monthlyPayment: lease.monthlyPayment,
     earlyTerminationFee: new Decimal('500'), // Default early termination fee
     dispositionFee: lease.dispositionFee ?? new Decimal('0'),
+    estimatedWholesaleValue: estimatedSalePrice,
   });
 
   // Evaluate extension scenario (only at lease end)
@@ -96,10 +96,13 @@ export function projectScenarioCosts(
   }
 
   // Evaluate lease transfer scenario (always available)
+  const stateCode = lease.stateCode ?? 'CA';
+  const registrationFee = getStateRegistrationFee(stateCode);
+
   const leaseTransferResult = evaluateLeaseTransferScenario({
     transferFee: new Decimal('400'), // Midpoint of $75-$895 range
     marketplaceFee: new Decimal('100'), // Typical marketplace listing
-    registrationFee: new Decimal('150'), // Typical registration/title
+    registrationFee: new Decimal(registrationFee.toString()),
     remainingPayments: lease.monthlyPayment.times(monthsRemaining),
     monthsRemaining,
     monthlyPayment: lease.monthlyPayment,

@@ -1,6 +1,7 @@
 import { Decimal } from '@/lib/decimal';
 import type { ScenarioResult, ScenarioType } from '@/lib/types/scenario';
 import type { Lease } from '@/lib/db/schema';
+import { getStateRegistrationFee } from '@/lib/calculations/tax-rules';
 import {
   evaluateReturnScenario,
   evaluateBuyoutScenario,
@@ -75,7 +76,6 @@ export function evaluateAllScenarios(
     termMonths: lease.termMonths,
     monthsElapsed,
     purchaseFee,
-    stateCode,
   });
 
   // Use provided market value or fallback to residualValue as conservative placeholder
@@ -90,7 +90,6 @@ export function evaluateAllScenarios(
     termMonths: lease.termMonths,
     monthsElapsed,
     purchaseFee,
-    stateCode,
   });
 
   // Mark sell-privately as incomplete if no market value provided
@@ -110,7 +109,13 @@ export function evaluateAllScenarios(
     monthlyPayment: lease.monthlyPayment,
     earlyTerminationFee,
     dispositionFee,
+    estimatedWholesaleValue: estimatedSalePrice,
   });
+
+  // Mark early termination as incomplete if no market value (using option b only)
+  if (!estimatedSalePrice) {
+    earlyTerminationResult.incomplete = true;
+  }
 
   const extensionResult = evaluateExtensionScenario({
     monthlyPayment: lease.monthlyPayment,
@@ -118,10 +123,23 @@ export function evaluateAllScenarios(
     monthlyTax,
   });
 
+  // Mark extension as incomplete when mid-lease (> 3 months remaining)
+  // Extension costs are only for 6 months beyond lease end, so comparing
+  // against scenarios that include remaining payments is apples-to-oranges
+  if (monthsRemaining > 3) {
+    extensionResult.incomplete = true;
+    extensionResult.warnings.push(
+      `Extension only applies after your lease ends (${monthsRemaining} months remaining). ` +
+        'This estimate shows 6 months of extended payments beyond lease end and is not directly comparable to other options.'
+    );
+  }
+
+  const registrationFee = getStateRegistrationFee(stateCode);
+
   const leaseTransferResult = evaluateLeaseTransferScenario({
     transferFee: new Decimal('400'), // Midpoint of $75-$895 range
-    marketplaceFee: new Decimal('100'), // Typical marketplace listing
-    registrationFee: new Decimal('150'), // Typical registration/title
+    marketplaceFee: new Decimal('100'), // Typical marketplace listing (e.g., SwapALease ~$100)
+    registrationFee: new Decimal(registrationFee.toString()),
     remainingPayments,
     monthsRemaining,
     monthlyPayment: lease.monthlyPayment,

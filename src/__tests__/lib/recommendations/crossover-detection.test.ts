@@ -32,7 +32,7 @@ describe('detectCrossovers', () => {
       overtakes: 'return',
     });
     expect(crossovers[0].message).toContain('Buy Out Lease');
-    expect(crossovers[0].message).toContain('Return Vehicle');
+    expect(crossovers[0].message).toContain('Ride Out Lease');
     expect(crossovers[0].message).toContain('month 12');
   });
 

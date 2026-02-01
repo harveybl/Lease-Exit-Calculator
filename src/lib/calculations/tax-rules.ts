@@ -156,6 +156,42 @@ export const STATE_TAX_RULES: Record<string, StateTaxRule> = {
 };
 
 /**
+ * State vehicle registration / title transfer fees.
+ *
+ * Used for lease transfer scenario to estimate new-lessee registration costs.
+ * Source: State DMV fee schedules (approximate, 2026).
+ */
+export const STATE_REGISTRATION_FEES: Record<string, number> = {
+  CA: 175,
+  TX: 90,
+  FL: 225,
+  NY: 135,
+  PA: 110,
+  IL: 301,
+  OH: 45,
+  GA: 20,
+  NC: 56,
+  MI: 240,
+  NJ: 85,
+  VA: 45,
+  WA: 110,
+  AZ: 32,
+  OR: 122,
+};
+
+const DEFAULT_REGISTRATION_FEE = 150;
+
+/**
+ * Get estimated state vehicle registration fee.
+ *
+ * @param stateCode - Two-letter state code
+ * @returns Registration fee in dollars (falls back to $150 for unknown states)
+ */
+export function getStateRegistrationFee(stateCode: string): number {
+  return STATE_REGISTRATION_FEES[stateCode.toUpperCase()] ?? DEFAULT_REGISTRATION_FEE;
+}
+
+/**
  * Get tax rule for a state.
  *
  * @param stateCode - Two-letter state code (e.g., 'CA', 'TX')

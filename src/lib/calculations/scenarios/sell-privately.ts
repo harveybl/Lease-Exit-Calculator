@@ -1,6 +1,5 @@
 import { Decimal } from '@/lib/decimal';
 import { SellPrivatelyResult, LineItem } from '@/lib/types';
-import { getStateTaxRule } from '@/lib/calculations/tax-rules';
 import { computeLeasePayoff } from '@/lib/calculations/lease-payoff';
 import { DISCLAIMERS } from '@/lib/disclaimers';
 
@@ -13,7 +12,6 @@ export interface EvaluateSellPrivatelyScenarioParams {
   termMonths: number;
   monthsElapsed: number;
   purchaseFee: Decimal;
-  stateCode: string;
 }
 
 /**
@@ -38,7 +36,6 @@ export function evaluateSellPrivatelyScenario(
     termMonths,
     monthsElapsed,
     purchaseFee,
-    stateCode,
   } = params;
 
   const monthsRemaining = termMonths - monthsElapsed;
@@ -56,14 +53,8 @@ export function evaluateSellPrivatelyScenario(
   // Remaining depreciation: payoff minus residual
   const remainingDepreciation = leasePayoff.minus(residualValue);
 
-  // Calculate sales tax on residual value (buyout purchase price)
-  const taxRule = getStateTaxRule(stateCode);
-  const buyoutTax = residualValue.mul(taxRule.rate);
-
-  // Total payoff amount to buy out the lease
-  const payoffAmount = leasePayoff
-    .add(purchaseFee)
-    .add(buyoutTax);
+  // Total payoff amount to buy out the lease (no sales tax)
+  const payoffAmount = leasePayoff.add(purchaseFee);
 
   // Calculate net proceeds (positive = profit, negative = loss)
   const netProceeds = estimatedSalePrice.sub(payoffAmount);
@@ -94,30 +85,28 @@ export function evaluateSellPrivatelyScenario(
       amount: leasePayoff,
       description: 'Amount owed to lender (residual + remaining book value)',
       type: 'liability',
+      subItem: true,
     },
     {
       label: '    ↳ Residual Value',
       amount: residualValue,
       description: 'Predetermined vehicle value at lease end',
       type: 'liability',
+      subItem: true,
     },
     {
       label: '    ↳ Remaining Depreciation',
       amount: remainingDepreciation,
       description: `Remaining book value above residual (${monthsRemaining} months left)`,
       type: 'liability',
+      subItem: true,
     },
     {
       label: '  ↳ Purchase Fee',
       amount: purchaseFee,
       description: 'Administrative buyout fee',
       type: 'fee',
-    },
-    {
-      label: '  ↳ Buyout Tax',
-      amount: buyoutTax,
-      description: `${taxRule.stateName} sales tax on residual (${taxRule.rate.mul(100).toFixed(2)}%)`,
-      type: 'tax',
+      subItem: true,
     },
     {
       label: 'Net Proceeds',
@@ -144,6 +133,10 @@ export function evaluateSellPrivatelyScenario(
         `Coordinate buyout and sale carefully to minimize time between transactions.`
     );
   }
+
+  warnings.push(
+    'Sales tax may apply at buyout depending on your state. Check with your local DMV or tax advisor for exact obligations.'
+  );
 
   // Build disclaimers
   const disclaimers: string[] = [
