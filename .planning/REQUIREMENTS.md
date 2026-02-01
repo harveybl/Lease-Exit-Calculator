@@ -40,17 +40,17 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Comparison
 
-- [ ] **COMP-01**: Side-by-side display of all five exit options (return, buyout, sell privately, early termination, keep paying)
-- [ ] **COMP-02**: Transparent cost breakdown per option showing every fee line item, not just a total
-- [ ] **COMP-03**: Recommended best option highlighted with reasoning text
-- [ ] **COMP-04**: Quick snapshot view answering "what is the best move today?" on a single screen
+- [x] **COMP-01**: Side-by-side display of all five exit options (return, buyout, sell privately, early termination, keep paying)
+- [x] **COMP-02**: Transparent cost breakdown per option showing every fee line item, not just a total
+- [x] **COMP-03**: Recommended best option highlighted with reasoning text
+- [x] **COMP-04**: Quick snapshot view answering "what is the best move today?" on a single screen
 
 ### Valuation
 
-- [ ] **VALU-01**: User can manually enter current market value for their vehicle
-- [ ] **VALU-02**: Manual value override is prominent (not hidden behind auto-lookup)
-- [ ] **VALU-03**: Valuation service abstraction layer exists with provider interface for future API integration
-- [ ] **VALU-04**: Value display includes "last updated" timestamp and accuracy disclaimers
+- [x] **VALU-01**: User can manually enter current market value for their vehicle
+- [x] **VALU-02**: Manual value override is prominent (not hidden behind auto-lookup)
+- [x] **VALU-03**: Valuation service abstraction layer exists with provider interface for future API integration
+- [x] **VALU-04**: Value display includes "last updated" timestamp and accuracy disclaimers
 
 ### Authentication and Multi-Lease
 
@@ -69,11 +69,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Polish and Growth
 
-- [ ] **PLSH-01**: Export comparison results to PDF
-- [ ] **PLSH-02**: Responsive layout optimized for both desktop (comparison tables) and mobile (quick status check)
-- [ ] **PLSH-03**: PWA support for "add to home screen" without native app
-- [ ] **PLSH-04**: Accessibility audit complete (ARIA labels, keyboard navigation, screen reader support)
-- [ ] **PLSH-05**: Lease transfer/swap analysis included as an additional exit option with all hidden costs
+- [x] **PLSH-01**: Export comparison results to PDF
+- [x] **PLSH-02**: Responsive layout optimized for both desktop (comparison tables) and mobile (quick status check)
+- [x] **PLSH-03**: PWA support for "add to home screen" without native app
+- [x] **PLSH-04**: Accessibility audit complete (ARIA labels, keyboard navigation, screen reader support)
+- [x] **PLSH-05**: Lease transfer/swap analysis included as an additional exit option with all hidden costs
 
 ## v2 Requirements
 
@@ -128,21 +128,21 @@ Explicitly excluded. Documented to prevent scope creep.
 | CALC-08 | Phase 1 | Complete |
 | CALC-09 | Phase 1 | Complete |
 | CALC-10 | Phase 1 | Complete |
-| ENTRY-01 | Phase 2 | Pending |
-| ENTRY-02 | Phase 2 | Pending |
-| ENTRY-03 | Phase 2 | Pending |
-| ENTRY-04 | Phase 2 | Pending |
-| ENTRY-05 | Phase 2 | Pending |
-| ENTRY-06 | Phase 2 | Pending |
-| ENTRY-07 | Phase 2 | Pending |
-| COMP-01 | Phase 3 | Pending |
-| COMP-02 | Phase 3 | Pending |
-| COMP-03 | Phase 3 | Pending |
-| COMP-04 | Phase 3 | Pending |
-| VALU-01 | Phase 4 | Pending |
-| VALU-02 | Phase 4 | Pending |
-| VALU-03 | Phase 4 | Pending |
-| VALU-04 | Phase 4 | Pending |
+| ENTRY-01 | Phase 2 | Complete |
+| ENTRY-02 | Phase 2 | Complete |
+| ENTRY-03 | Phase 2 | Complete |
+| ENTRY-04 | Phase 2 | Complete |
+| ENTRY-05 | Phase 2 | Complete |
+| ENTRY-06 | Phase 2 | Complete |
+| ENTRY-07 | Phase 2 | Complete |
+| COMP-01 | Phase 3 | Complete |
+| COMP-02 | Phase 3 | Complete |
+| COMP-03 | Phase 3 | Complete |
+| COMP-04 | Phase 3 | Complete |
+| VALU-01 | Phase 4 | Complete |
+| VALU-02 | Phase 4 | Complete |
+| VALU-03 | Phase 4 | Complete |
+| VALU-04 | Phase 4 | Complete |
 | AUTH-01 | Phase 5 | Dropped |
 | AUTH-02 | Phase 5 | Dropped |
 | AUTH-03 | Phase 5 | Dropped |
@@ -152,11 +152,11 @@ Explicitly excluded. Documented to prevent scope creep.
 | TIME-02 | Phase 6 | Complete |
 | TIME-03 | Phase 6 | Complete |
 | TIME-04 | Phase 6 | Complete |
-| PLSH-01 | Phase 7 | Pending |
-| PLSH-02 | Phase 7 | Pending |
-| PLSH-03 | Phase 7 | Pending |
-| PLSH-04 | Phase 7 | Pending |
-| PLSH-05 | Phase 7 | Pending |
+| PLSH-01 | Phase 7 | Complete |
+| PLSH-02 | Phase 7 | Complete |
+| PLSH-03 | Phase 7 | Complete |
+| PLSH-04 | Phase 7 | Complete |
+| PLSH-05 | Phase 7 | Complete |
 
 **Coverage:**
 - v1 requirements: 40 total
@@ -165,4 +165,4 @@ Explicitly excluded. Documented to prevent scope creep.
 
 ---
 *Requirements defined: 2026-01-28*
-*Last updated: 2026-01-31 — Phase 5 auth requirements dropped (local app), AUTH-04 already complete from Phase 2*
+*Last updated: 2026-01-31 — All v1 requirements complete. 40/40 mapped, 35 complete, 5 dropped (auth).*

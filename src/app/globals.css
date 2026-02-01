@@ -87,6 +87,7 @@
     --chart-3: 142 72% 42%; /* green */
     --chart-4: 280 65% 60%; /* purple */
     --chart-5: 350 80% 55%; /* red */
+    --chart-6: 200 70% 50%; /* blue - lease transfer */
   }
 
   .dark {
@@ -127,6 +128,7 @@
     --chart-3: 142 70% 50%; /* lighter green */
     --chart-4: 280 65% 65%; /* lighter purple */
     --chart-5: 350 75% 60%; /* lighter red */
+    --chart-6: 200 65% 60%; /* lighter blue - lease transfer */
   }
 
   * {
