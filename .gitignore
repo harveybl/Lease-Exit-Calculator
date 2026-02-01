@@ -43,3 +43,6 @@ coverage/
 /public/sw.js.map
 /public/workbox-*.js
 /public/swe-worker-*.js
+
+# Claude Code dev tooling
+.claude/
