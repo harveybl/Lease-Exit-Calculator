@@ -1,19 +1,36 @@
 import { Decimal } from '@/lib/decimal';
 import { evaluateSellPrivatelyScenario } from '@/lib/calculations/scenarios/sell-privately';
 
+/** Helper: compute base monthly payment from lease params */
+function basePayment(netCapCost: Decimal, residualValue: Decimal, moneyFactor: Decimal, termMonths: number): Decimal {
+  const depreciation = netCapCost.minus(residualValue).div(termMonths);
+  const rentCharge = netCapCost.plus(residualValue).mul(moneyFactor);
+  return depreciation.plus(rentCharge);
+}
+
 describe('evaluateSellPrivatelyScenario', () => {
-  describe('profitable sale in TX', () => {
+  describe('profitable sale in TX (end of lease)', () => {
     it('should calculate positive net proceeds when sale price exceeds payoff', () => {
+      const netCapCost = new Decimal('30000');
+      const residualValue = new Decimal('18000');
+      const moneyFactor = new Decimal('0.00125');
+      const termMonths = 36;
+
       const result = evaluateSellPrivatelyScenario({
         estimatedSalePrice: new Decimal('28000'),
-        residualValue: new Decimal('18000'),
-        monthlyPayment: new Decimal('393.33'),
-        monthsRemaining: 0,
+        residualValue,
+        netCapCost,
+        moneyFactor,
+        monthlyPayment: basePayment(netCapCost, residualValue, moneyFactor, termMonths),
+        termMonths,
+        monthsElapsed: 36,
         purchaseFee: new Decimal('300'),
         stateCode: 'TX',
       });
 
-      // Buyout: 18000 + 0 + 300 + 1125 (TX 6.25% tax) = 19425
+      // End of lease: leasePayoff = 18000 (no remaining depreciation)
+      // TX tax: 18000 * 0.0625 = 1125
+      // payoffAmount = 18000 + 300 + 1125 = 19425
       // Net proceeds: 28000 - 19425 = 8575
 
       expect(result.type).toBe('sell-privately');
@@ -23,23 +40,31 @@ describe('evaluateSellPrivatelyScenario', () => {
       expect(result.totalCost.toNumber()).toBe(19425); // Payoff amount
       expect(result.netCost.toNumber()).toBe(-8575); // Negative = profit
       expect(result.lineItems.length).toBeGreaterThan(4); // Sale price + buyout breakdown
-      expect(result.warnings).toHaveLength(0); // Profitable, no warnings
+      expect(result.warnings).toHaveLength(0); // Profitable, end of lease
       expect(result.disclaimers).toHaveLength(3); // general + tax + marketValue
     });
   });
 
   describe('loss sale', () => {
     it('should calculate negative net proceeds when payoff exceeds sale price', () => {
+      const netCapCost = new Decimal('30000');
+      const residualValue = new Decimal('18000');
+      const moneyFactor = new Decimal('0.00125');
+      const termMonths = 36;
+
       const result = evaluateSellPrivatelyScenario({
         estimatedSalePrice: new Decimal('15000'),
-        residualValue: new Decimal('18000'),
-        monthlyPayment: new Decimal('393.33'),
-        monthsRemaining: 0,
+        residualValue,
+        netCapCost,
+        moneyFactor,
+        monthlyPayment: basePayment(netCapCost, residualValue, moneyFactor, termMonths),
+        termMonths,
+        monthsElapsed: 36,
         purchaseFee: new Decimal('300'),
         stateCode: 'TX',
       });
 
-      // Buyout: 18000 + 0 + 300 + 1125 = 19425
+      // End of lease: payoffAmount = 18000 + 300 + 1125 = 19425
       // Net proceeds: 15000 - 19425 = -4425
 
       expect(result.type).toBe('sell-privately');
@@ -56,27 +81,36 @@ describe('evaluateSellPrivatelyScenario', () => {
   });
 
   describe('mid-lease sale in CA', () => {
-    it('should include remaining payments in payoff calculation', () => {
+    it('should include remaining depreciation in payoff calculation', () => {
+      const netCapCost = new Decimal('30000');
+      const residualValue = new Decimal('18000');
+      const moneyFactor = new Decimal('0.00125');
+      const termMonths = 36;
+
       const result = evaluateSellPrivatelyScenario({
         estimatedSalePrice: new Decimal('28000'),
-        residualValue: new Decimal('18000'),
-        monthlyPayment: new Decimal('393.33'),
-        monthsRemaining: 6,
+        residualValue,
+        netCapCost,
+        moneyFactor,
+        monthlyPayment: basePayment(netCapCost, residualValue, moneyFactor, termMonths),
+        termMonths,
+        monthsElapsed: 30,
         purchaseFee: new Decimal('300'),
         stateCode: 'CA',
       });
 
-      // Remaining: 393.33 * 6 = 2359.98
+      // monthsRemaining = 6
+      // Constant yield leasePayoff ≈ 19732.24 (vs straight-line 20000)
       // CA tax: 18000 * 0.0725 = 1305
-      // Buyout: 18000 + 2359.98 + 300 + 1305 = 21964.98
-      // Net proceeds: 28000 - 21964.98 = 6035.02
+      // payoffAmount ≈ 19732.24 + 300 + 1305 = 21337.24
+      // Net proceeds: 28000 - 21337.24 ≈ 6662.76
 
       expect(result.type).toBe('sell-privately');
       expect(result.estimatedSalePrice.toNumber()).toBe(28000);
-      expect(result.payoffAmount.toNumber()).toBeCloseTo(21964.98, 2);
-      expect(result.netProceeds.toNumber()).toBeCloseTo(6035.02, 2);
-      expect(result.totalCost.toNumber()).toBeCloseTo(21964.98, 2);
-      expect(result.netCost.toNumber()).toBeCloseTo(-6035.02, 2);
+      expect(result.payoffAmount.toNumber()).toBeCloseTo(21337.24, 0);
+      expect(result.netProceeds.toNumber()).toBeCloseTo(6662.76, 0);
+      expect(result.totalCost.toNumber()).toBeCloseTo(21337.24, 0);
+      expect(result.netCost.toNumber()).toBeCloseTo(-6662.76, 0);
       expect(result.lineItems.length).toBeGreaterThan(4);
       expect(result.warnings.length).toBeGreaterThan(0);
       expect(result.warnings.some(w => w.includes('timing'))).toBe(true);
@@ -86,16 +120,24 @@ describe('evaluateSellPrivatelyScenario', () => {
 
   describe('break-even scenario', () => {
     it('should handle near-zero net proceeds', () => {
+      const netCapCost = new Decimal('30000');
+      const residualValue = new Decimal('18000');
+      const moneyFactor = new Decimal('0.00125');
+      const termMonths = 36;
+
       const result = evaluateSellPrivatelyScenario({
         estimatedSalePrice: new Decimal('19425'),
-        residualValue: new Decimal('18000'),
-        monthlyPayment: new Decimal('393.33'),
-        monthsRemaining: 0,
+        residualValue,
+        netCapCost,
+        moneyFactor,
+        monthlyPayment: basePayment(netCapCost, residualValue, moneyFactor, termMonths),
+        termMonths,
+        monthsElapsed: 36,
         purchaseFee: new Decimal('300'),
         stateCode: 'TX',
       });
 
-      // Buyout: 19425
+      // End of lease: payoffAmount = 19425
       // Net proceeds: 19425 - 19425 = 0
 
       expect(result.type).toBe('sell-privately');
@@ -105,27 +147,36 @@ describe('evaluateSellPrivatelyScenario', () => {
     });
   });
 
-  describe('profitable sale with many remaining payments', () => {
+  describe('profitable sale with many remaining months', () => {
     it('should warn about timing and show positive equity', () => {
+      const netCapCost = new Decimal('32000');
+      const residualValue = new Decimal('20000');
+      const moneyFactor = new Decimal('0.001');
+      const termMonths = 36;
+
       const result = evaluateSellPrivatelyScenario({
         estimatedSalePrice: new Decimal('30000'),
-        residualValue: new Decimal('20000'),
-        monthlyPayment: new Decimal('400'),
-        monthsRemaining: 12,
+        residualValue,
+        netCapCost,
+        moneyFactor,
+        monthlyPayment: basePayment(netCapCost, residualValue, moneyFactor, termMonths),
+        termMonths,
+        monthsElapsed: 24,
         purchaseFee: new Decimal('300'),
         stateCode: 'FL',
       });
 
-      // Remaining: 400 * 12 = 4800
+      // monthsRemaining = 12
+      // Constant yield leasePayoff ≈ 23759.18 (vs straight-line 24000)
       // FL tax: 20000 * 0.06 = 1200
-      // Buyout: 20000 + 4800 + 300 + 1200 = 26300
-      // Net proceeds: 30000 - 26300 = 3700
+      // payoffAmount ≈ 23759.18 + 300 + 1200 = 25259.18
+      // Net proceeds: 30000 - 25259.18 ≈ 4740.82
 
       expect(result.type).toBe('sell-privately');
       expect(result.estimatedSalePrice.toNumber()).toBe(30000);
-      expect(result.payoffAmount.toNumber()).toBe(26300);
-      expect(result.netProceeds.toNumber()).toBe(3700);
-      expect(result.netCost.toNumber()).toBe(-3700);
+      expect(result.payoffAmount.toNumber()).toBeCloseTo(25259.18, 0);
+      expect(result.netProceeds.toNumber()).toBeCloseTo(4740.82, 0);
+      expect(result.netCost.toNumber()).toBeCloseTo(-4740.82, 0);
       expect(result.warnings.length).toBeGreaterThan(0);
       expect(result.warnings.some(w => w.includes('12 remaining'))).toBe(true);
       expect(result.disclaimers).toHaveLength(3);
@@ -134,17 +185,25 @@ describe('evaluateSellPrivatelyScenario', () => {
 
   describe('no-tax state sale (OR)', () => {
     it('should calculate with zero sales tax', () => {
+      const netCapCost = new Decimal('30000');
+      const residualValue = new Decimal('18000');
+      const moneyFactor = new Decimal('0.00125');
+      const termMonths = 36;
+
       const result = evaluateSellPrivatelyScenario({
         estimatedSalePrice: new Decimal('25000'),
-        residualValue: new Decimal('18000'),
-        monthlyPayment: new Decimal('393.33'),
-        monthsRemaining: 0,
+        residualValue,
+        netCapCost,
+        moneyFactor,
+        monthlyPayment: basePayment(netCapCost, residualValue, moneyFactor, termMonths),
+        termMonths,
+        monthsElapsed: 36,
         purchaseFee: new Decimal('300'),
         stateCode: 'OR',
       });
 
-      // OR has no sales tax
-      // Buyout: 18000 + 0 + 300 + 0 = 18300
+      // End of lease, OR has no sales tax
+      // payoffAmount = 18000 + 300 + 0 = 18300
       // Net proceeds: 25000 - 18300 = 6700
 
       expect(result.type).toBe('sell-privately');
@@ -157,14 +216,25 @@ describe('evaluateSellPrivatelyScenario', () => {
 
   describe('line items structure', () => {
     it('should have sale price, buyout breakdown, and net proceeds', () => {
+      const netCapCost = new Decimal('30000');
+      const residualValue = new Decimal('18000');
+      const moneyFactor = new Decimal('0.00125');
+      const termMonths = 36;
+
       const result = evaluateSellPrivatelyScenario({
         estimatedSalePrice: new Decimal('28000'),
-        residualValue: new Decimal('18000'),
-        monthlyPayment: new Decimal('393.33'),
-        monthsRemaining: 3,
+        residualValue,
+        netCapCost,
+        moneyFactor,
+        monthlyPayment: basePayment(netCapCost, residualValue, moneyFactor, termMonths),
+        termMonths,
+        monthsElapsed: 33,
         purchaseFee: new Decimal('300'),
         stateCode: 'TX',
       });
+
+      // monthsRemaining = 3
+      // Constant yield leasePayoff ≈ 18695.51
 
       expect(result.lineItems.length).toBeGreaterThan(4);
 
@@ -179,9 +249,9 @@ describe('evaluateSellPrivatelyScenario', () => {
       expect(residualItem).toBeDefined();
       expect(residualItem?.amount.toNumber()).toBe(18000);
 
-      const remainingItem = result.lineItems.find(item => item.label.includes('Remaining'));
-      expect(remainingItem).toBeDefined();
-      expect(remainingItem?.amount.toNumber()).toBeCloseTo(1179.99, 2);
+      const depreciationItem = result.lineItems.find(item => item.label.includes('Remaining Depreciation'));
+      expect(depreciationItem).toBeDefined();
+      expect(depreciationItem?.amount.toNumber()).toBeCloseTo(695.51, 0);
 
       const feeItem = result.lineItems.find(item => item.label.includes('Purchase Fee'));
       expect(feeItem).toBeDefined();

@@ -1,13 +1,17 @@
 import { Decimal } from '@/lib/decimal';
 import { SellPrivatelyResult, LineItem } from '@/lib/types';
 import { getStateTaxRule } from '@/lib/calculations/tax-rules';
+import { computeLeasePayoff } from '@/lib/calculations/lease-payoff';
 import { DISCLAIMERS } from '@/lib/disclaimers';
 
 export interface EvaluateSellPrivatelyScenarioParams {
   estimatedSalePrice: Decimal;
   residualValue: Decimal;
+  netCapCost: Decimal;
+  moneyFactor: Decimal;
   monthlyPayment: Decimal;
-  monthsRemaining: number;
+  termMonths: number;
+  monthsElapsed: number;
   purchaseFee: Decimal;
   stateCode: string;
 }
@@ -16,7 +20,8 @@ export interface EvaluateSellPrivatelyScenarioParams {
  * Evaluates the sell-privately scenario.
  *
  * Calculates the net proceeds from selling the vehicle privately after buying
- * out the lease. Shows whether the user will profit or need to bring cash to close.
+ * out the lease. Uses the Constant Yield Method (same as buyout scenario) to
+ * determine the amount owed to the lender.
  *
  * @param params - Sell-privately scenario parameters
  * @returns SellPrivatelyResult with itemized breakdown and net proceeds
@@ -27,22 +32,36 @@ export function evaluateSellPrivatelyScenario(
   const {
     estimatedSalePrice,
     residualValue,
+    netCapCost,
+    moneyFactor,
     monthlyPayment,
-    monthsRemaining,
+    termMonths,
+    monthsElapsed,
     purchaseFee,
     stateCode,
   } = params;
 
-  // First calculate the buyout cost (same as buyout scenario)
-  const remainingPayments = monthlyPayment.mul(monthsRemaining);
+  const monthsRemaining = termMonths - monthsElapsed;
+
+  // Compute payoff using Constant Yield Method (same as buyout)
+  const leasePayoff = computeLeasePayoff(
+    netCapCost,
+    residualValue,
+    monthlyPayment,
+    termMonths,
+    monthsElapsed,
+    moneyFactor,
+  );
+
+  // Remaining depreciation: payoff minus residual
+  const remainingDepreciation = leasePayoff.minus(residualValue);
 
   // Calculate sales tax on residual value (buyout purchase price)
   const taxRule = getStateTaxRule(stateCode);
   const buyoutTax = residualValue.mul(taxRule.rate);
 
   // Total payoff amount to buy out the lease
-  const payoffAmount = residualValue
-    .add(remainingPayments)
+  const payoffAmount = leasePayoff
     .add(purchaseFee)
     .add(buyoutTax);
 
@@ -71,15 +90,21 @@ export function evaluateSellPrivatelyScenario(
     },
     // Buyout breakdown sub-items
     {
-      label: '  ↳ Residual Value',
-      amount: residualValue,
-      description: 'Predetermined buyout price',
+      label: '  ↳ Lease Payoff',
+      amount: leasePayoff,
+      description: 'Amount owed to lender (residual + remaining book value)',
       type: 'liability',
     },
     {
-      label: '  ↳ Remaining Payments',
-      amount: remainingPayments,
-      description: `${monthsRemaining} remaining monthly payments`,
+      label: '    ↳ Residual Value',
+      amount: residualValue,
+      description: 'Predetermined vehicle value at lease end',
+      type: 'liability',
+    },
+    {
+      label: '    ↳ Remaining Depreciation',
+      amount: remainingDepreciation,
+      description: `Remaining book value above residual (${monthsRemaining} months left)`,
       type: 'liability',
     },
     {
@@ -115,7 +140,7 @@ export function evaluateSellPrivatelyScenario(
 
   if (monthsRemaining > 0) {
     warnings.push(
-      `You have ${monthsRemaining} remaining payments. Important timing consideration: you must buy out the lease before selling privately. ` +
+      `You have ${monthsRemaining} remaining months on your lease. Important timing consideration: you must buy out the lease before selling privately. ` +
         `Coordinate buyout and sale carefully to minimize time between transactions.`
     );
   }
