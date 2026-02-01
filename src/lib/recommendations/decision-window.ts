@@ -31,6 +31,7 @@ function getCheapestScenario(
     { scenario: 'sell-privately', cost: point.sellPrivately },
     { scenario: 'early-termination', cost: point.earlyTermination },
     { scenario: 'extension', cost: point.extension },
+    { scenario: 'lease-transfer', cost: point.leaseTransfer },
   ];
 
   // Filter out null costs

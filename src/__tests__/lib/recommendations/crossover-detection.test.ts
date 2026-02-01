@@ -136,4 +136,32 @@ describe('detectCrossovers', () => {
     expect(crossovers[0].month).toBe(1);
     expect(crossovers[0].scenario).toBe('buyout');
   });
+
+  it('detects crossover when lease transfer becomes cheapest', () => {
+    const data: TimelineDataPoint[] = [
+      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null, leaseTransfer: 1200 },
+      { month: 6, return: 1500, buyout: 1800, sellPrivately: null, earlyTermination: 2800, extension: null, leaseTransfer: 900 },
+      { month: 12, return: 2000, buyout: 1600, sellPrivately: null, earlyTermination: 2600, extension: null, leaseTransfer: 800 },
+    ];
+
+    const crossovers = detectCrossovers(data);
+
+    expect(crossovers).toHaveLength(1);
+    expect(crossovers[0].month).toBe(6);
+    expect(crossovers[0].scenario).toBe('lease-transfer');
+    expect(crossovers[0].overtakes).toBe('return');
+    expect(crossovers[0].message).toContain('Transfer Lease');
+  });
+
+  it('includes lease transfer in cheapest scenario comparison', () => {
+    const data: TimelineDataPoint[] = [
+      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null, leaseTransfer: 500 },
+      { month: 6, return: 1100, buyout: 2100, sellPrivately: null, earlyTermination: 2900, extension: null, leaseTransfer: 600 },
+    ];
+
+    const crossovers = detectCrossovers(data);
+
+    // Lease transfer is always cheapest, no crossovers
+    expect(crossovers).toEqual([]);
+  });
 });

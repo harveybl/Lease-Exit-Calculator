@@ -12,6 +12,7 @@ export interface TimelineDataPoint {
   sellPrivately: number | null;
   earlyTermination: number;
   extension: number | null;
+  leaseTransfer: number | null;
 }
 
 /**

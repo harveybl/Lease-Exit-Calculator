@@ -160,4 +160,38 @@ describe('generateRecommendation', () => {
     expect(result.shouldWait).toBe(false); // Exactly $100 savings
     expect(result.savings).toBe(100);
   });
+
+  it('identifies lease transfer as best option when cheapest', () => {
+    const data: TimelineDataPoint[] = [
+      { month: 0, return: 2000, buyout: 2500, sellPrivately: null, earlyTermination: 3000, extension: null, leaseTransfer: 650 },
+      { month: 6, return: 2200, buyout: 2400, sellPrivately: null, earlyTermination: 2800, extension: null, leaseTransfer: 700 },
+    ];
+
+    const result = generateRecommendation(data);
+
+    expect(result.bestNow.scenario).toBe('lease-transfer');
+    expect(result.bestNow.cost).toBe(650);
+    expect(result.bestOverall.scenario).toBe('lease-transfer');
+    expect(result.shouldWait).toBe(false);
+    expect(result.message).toContain('Transfer Lease');
+  });
+
+  it('recommends waiting when lease transfer becomes cheapest in future', () => {
+    const data: TimelineDataPoint[] = [
+      { month: 0, return: 1000, buyout: 2000, sellPrivately: null, earlyTermination: 3000, extension: null, leaseTransfer: 1200 },
+      { month: 6, return: 1500, buyout: 1800, sellPrivately: null, earlyTermination: 2800, extension: null, leaseTransfer: 700 },
+      { month: 12, return: 2000, buyout: 1600, sellPrivately: null, earlyTermination: 2600, extension: null, leaseTransfer: 600 },
+    ];
+
+    const result = generateRecommendation(data);
+
+    expect(result.bestNow.scenario).toBe('return');
+    expect(result.bestNow.cost).toBe(1000);
+    expect(result.bestOverall.scenario).toBe('lease-transfer');
+    expect(result.bestOverall.cost).toBe(600);
+    expect(result.bestOverall.month).toBe(12);
+    expect(result.shouldWait).toBe(true);
+    expect(result.savings).toBe(400);
+    expect(result.message).toContain('Transfer Lease');
+  });
 });
