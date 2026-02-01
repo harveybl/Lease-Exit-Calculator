@@ -73,7 +73,7 @@ export function ComparisonView({ data, marketValue, leaseId, heading = "Lease Co
   const pdfData = serializeForPDF(data, heading);
 
   return (
-    <div id="main-content" className="max-w-4xl mx-auto px-4 py-4 md:py-8">
+    <div className="max-w-4xl mx-auto px-4 py-4 md:py-8">
       {/* Export button */}
       <div className="flex justify-end mb-4">
         <ExportButton data={pdfData} />

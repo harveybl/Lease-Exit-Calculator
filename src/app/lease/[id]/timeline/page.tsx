@@ -49,7 +49,7 @@ export default async function TimelinePage({ params }: TimelinePageProps) {
       : 'Lease Timeline';
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-4 md:py-8">
+    <main id="main-content" className="mx-auto max-w-4xl px-4 py-4 md:py-8">
       {/* Back navigation to compare page */}
       <Link
         href={`/lease/${id}/compare`}

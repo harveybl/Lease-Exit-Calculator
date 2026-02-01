@@ -5,7 +5,7 @@ import { ArrowRight, List } from "lucide-react";
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8">
+    <main id="main-content" className="mx-auto max-w-4xl px-4 py-8">
       {/* Hero section */}
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">Lease Tracker</h1>

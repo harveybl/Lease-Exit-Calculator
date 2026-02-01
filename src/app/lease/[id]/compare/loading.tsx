@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 
 export default function CompareLoading() {
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8">
+    <main id="main-content" className="mx-auto max-w-4xl px-4 py-8">
       {/* Back link placeholder */}
       <div className="h-5 bg-muted rounded w-32 mb-6 animate-pulse" />
 

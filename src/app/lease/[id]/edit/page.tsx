@@ -52,7 +52,7 @@ export default async function EditLeasePage({ params }: EditLeasePageProps) {
   };
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8">
+    <main id="main-content" className="mx-auto max-w-4xl px-4 py-8">
       {/* Back link */}
       <Link
         href="/lease"

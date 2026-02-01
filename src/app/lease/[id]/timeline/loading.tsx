@@ -6,7 +6,7 @@ import { Card, CardHeader, CardContent } from '@/components/ui/card';
  */
 export default function TimelineLoading() {
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8">
+    <main id="main-content" className="mx-auto max-w-4xl px-4 py-8">
       {/* Back link skeleton */}
       <div className="h-5 w-32 bg-muted rounded animate-pulse mb-6" />
 
