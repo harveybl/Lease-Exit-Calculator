@@ -18,10 +18,29 @@ function LeasePageSkeleton() {
   );
 }
 
-function parseHash(): string[] {
+/**
+ * Parse the current route slug from the URL.
+ * Uses hash for dynamic routes (#/id/compare, #/id/edit, #/id/timeline).
+ * Falls back to pathname for pre-rendered routes (/lease, /lease/new).
+ */
+function parseRoute(): string[] {
   if (typeof window === "undefined") return [];
+
+  // Hash takes priority (dynamic lease routes)
   const hash = window.location.hash.replace(/^#\/?/, "");
-  return hash ? hash.split("/").filter(Boolean) : [];
+  if (hash) {
+    return hash.split("/").filter(Boolean);
+  }
+
+  // Fall back to pathname (pre-rendered routes like /lease/new)
+  let pathname = window.location.pathname;
+  // Strip basePath if present
+  if (pathname.startsWith("/Lease-Exit-Calculator")) {
+    pathname = pathname.slice("/Lease-Exit-Calculator".length);
+  }
+  // Strip /lease prefix
+  pathname = pathname.replace(/^\/lease\/?/, "");
+  return pathname ? pathname.split("/").filter(Boolean) : [];
 }
 
 interface LeaseRouterProps {
@@ -32,22 +51,22 @@ export function LeaseRouter({ initialSlug }: LeaseRouterProps) {
   const [slug, setSlug] = useState<string[]>(initialSlug || []);
   const [mounted, setMounted] = useState(false);
 
-  const syncHash = useCallback(() => {
-    setSlug(parseHash());
+  const syncRoute = useCallback(() => {
+    setSlug(parseRoute());
   }, []);
 
   useEffect(() => {
-    // On mount, read hash from URL (handles refresh and 404 fallback)
-    syncHash();
+    // On mount, read actual route from URL
+    syncRoute();
     setMounted(true);
 
-    window.addEventListener("hashchange", syncHash);
-    return () => window.removeEventListener("hashchange", syncHash);
-  }, [syncHash]);
+    // Listen for hash changes (dynamic route navigation)
+    window.addEventListener("hashchange", syncRoute);
+    return () => window.removeEventListener("hashchange", syncRoute);
+  }, [syncRoute]);
 
-  // During SSR, use initialSlug; show skeleton only if hash will differ
+  // During SSR, use initialSlug
   if (!mounted) {
-    // For pre-rendered paths, render actual content; for 404 fallback, skeleton is fine
     if (!initialSlug || initialSlug.length === 0) {
       return <LeasesView />;
     }
@@ -57,7 +76,7 @@ export function LeaseRouter({ initialSlug }: LeaseRouterProps) {
     return <LeasePageSkeleton />;
   }
 
-  // Client-side routing based on hash
+  // Client-side routing based on parsed route
   if (slug.length === 0) return <LeasesView />;
   if (slug[0] === "new") return <NewLeaseView />;
 
