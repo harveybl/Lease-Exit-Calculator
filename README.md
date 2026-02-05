@@ -61,6 +61,7 @@ We welcome contributions! This project follows comprehensive development best pr
 - ✨ **Quality Standards** - All review items must be addressed, even low-priority ones
 
 **Before contributing, please read:**
+- [QUICKSTART.md](./QUICKSTART.md) - Fast-track guide to get started (5 min read)
 - [CONTRIBUTING.md](./CONTRIBUTING.md) - Comprehensive workflow and quality standards
 - [DEVELOPMENT.md](./DEVELOPMENT.md) - Technical setup and development guide
 - [Pull Request Template](./.github/PULL_REQUEST_TEMPLATE.md) - Complete checklist for PRs
