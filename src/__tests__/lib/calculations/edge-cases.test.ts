@@ -132,7 +132,9 @@ describe('Lease Calculation Edge Cases', () => {
         moneyFactor
       );
 
-      // At month 1, with annuity-due structure, 2 payments have been applied (period 0 + period 1)
+      // At monthsElapsed=1, with annuity-due structure, the constant yield calculation
+      // applies numPeriods = monthsElapsed + 1 = 2 (to account for signing payment at period 0)
+      // This means 2 periods of depreciation have been applied to the balance
       // Payoff should be significantly reduced from cap cost
       // Expected range: approximately $29,000 - $29,500
       expect(payoff.toNumber()).toBeGreaterThan(29000);

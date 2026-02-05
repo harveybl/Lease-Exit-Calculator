@@ -235,7 +235,7 @@ describe('evaluateEarlyTerminationScenario', () => {
       })).toThrow('monthsElapsed cannot be negative');
     });
 
-    it('should throw error when monthsElapsed equals termMonths', () => {
+    it('should handle monthsElapsed equals termMonths as degenerate case', () => {
       // This is now allowed as a degenerate case (0 remaining payments)
       const result = evaluateEarlyTerminationScenario({
         netCapCost: new Decimal('30000'),
