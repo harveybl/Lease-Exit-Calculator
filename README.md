@@ -1,5 +1,9 @@
 # Lease Exit Calculator
 
+[![CI/CD Pipeline](https://github.com/harveybl/Lease-Exit-Calculator/actions/workflows/ci.yml/badge.svg)](https://github.com/harveybl/Lease-Exit-Calculator/actions/workflows/ci.yml)
+[![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)](./CONTRIBUTING.md#testing-requirements)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 Find the smartest financial move for your vehicle lease — right now, and when a better window might open up.
 
 ## What It Does
@@ -44,6 +48,23 @@ Each option shows a transparent cost breakdown with every fee line item — no b
 - [Serwist](https://serwist.pages.dev/) for PWA/service worker
 - [@react-pdf/renderer](https://react-pdf.org/) for PDF export
 - [Dexie.js](https://dexie.org/) for IndexedDB storage
+
+## Contributing
+
+We welcome contributions! This project follows comprehensive development best practices including:
+
+- ✅ **Test-Driven Development (TDD)** - Write tests first, then implement
+- 🔍 **Code Reviews** - All changes reviewed with full checklist
+- 🧪 **100% Test Coverage** - Enforced for calculation logic
+- 🔒 **Security Reviews** - Every change undergoes security assessment
+- 📚 **Documentation** - Keep docs updated with code changes
+- ✨ **Quality Standards** - All review items must be addressed, even low-priority ones
+
+**Before contributing, please read:**
+- [QUICKSTART.md](./QUICKSTART.md) - Fast-track guide to get started (5 min read)
+- [CONTRIBUTING.md](./CONTRIBUTING.md) - Comprehensive workflow and quality standards
+- [DEVELOPMENT.md](./DEVELOPMENT.md) - Technical setup and development guide
+- [Pull Request Template](./.github/PULL_REQUEST_TEMPLATE.md) - Complete checklist for PRs
 
 ## Getting Started
 
