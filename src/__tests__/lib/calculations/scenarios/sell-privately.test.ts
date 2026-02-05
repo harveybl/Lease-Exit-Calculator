@@ -228,4 +228,24 @@ describe('evaluateSellPrivatelyScenario', () => {
       expect(netItem?.subItem).toBeUndefined();
     });
   });
+
+  describe('input validation', () => {
+    it('should throw error when monthsElapsed is negative', () => {
+      const netCapCost = new Decimal('30000');
+      const residualValue = new Decimal('18000');
+      const moneyFactor = new Decimal('0.00125');
+      const termMonths = 36;
+
+      expect(() => evaluateSellPrivatelyScenario({
+        estimatedSalePrice: new Decimal('25000'),
+        residualValue,
+        netCapCost,
+        moneyFactor,
+        monthlyPayment: basePayment(netCapCost, residualValue, moneyFactor, termMonths),
+        termMonths,
+        monthsElapsed: -1,
+        purchaseFee: new Decimal('300'),
+      })).toThrow('monthsElapsed cannot be negative');
+    });
+  });
 });

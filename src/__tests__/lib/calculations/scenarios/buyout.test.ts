@@ -245,4 +245,18 @@ describe('evaluateBuyoutScenario', () => {
       expect(feeItem?.subItem).toBeUndefined();
     });
   });
+
+  describe('input validation', () => {
+    it('should throw error when monthsElapsed is negative', () => {
+      expect(() => evaluateBuyoutScenario({
+        residualValue: new Decimal('18000'),
+        netCapCost: new Decimal('30000'),
+        moneyFactor: new Decimal('0.00125'),
+        monthlyPayment: new Decimal('393.33'),
+        termMonths: 36,
+        monthsElapsed: -1,
+        purchaseFee: new Decimal('300'),
+      })).toThrow('monthsElapsed cannot be negative');
+    });
+  });
 });

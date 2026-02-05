@@ -38,6 +38,11 @@ export function evaluateSellPrivatelyScenario(
     purchaseFee,
   } = params;
 
+  // Input validation
+  if (monthsElapsed < 0) {
+    throw new Error('monthsElapsed cannot be negative');
+  }
+
   const monthsRemaining = termMonths - monthsElapsed;
 
   // Compute payoff using Constant Yield Method (same as buyout)
@@ -61,7 +66,18 @@ export function evaluateSellPrivatelyScenario(
 
   // For sell-privately scenario:
   // - totalCost is the payoff amount (what you pay to own it)
-  // - netCost is payoffAmount - salePrice (positive = cost, negative = profit)
+  // - netCost is payoffAmount - salePrice
+  //
+  // ⚠️ SEMANTIC NOTE: Unlike other scenarios where netCost is always a cost (positive),
+  //    sell-privately can produce a NEGATIVE netCost when sale price exceeds payoff.
+  //    This negative value represents profit/equity, not a cost.
+  //    
+  //    Example: If payoff = $20,000 and sale = $25,000:
+  //      - netCost = -$5,000 (you gain $5,000)
+  //      - netProceeds = +$5,000 (same gain, different sign convention)
+  //
+  //    The comparison logic in evaluate-all.ts correctly handles this by using
+  //    Decimal.comparedTo() which properly sorts negative values as better than positive.
   const totalCost = payoffAmount;
   const netCost = payoffAmount.sub(estimatedSalePrice);
 
