@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-28)
 
 **Core value:** Show the user the smartest financial move for their vehicle lease right now, and when a better window might open up.
-**Current focus:** Phase 6 complete — Next: Phase 7
+**Current focus:** Phase 8 complete — All development phases complete
 
 ## Current Position
 
-Phase: 7 of 7 (Polish, Export, and Growth) — COMPLETE
-Plan: 6 of 6 (Accessibility Audit) — COMPLETE
-Status: All phases complete - WCAG 2.1 AA compliant, 0 axe-core violations
-Last activity: 2026-01-31 -- Completed 07-06-PLAN.md (Accessibility Audit)
+Phase: 8 of 8 (GitHub Pages Deployment) — COMPLETE
+Plan: All phases complete
+Status: All phases complete - Application fully deployed to GitHub Pages with IndexedDB storage
+Last activity: 2026-01-31 -- Completed Phase 8 (GitHub Pages Deployment)
 
-Progress: [█████████████████████████████] 33/33 plans (100% - all phases complete)
+Progress: [█████████████████████████████] 33/33 plans + Phase 8 (100% - all phases complete)
 
 ## Performance Metrics
 
@@ -33,10 +33,11 @@ Progress: [███████████████████████
 | 4. Market Value and Valuation | 5/5 | ~13m | ~2m 36s |
 | 6. Timeline and Recommendations | 4/4 | ~16m | ~4m |
 | 7. Polish, Export, and Growth | 6/6 | ~23m | ~3m 50s |
+| 8. GitHub Pages Deployment | Complete | — | — |
 
 **Recent Trend:**
-- Last 5 plans: 07-02 (3m), 07-05 (4m 20s), 07-06 (checkpoint-based)
-- Trend: Phase 7 complete - all phases done
+- Phase 8 (GitHub Pages Deployment): Complete - IndexedDB migration and static export implemented
+- All 8 phases complete - Application production-ready and deployed
 
 *Updated after each plan completion*
 
@@ -151,22 +152,26 @@ Recent decisions affecting current work:
 - [07-06]: id="main-content" added to all page main elements for skip navigation target
 - [07-06]: Skip-to-content link uses sr-only + focus:not-sr-only pattern for keyboard-only visibility
 - [07-06]: ARIA landmarks (section with aria-label) for major page regions
+- [08]: IndexedDB implementation via Dexie.js for client-side data persistence (Phase 8)
+- [08]: All server actions removed for static export compatibility (Phase 8)
+- [08]: Next.js configured with output: 'export' for GitHub Pages deployment (Phase 8)
+- [08]: GitHub Actions workflow configured for automatic deployment to GitHub Pages (Phase 8)
 
 ### Pending Todos
 
-- Add "switch to client-side storage (IndexedDB) for GitHub Pages deployment" to Phase 7
+~~- Add "switch to client-side storage (IndexedDB) for GitHub Pages deployment" to Phase 7~~ ✓ Complete (Phase 8)
 
 ### Blockers/Concerns
 
 - [Research]: KBB/Edmunds have no public API docs -- B2B partnership may be required for Phase 4 valuation integration
 - [Research]: Manufacturer-specific early termination formulas differ by lender -- Phase 1 engine should use generic method with strong disclaimers
 - [Research]: State/local tax database scope is large (50 states + municipalities) -- consider starting with top 15 states in Phase 1
-- [01-02]: DATABASE_URL environment variable required before migrations can run (Neon signup needed)
+~~- [01-02]: DATABASE_URL environment variable required before migrations can run (Neon signup needed)~~ — Resolved: Using IndexedDB (no server database needed)
 
 ## Session Continuity
 
-Last session: 2026-01-31
-Stopped at: Completed 07-06-PLAN.md (Accessibility Audit)
+Last session: 2026-02-05
+Stopped at: Updated planning documents to reflect Phase 8 (GitHub Pages) completion
 Resume file: None
 
-**All phases complete (33/33 plans).** Application ready for production deployment.
+**All phases complete (8/8 phases, 33/33 plans).** Application deployed to GitHub Pages and production-ready.

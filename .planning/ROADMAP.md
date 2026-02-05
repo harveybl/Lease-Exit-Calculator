@@ -114,7 +114,7 @@ Plans: 6/6 complete (07-01 ✓, 07-02 ✓, 07-03 ✓, 07-04 ✓, 07-05 ✓, 07-0
   5. The live site at GitHub Pages URL works end-to-end: create lease, add market value, compare options, view timeline, export PDF
   6. All 186+ existing tests continue to pass after the migration
 
-Plans: 0/0 (planning)
+Plans: Complete (implemented without formal plan documents)
 
 ## Progress
 
@@ -127,4 +127,4 @@ Plans: 0/0 (planning)
 | 5. Multi-Lease (Auth Dropped) | - | ✓ Skipped | 2026-01-31 |
 | 6. Timeline and Smart Recommendations | 4/4 | ✓ Complete | 2026-01-31 |
 | 7. Polish, Export, and Growth | 6/6 | ✓ Complete | 2026-01-31 |
-| 8. GitHub Pages Deployment | 0/0 | Planning | — |
+| 8. GitHub Pages Deployment | Complete | ✓ Complete | 2026-01-31 |
