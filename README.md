@@ -24,6 +24,7 @@ Each option shows a transparent cost breakdown with every fee line item — no b
 - **Guided lease entry** with educational tooltips explaining confusing terms (residual, money factor, disposition fee)
 - **PDF export** of comparison results
 - **Progressive Web App** — installable on phone home screens
+- **Client-side storage** — IndexedDB for offline-capable data persistence
 - **Responsive design** optimized for desktop and mobile
 - **Accessible** — WCAG 2.1 AA compliant, keyboard navigable, screen reader tested
 - **Decimal precision** — all monetary calculations use Decimal.js (no floating-point rounding errors)
@@ -39,9 +40,10 @@ Each option shows a transparent cost breakdown with every fee line item — no b
 - [shadcn/ui](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/) for accessible components
 - [Tailwind CSS](https://tailwindcss.com/) v4
 - [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) for validated forms
-- [Vitest](https://vitest.dev/) with 186 tests and 100% calculation coverage
+- [Vitest](https://vitest.dev/) with 208 tests and 100% calculation coverage
 - [Serwist](https://serwist.pages.dev/) for PWA/service worker
 - [@react-pdf/renderer](https://react-pdf.org/) for PDF export
+- [Dexie.js](https://dexie.org/) for IndexedDB storage
 
 ## Getting Started
 

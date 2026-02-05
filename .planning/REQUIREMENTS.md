@@ -77,21 +77,64 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ## v2 Requirements
 
-Deferred to future release. Tracked but not in current roadmap.
+Requirements for version 2.0 release. Each maps to roadmap phases 9-12.
 
-### Market Intelligence
+**Architecture Constraint:** All features must be compatible with GitHub Pages (static hosting, client-side only, no server dependencies).
 
-- **MKTV-01**: KBB/Edmunds API integration for automated vehicle valuation lookup
-- **MKTV-02**: Market value trend tracking over time with historical data
-- **MKTV-03**: Value range display from multiple valuation sources
-- **MKTV-04**: Trade-in offer aggregation from dealer networks
+### Market Intelligence (Phase 9)
 
-### Advanced Features
+- [ ] **MKTV-01**: KBB/Edmunds/Carvana API integration for automated vehicle valuation lookup (user-provided API keys)
+- [ ] **MKTV-02**: Market value trend tracking over time with historical data stored in IndexedDB
+- [ ] **MKTV-03**: Value range display from multiple valuation sources with consensus calculation
+- [ ] **MKTV-04**: Trade-in offer aggregation from dealer networks (Carvana, CarMax, Vroom)
 
-- **ADVN-01**: Decision window alerts via email or push notification
-- **ADVN-02**: Total cost of ownership projections (lease vs buy vs keep)
-- **ADVN-03**: Shareable comparison links (auth-gated, expiring)
-- **ADVN-04**: Manufacturer-specific early termination rule database (Toyota Financial, GM Financial, Honda Financial)
+**GitHub Pages Compatibility:** ✓ Yes
+- Client-side API calls with CORS handling
+- IndexedDB for historical value storage
+- Chart component for trend visualization
+- User provides own API keys (stored securely in IndexedDB)
+
+### Enhanced User Experience (Phase 10)
+
+- [ ] **UX-01**: Lease document scanning with OCR via Tesseract.js for auto-extraction of lease terms
+- [ ] **UX-03**: Educational content library with markdown articles on lease concepts
+- [ ] **UX-04**: Additional export formats (Excel .xlsx, CSV, JSON) beyond PDF
+
+**GitHub Pages Compatibility:** ✓ Yes
+- Tesseract.js runs entirely in browser
+- Markdown content served as static files
+- Export libraries (xlsx.js, papaparse) are client-side
+
+**Deferred (Server Required):**
+- ~~**UX-02**: Mileage tracking integration~~ — Requires manufacturer API partnerships and server proxy
+
+### Advanced Decision Support (Phase 11)
+
+- [ ] **ADVN-01**: Decision window alerts via browser Notification API (same-device only, no email/push)
+- [ ] **ADVN-02**: Total cost of ownership projections (lease-to-own vs. buy vs. extend scenarios)
+- [ ] **ADVN-04**: Manufacturer-specific early termination rule database (static JSON data file)
+
+**GitHub Pages Compatibility:** ✓ Partial
+- Browser Notification API works for same-device alerts
+- Service worker can schedule daily checks
+- All calculations client-side
+- **Limitation:** No cross-device notifications (email/push requires server)
+
+**Deferred (Server Required):**
+- ~~**ADVN-03**: Shareable comparison links~~ — Requires server for temporary data storage and token generation
+
+### Internationalization & Analytics (Phase 12)
+
+- [ ] **INFRA-02**: Multi-language support (i18n) for Spanish, French, etc. via next-intl
+- [ ] **ANLY-01**: Anonymous usage analytics with privacy-respecting service (Plausible, Simple Analytics)
+
+**GitHub Pages Compatibility:** ✓ Yes
+- next-intl supports static export
+- Client-side analytics scripts
+- No PII collection, respects Do Not Track
+
+**Deferred (Server Required):**
+- ~~**ANLY-02**: Aggregated market insights~~ — Requires central database to aggregate across users
 
 ## Out of Scope
 
@@ -165,4 +208,31 @@ Explicitly excluded. Documented to prevent scope creep.
 
 ---
 *Requirements defined: 2026-01-28*
-*Last updated: 2026-01-31 — All v1 requirements complete. 40/40 mapped, 35 complete, 5 dropped (auth).*
+*Last updated: 2026-02-05 — All v1 requirements complete (40/40 mapped, 35 complete, 5 dropped). v2 requirements defined for Phases 9-12 with GitHub Pages compatibility noted.*
+
+## v2 Traceability
+
+| Requirement | Phase | Status | GitHub Pages Compatible |
+|-------------|-------|--------|------------------------|
+| MKTV-01 | Phase 9 | Planning | ✓ Yes (client-side API calls) |
+| MKTV-02 | Phase 9 | Planning | ✓ Yes (IndexedDB + charts) |
+| MKTV-03 | Phase 9 | Planning | ✓ Yes (client-side aggregation) |
+| MKTV-04 | Phase 9 | Planning | ✓ Yes (API integration) |
+| UX-01 | Phase 10 | Planning | ✓ Yes (Tesseract.js) |
+| UX-02 | Deferred | Out of scope | ✗ Requires server proxy |
+| UX-03 | Phase 10 | Planning | ✓ Yes (static markdown) |
+| UX-04 | Phase 10 | Planning | ✓ Yes (client-side export) |
+| ADVN-01 | Phase 11 | Planning | ⚠ Partial (browser API only) |
+| ADVN-02 | Phase 11 | Planning | ✓ Yes (calculations only) |
+| ADVN-03 | Deferred | Out of scope | ✗ Requires server storage |
+| ADVN-04 | Phase 11 | Planning | ✓ Yes (static data file) |
+| INFRA-02 | Phase 12 | Planning | ✓ Yes (next-intl static) |
+| ANLY-01 | Phase 12 | Planning | ✓ Yes (client-side scripts) |
+| ANLY-02 | Deferred | Out of scope | ✗ Requires central database |
+
+**Coverage:**
+- v2 requirements: 15 total
+- GitHub Pages compatible: 11 full + 1 partial = 12
+- Deferred (server required): 3
+- Mapped to phases: 12
+- Unmapped: 0

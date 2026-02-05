@@ -114,7 +114,61 @@ Plans: 6/6 complete (07-01 ✓, 07-02 ✓, 07-03 ✓, 07-04 ✓, 07-05 ✓, 07-0
   5. The live site at GitHub Pages URL works end-to-end: create lease, add market value, compare options, view timeline, export PDF
   6. All 186+ existing tests continue to pass after the migration
 
-Plans: 0/0 (planning)
+Plans: Complete (implemented without formal plan documents)
+
+### Phase 9: Market Intelligence (v2.0)
+**Goal**: Enable automated vehicle valuation, historical trend tracking, and multi-source value comparison to eliminate manual entry and improve decision confidence.
+**Depends on**: Phase 4, Phase 8
+**Requirements**: MKTV-01, MKTV-02, MKTV-03, MKTV-04
+**GitHub Pages Compatible**: Yes (client-side API calls, IndexedDB storage)
+**Success Criteria** (what must be TRUE):
+  1. User can fetch market value automatically from KBB, Edmunds, or Carvana API (via user-provided API key stored in IndexedDB)
+  2. Historical market values are stored in IndexedDB and displayed as a trend chart showing depreciation velocity
+  3. Multiple valuation sources can be queried simultaneously and displayed as a range with consensus value
+  4. Trade-in offers from dealer networks can be fetched and compared to private sale estimates
+  5. All API integrations work client-side without exposing API keys (user provides their own)
+
+Plans: 0/4 (planned: API integration, trend visualization, multi-source aggregation, dealer offers)
+
+### Phase 10: Enhanced User Experience
+**Goal**: Improve data entry and export capabilities with document scanning, additional export formats, and educational content.
+**Depends on**: Phase 2, Phase 7
+**Requirements**: UX-01, UX-03, UX-04
+**GitHub Pages Compatible**: Yes (client-side OCR, static content, export libraries)
+**Success Criteria** (what must be TRUE):
+  1. User can upload lease document photo and have key fields auto-extracted via Tesseract.js OCR
+  2. Educational content library provides in-app articles on lease concepts with markdown rendering
+  3. Comparison results can be exported to Excel (.xlsx), CSV, and JSON formats in addition to PDF
+  4. All processing happens client-side with no server dependencies
+
+Plans: 0/3 (planned: OCR implementation, content library, export formats)
+
+### Phase 11: Advanced Decision Support
+**Goal**: Provide total cost of ownership analysis, manufacturer-specific termination rules, and browser-based decision alerts.
+**Depends on**: Phase 6, Phase 8
+**Requirements**: ADVN-02, ADVN-04, ADVN-01 (modified for client-side)
+**GitHub Pages Compatible**: Partial (calculations yes, browser notifications yes, cross-device alerts no)
+**Success Criteria** (what must be TRUE):
+  1. Total cost of ownership calculator compares lease-to-own vs. buy-new vs. extend scenarios
+  2. Manufacturer-specific termination formulas database (Toyota, GM, Honda, etc.) provides accurate estimates
+  3. Browser Notification API alerts user when optimal exit window approaches (same-device only)
+  4. Service worker checks timelines daily and triggers notifications when decision windows open
+  5. Notification preferences stored in IndexedDB with user-configurable thresholds
+
+Plans: 0/3 (planned: TCO calculator, lender database, browser notifications)
+
+### Phase 12: Internationalization & Analytics
+**Goal**: Support multiple languages and privacy-respecting analytics while maintaining GitHub Pages compatibility.
+**Depends on**: Phase 7
+**Requirements**: INFRA-02 (i18n), ANLY-01 (analytics)
+**GitHub Pages Compatible**: Yes (client-side i18n, privacy-first analytics)
+**Success Criteria** (what must be TRUE):
+  1. Application supports Spanish, French, and other languages via next-intl or similar
+  2. Privacy-respecting analytics (Plausible, Simple Analytics) track feature usage without PII
+  3. All analytics processing is client-side and respects Do Not Track
+  4. Language preference stored in IndexedDB and persists across sessions
+
+Plans: 0/2 (planned: i18n implementation, analytics integration)
 
 ## Progress
 
@@ -127,4 +181,9 @@ Plans: 0/0 (planning)
 | 5. Multi-Lease (Auth Dropped) | - | ✓ Skipped | 2026-01-31 |
 | 6. Timeline and Smart Recommendations | 4/4 | ✓ Complete | 2026-01-31 |
 | 7. Polish, Export, and Growth | 6/6 | ✓ Complete | 2026-01-31 |
-| 8. GitHub Pages Deployment | 0/0 | Planning | — |
+| 8. GitHub Pages Deployment | Complete | ✓ Complete | 2026-01-31 |
+| **v2.0 Phases** | | | |
+| 9. Market Intelligence | 0/4 | Planning | — |
+| 10. Enhanced User Experience | 0/3 | Planning | — |
+| 11. Advanced Decision Support | 0/3 | Planning | — |
+| 12. Internationalization & Analytics | 0/2 | Planning | — |
