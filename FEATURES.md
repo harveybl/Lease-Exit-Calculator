@@ -350,17 +350,116 @@ All scenarios provide itemized cost breakdowns with every fee line item:
 
 ---
 
+## Planned Features (v2.0)
+
+The following features are planned for version 2.0 (Phases 9-12). All are designed to work with GitHub Pages (client-side only, no server dependencies).
+
+### Phase 9: Market Intelligence
+
+**MKTV-01: API-Based Valuation** ✓ GitHub Pages Compatible
+- Automated KBB/Edmunds/Carvana API integration
+- User provides own API keys (stored securely in IndexedDB)
+- Client-side CORS handling
+- Eliminates manual value entry
+
+**MKTV-02: Market Value Trend Tracking** ✓ GitHub Pages Compatible
+- Historical value chart showing depreciation velocity
+- IndexedDB storage for value history
+- Trend analysis and projections
+- `getMarketValueHistory` infrastructure already exists
+
+**MKTV-03: Multi-Source Value Range** ✓ GitHub Pages Compatible
+- Query multiple APIs simultaneously
+- Display range with consensus value
+- Confidence scoring based on agreement
+- Client-side aggregation logic
+
+**MKTV-04: Trade-in Offer Aggregation** ✓ GitHub Pages Compatible
+- Fetch dealer offers (Carvana, CarMax, Vroom)
+- Compare to private sale estimates
+- Real-time offer comparison
+
+### Phase 10: Enhanced User Experience
+
+**UX-01: Lease Document Scanning** ✓ GitHub Pages Compatible
+- OCR via Tesseract.js (runs in browser)
+- Upload lease document photo
+- Auto-extract key fields
+- Pre-fill lease entry form
+
+**UX-03: Educational Content Library** ✓ GitHub Pages Compatible
+- In-app articles on lease concepts
+- Markdown-based content
+- Negotiation strategies
+- Static file serving
+
+**UX-04: Additional Export Formats** ✓ GitHub Pages Compatible
+- Excel (.xlsx) via xlsx.js
+- CSV via papaparse
+- JSON for programmatic use
+- Client-side generation
+
+### Phase 11: Advanced Decision Support
+
+**ADVN-01: Decision Window Alerts** ⚠ Partial GitHub Pages Compatibility
+- Browser Notification API (same-device only)
+- Service worker scheduled checks
+- Daily timeline evaluation
+- Notification when optimal windows open
+- **Limitation:** No cross-device alerts (email/push requires server)
+
+**ADVN-02: Total Cost of Ownership** ✓ GitHub Pages Compatible
+- Lease-to-own scenario analysis
+- Buy-new comparison
+- Long-term extension costs
+- Pure calculation (no server needed)
+
+**ADVN-04: Manufacturer-Specific Termination Rules** ✓ GitHub Pages Compatible
+- Toyota Financial, GM Financial, Honda Financial formulas
+- Static JSON database
+- Lender detection logic
+- More accurate early termination estimates
+
+### Phase 12: Internationalization & Analytics
+
+**INFRA-02: Multi-Language Support** ✓ GitHub Pages Compatible
+- Spanish, French, etc. via next-intl
+- Static export compatible
+- Language preference in IndexedDB
+- Locale-aware formatting
+
+**ANLY-01: Privacy-Respecting Analytics** ✓ GitHub Pages Compatible
+- Plausible or Simple Analytics
+- Client-side scripts
+- No PII collection
+- Respects Do Not Track
+
+---
+
+## Deferred Features (Require Server)
+
+The following features are incompatible with GitHub Pages architecture and deferred to a potential server-based version:
+
+- **ADVN-03: Shareable Links** - Requires server for temporary data storage and token generation
+- **ANLY-02: Aggregated Market Insights** - Requires central database to aggregate across users
+- **UX-02: Mileage Tracking Integration** - Requires manufacturer API partnerships and server proxy
+- **Email/Push Notifications** - Requires email service (SendGrid, AWS SES) or push server
+
+---
+
 ## Summary Statistics
 
 - **Scenarios:** 6
 - **Tests:** 208 (100% calculation coverage)
 - **UI Components:** 24 custom + 11 primitives
 - **States Supported:** 15 (tax calculations)
-- **Development Phases:** 8 (all complete)
+- **Development Phases:** 8 complete (v1.0) + 4 planned (v2.0)
 - **Lines of Planning Docs:** ~10,000+
 - **WCAG Level:** AA Compliant
+- **v2.0 Features Planned:** 12 (11 full + 1 partial GitHub Pages compatible)
 
 ---
 
-**Status:** ✅ Production-ready and deployed to GitHub Pages  
-**Next Steps:** See PHASE2-ANALYSIS.md for Phase 2 (v2.0) feature recommendations
+**v1.0 Status:** ✅ Production-ready and deployed to GitHub Pages  
+**v2.0 Status:** 📋 Planning phase - See `.planning/ROADMAP.md` Phases 9-12  
+**Next Steps:** Begin Phase 9 (Market Intelligence) implementation
