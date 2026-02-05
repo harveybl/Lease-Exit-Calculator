@@ -220,4 +220,50 @@ describe('evaluateEarlyTerminationScenario', () => {
       expect(result.totalCost.toNumber()).toBeCloseTo(7579.94, 0);
     });
   });
+
+  describe('input validation', () => {
+    it('should throw error when monthsElapsed is negative', () => {
+      expect(() => evaluateEarlyTerminationScenario({
+        netCapCost: new Decimal('30000'),
+        residualValue: new Decimal('18000'),
+        moneyFactor: new Decimal('0.00125'),
+        termMonths: 36,
+        monthsElapsed: -1,
+        monthlyPayment: new Decimal('393.33'),
+        earlyTerminationFee: new Decimal('500'),
+        dispositionFee: new Decimal('0'),
+      })).toThrow('monthsElapsed cannot be negative');
+    });
+
+    it('should throw error when monthsElapsed equals termMonths', () => {
+      // This is now allowed as a degenerate case (0 remaining payments)
+      const result = evaluateEarlyTerminationScenario({
+        netCapCost: new Decimal('30000'),
+        residualValue: new Decimal('18000'),
+        moneyFactor: new Decimal('0.00125'),
+        termMonths: 36,
+        monthsElapsed: 36,
+        monthlyPayment: new Decimal('393.33'),
+        earlyTerminationFee: new Decimal('500'),
+        dispositionFee: new Decimal('395'),
+      });
+      
+      // At lease end, no remaining payments
+      expect(result.remainingPayments.toNumber()).toBe(0);
+      expect(result.totalCost.toNumber()).toBe(895); // Just fees
+    });
+
+    it('should throw error when monthsElapsed exceeds termMonths', () => {
+      expect(() => evaluateEarlyTerminationScenario({
+        netCapCost: new Decimal('30000'),
+        residualValue: new Decimal('18000'),
+        moneyFactor: new Decimal('0.00125'),
+        termMonths: 36,
+        monthsElapsed: 40,
+        monthlyPayment: new Decimal('393.33'),
+        earlyTerminationFee: new Decimal('500'),
+        dispositionFee: new Decimal('395'),
+      })).toThrow('Cannot evaluate early termination after lease has exceeded term');
+    });
+  });
 });

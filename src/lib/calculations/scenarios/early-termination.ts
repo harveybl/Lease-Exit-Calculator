@@ -57,6 +57,14 @@ export function evaluateEarlyTerminationScenario(params: {
     excessMileageCharge = new Decimal('0'),
   } = params;
 
+  // Input validation
+  if (monthsElapsed < 0) {
+    throw new Error('monthsElapsed cannot be negative');
+  }
+  if (monthsElapsed > termMonths) {
+    throw new Error('Cannot evaluate early termination after lease has exceeded term');
+  }
+
   // Calculate months remaining
   const monthsRemaining = termMonths - monthsElapsed;
 

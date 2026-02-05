@@ -167,4 +167,32 @@ describe('evaluateReturnScenario', () => {
       expect(wearItem?.type).toBe('fee');
     });
   });
+
+  describe('input validation', () => {
+    it('should throw error when monthsElapsed is negative', () => {
+      expect(() => evaluateReturnScenario({
+        dispositionFee: new Decimal('395'),
+        currentMileage: 18000,
+        monthsElapsed: -1,
+        termMonths: 36,
+        allowedMilesPerYear: 12000,
+        overageFeePerMile: new Decimal('0.25'),
+        wearAndTearEstimate: new Decimal('0'),
+        remainingPayments: new Decimal('4719.96'),
+      })).toThrow('monthsElapsed cannot be negative');
+    });
+
+    it('should throw error when monthsElapsed exceeds termMonths', () => {
+      expect(() => evaluateReturnScenario({
+        dispositionFee: new Decimal('395'),
+        currentMileage: 18000,
+        monthsElapsed: 40,
+        termMonths: 36,
+        allowedMilesPerYear: 12000,
+        overageFeePerMile: new Decimal('0.25'),
+        wearAndTearEstimate: new Decimal('0'),
+        remainingPayments: new Decimal('0'),
+      })).toThrow('monthsElapsed cannot exceed termMonths');
+    });
+  });
 });

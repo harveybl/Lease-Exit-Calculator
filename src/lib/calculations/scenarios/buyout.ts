@@ -40,6 +40,11 @@ export function evaluateBuyoutScenario(
     purchaseFee,
   } = params;
 
+  // Input validation
+  if (monthsElapsed < 0) {
+    throw new Error('monthsElapsed cannot be negative');
+  }
+
   const monthsRemaining = termMonths - monthsElapsed;
 
   // Compute payoff using Constant Yield Method

@@ -38,6 +38,14 @@ export function evaluateReturnScenario(
     remainingPayments,
   } = params;
 
+  // Input validation
+  if (monthsElapsed < 0) {
+    throw new Error('monthsElapsed cannot be negative');
+  }
+  if (monthsElapsed > termMonths) {
+    throw new Error('monthsElapsed cannot exceed termMonths');
+  }
+
   // Project excess mileage cost using the mileage calculation module
   const mileageProjection = projectMileage({
     currentMileage,
